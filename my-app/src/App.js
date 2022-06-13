@@ -1,46 +1,70 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { YoutubeData } from "./YoutubeData";
 
 // JSX : Javascript XML
 // ES6
 
-/**
- * element = <div id="root">Hello World</div>
- * element = React.createElement('div', {id: 'root'}, 'Hello World')
- * function createElement(elementType, props, ...children)
- * elementType: 'div', 'p' , 'span'
- * props: những cái attribute của thẻ VD: className,id,href,src,...
- * ...children:
- * element2 = (<div>
- * <span>Hello</span> <span>World</span>
- * </div>)
- * element2 = React.createElement('div',{
- * children:[
- * React.createElement('span', null, 'Hello'),
- * ' ',
- * React.createElement('span',null, 'World')
- * ]
- * })
- */
-function Feature() {
+function App() {
+  // const numbers = [1, 2, 3, 4, 5];
+  // const double = numbers.map((item) => item * 2);
+  // console.log(double);
+  console.log(YoutubeData);
   return (
-    <div className="feature">
-      <h3 className="feature-title">Dinasour</h3>
-      <p className="feature-text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem
-        dignissimos fuga neque sunt quis quaerat? Soluta reprehenderit
-        voluptates nesciunt aperiam quae maiores harum expedita excepturi
-        repellendus, ducimus quas cumque sunt.
-      </p>
+    <div className="youtube-list">
+      {YoutubeData.map((item) => (
+        <YoutubeItem
+          key={item.id}
+          img={item.image}
+          avatar={item.avatar}
+          title={item.title}
+          author={item.author}
+        ></YoutubeItem>
+      ))}
+      {/* <YoutubeItem
+        img="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        avatar="https://images.unsplash.com/photo-1649972904914-5d5aaf3d1793?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        title="Learn ReactJS From Zero To Hero"
+        author="Tran Dang Khoi"
+      ></YoutubeItem>
+      <YoutubeItem
+        img="https://images.unsplash.com/photo-1559705421-4ae9bf6fabb5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        avatar="https://images.unsplash.com/photo-1649972904914-5d5aaf3d1793?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        title="Learn ReactJS From Zero To Hero"
+        author="Tran Dang Khoi"
+      ></YoutubeItem>
+      <YoutubeItem
+        img="https://images.unsplash.com/photo-1563874257547-d19fbb71b46c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        avatar="https://images.unsplash.com/photo-1649972904914-5d5aaf3d1793?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        title="Learn ReactJS From Zero To Hero"
+        author="Tran Dang Khoi"
+      ></YoutubeItem>
+      <YoutubeItem
+        img="https://images.unsplash.com/photo-1542681575-352258e0c854?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+        avatar="https://images.unsplash.com/photo-1649972904914-5d5aaf3d1793?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+        title="Learn ReactJS From Zero To Hero"
+        author="Tran Dang Khoi"
+      ></YoutubeItem> */}
     </div>
   );
 }
-function App() {
+// Rendering List
+// Props = Properties
+function YoutubeItem(props) {
   return (
-    <div>
-      <Feature></Feature>
-      <Feature></Feature>
-      <Feature></Feature>
+    <div className="youtube-item">
+      <div className="youtube-image">
+        <img src={props.img} alt="" />
+      </div>
+      <div className="youtube-footer">
+        <img src={props.avatar} alt="" className="youtube-avatar" />
+        <div className="youtube-info">
+          <h3 className="yotube-title">
+            {props.title || "This is a youtube video title"}
+          </h3>
+          <h4 className="youtube-author">{props.author}</h4>
+        </div>
+      </div>
     </div>
   );
 }
