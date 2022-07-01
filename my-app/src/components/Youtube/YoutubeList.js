@@ -2,11 +2,12 @@ import React from "react";
 import { YoutubeData } from "../../data";
 import YoutubeItem from "./YoutubeItem";
 
-const YoutubeList = () => {
+const YoutubeList = (props) => {
   const defaultAvt =
     "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png";
   return (
     <div className="youtube-list">
+      {props.children}
       {YoutubeData.map((item, index) => {
         return (
           <YoutubeItem

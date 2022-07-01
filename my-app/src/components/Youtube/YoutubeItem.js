@@ -1,6 +1,8 @@
 import React from "react";
 
 const YoutubeItem = (props) => {
+  // props chính là thằng object mang attr của các thẻ, truyền từ thằng cha vào đây
+  // console.log(props);
   return (
     <div className={`youtube-item ${props.className}`}>
       <div className="youtube-image">
