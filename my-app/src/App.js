@@ -1,14 +1,12 @@
 import "./App.css";
-import Toggle from "./components/state/Toggle";
-import YoutubeList from "./components/Youtube/YoutubeList";
-
+import Game from "./components/Tictactoe/Game";
 // JSX : Javascript XML
 // ES6
 
 function App() {
   return (
     <div>
-      <Toggle></Toggle>
+      <Game></Game>
     </div>
   );
 }

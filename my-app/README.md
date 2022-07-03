@@ -2,7 +2,7 @@
 
 ## **1. Props là gì? ( cơ bản )** <br>
 
-- Props là từ viết tắt của Properties.
+- Props là một object, và là từ viết tắt của Properties.
   _ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
   _ Ví dụ về đoạn mã HTML như sau: <br>
   **img src="img_girl.jpg" width="500" height="600"**
