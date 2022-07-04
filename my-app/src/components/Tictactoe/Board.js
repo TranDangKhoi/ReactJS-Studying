@@ -1,18 +1,23 @@
 import React from "react";
 import Cell from "./Cell";
 
-const Board = () => {
+const Board = ({ cells, onClick }) => {
+  // Array.fill(9) -> [undefined,undefined,...]
+  // Giờ mà điền hết vào thì rất tốn thời gian
+  // Nên ta sẽ sử dụng map
+  // const cells = ["X", null, null, "X", null, null, "X", null, null];
+  // console.log(winnerCalculate(cells));
+
   return (
     <div className="game-board">
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
+      {/* bằng với board.map((item,index)) trong đó item là một phần tử nằm trong array, index là index của array */}
+      {cells.map((item, index) => (
+        <Cell
+          key={index}
+          value={item}
+          onClick={() => onClick(index)} // onClick ở đây (onclick trái) là props của thằng Cell, và thg props này gọi tới function handleClick của thằng Game.js
+        ></Cell>
+      ))}
     </div>
   );
 };
