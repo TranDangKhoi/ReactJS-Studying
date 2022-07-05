@@ -9,12 +9,13 @@ const Board = ({ cells, onClick }) => {
   // console.log(winnerCalculate(cells));
 
   return (
-    <div className="game-board">
+    <div className={"game-board"}>
       {/* bằng với board.map((item,index)) trong đó item là một phần tử nằm trong array, index là index của array */}
       {cells.map((item, index) => (
         <Cell
           key={index}
           value={item}
+          className={item === "X" ? "x-mark" : item === "O" ? "o-mark" : ""}
           onClick={() => onClick(index)} // onClick ở đây (onclick trái) là props của thằng Cell, và thg props này gọi tới function handleClick của thằng Game.js
         ></Cell>
       ))}

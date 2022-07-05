@@ -15,13 +15,13 @@ const Game = () => {
     // bạn sẽ biết rằng là khi ta thay đổi giá trị trong mảng thì nó sẽ ảnh hưởng đến giá trị gốc
     // vì vậy ta phải tạo ra một bản copy để đề phòng trường hợp đó xảy ra
     if (winner || boardCopy[index]) {
-      // nếu đã có người chiến thắng (winner === X hoặc winner === O ), hoặc ô vuông đã được nhấn thì không cho nhấn nữa
+      // nếu đã có người chiến thắng (winner === X hoặc winner === O hoặc tổng quan ra thì là winner !== null ), hoặc ô vuông đã được nhấn thì không cho nhấn nữa
       // nếu không có điều kiện boardCopy[index] = true thì khi nhấn tiếp lại vào ô vuông đó
       // sẽ xảy ra một lỗi là ô vuông sẽ chuyển X O luân phiên (tùy theo giá trị boolean của xIsNext trong state)
       console.log("Hello");
       return;
     }
-    // boardCopy[index] = xIsNext ? "X" : "O"; // nếu điều kiện if đã return rồ
+    // boardCopy[index] = xIsNext ? "X" : "O"; // nếu X là lượt đánh tiếp theo thì thay đổi lần click tiếp theo giá trị là X, còn không thì là O
     // Viết kiểu dài dòng
     if (xIsNext === true) {
       boardCopy[index] = "X";
@@ -29,13 +29,20 @@ const Game = () => {
       boardCopy[index] = "O";
     }
     setBoard(boardCopy);
-    console.log(boardCopy);
     setXIsNext((xIsNext) => !xIsNext);
+  };
+
+  const handleReset = () => {
+    setBoard(Array(9).fill(null));
+    setXIsNext(true);
   };
   return (
     <div>
       <Board cells={board} onClick={handleClick}></Board>
-      {winner ? `Winner is ${xIsNext ? "O" : "X"}` : ""}
+      <div className="game-winner">{winner ? `Winner is ${winner}` : ""}</div>
+      <button className="game-reset" onClick={handleReset}>
+        Reset game
+      </button>
     </div>
   );
 };
