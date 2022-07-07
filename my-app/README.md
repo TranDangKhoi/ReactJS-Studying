@@ -14,7 +14,7 @@
 - JSX là một cú pháp mở rộng cho JavaScript.
   -> JSX = Javascript + XML. Nó biến cú pháp dạng gần như XML về thành Javascript. Giúp người lập trình có thể code ReactJS bằng cú pháp của XML thay vì sử dụng Javascript. Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement. Khi sử dụng hook phải sử dụng ở trong functional component
 
-## 3. Props Children là gì
+## 3. Children Props là gì?
 
 ## 4. State là gì?
 

@@ -23,7 +23,6 @@ const Game = () => {
       // nếu đã có người chiến thắng (winner === X hoặc winner === O hoặc tổng quan ra thì là winner !== null ), hoặc ô vuông đã được nhấn thì không cho nhấn nữa
       // nếu không có điều kiện boardCopy[index] = true thì khi nhấn tiếp lại vào ô vuông đó
       // sẽ xảy ra một lỗi là ô vuông sẽ chuyển X O luân phiên (tùy theo giá trị boolean của xIsNext trong state)
-      console.log("Hello");
       return;
     }
     // boardCopy[index] = xIsNext ? "X" : "O"; // nếu X là lượt đánh tiếp theo thì thay đổi lần click tiếp theo giá trị là X, còn không thì là O
@@ -40,12 +39,14 @@ const Game = () => {
       board: boardCopy,
       xIsNext: !state.xIsNext,
     });
+    console.log(state);
   };
 
   const handleReset = () => {
     setState({
       board: Array(9).fill(null),
       xIsNext: true,
+      ...state,
     });
   };
   return (

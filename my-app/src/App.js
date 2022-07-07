@@ -1,5 +1,5 @@
 import "./App.css";
-import Game from "./components/Tictactoe/Game";
+import Game from "./components/Tictactoe (useReducer version)/Game";
 
 // JSX : Javascript XML
 // ES6
