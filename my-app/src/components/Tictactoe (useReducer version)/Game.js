@@ -12,13 +12,15 @@ const initialState = {
 const gameReducer = (state, action) => {
   switch (action.type) {
     case "Click": {
-      const { board, xIsNext } = state; // destructuring
-      const { index, winner } = action.payload;
-      if (winner || board[index]) return state; // return lại cái state hiện tại còn cái nextState mới là cái dùng để update từ state lên nextState
-      const nextState = JSON.parse(JSON.stringify(state)); // clone state
-      nextState.xIsNext = !xIsNext;
-      nextState.board[index] = xIsNext ? "X" : "O";
-      return nextState;
+      // const { board, xIsNext } = state; // destructuring
+      // const { index, winner } = action.payload;
+      // if (winner || board[index]) return state; // return lại cái state hiện tại còn cái nextState mới là cái dùng để update từ state lên nextState
+      // const nextState = JSON.parse(JSON.stringify(state)); // clone state
+      // nextState.xIsNext = !xIsNext;
+      // nextState.board[index] = xIsNext ? "X" : "O";
+      // return nextState;
+      console.log("It's working");
+      break;
     }
     // console.log(state, action.payload);
     case "Reset": {
@@ -34,17 +36,9 @@ const gameReducer = (state, action) => {
 };
 
 const Game = () => {
-  // const [state, dispatch] = useReducer(reducer, initialState)
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  // const action = {type:"Click", payload{}}
-  // dispatch({type: "Click"})
   const winner = winnerCalculate(state.board);
   const handleClick = (index) => {
-    // const boardCopy = [...state.board];
-    // if (winner || boardCopy[index]) {
-    //   return;
-    // }
-    // dispatch(action) -> action này được truyền vào hàm gameReducer ở bên trên
     dispatch({
       type: "Click",
       payload: {
