@@ -55,7 +55,7 @@ const Game = () => {
   };
   return (
     <div>
-      <Board cells={state.board} onClick={handleClick}></Board>
+      <Board cells={state.board} onMouseEnter={handleClick}></Board>
       <div className="game-winner">{winner ? `Winner is ${winner}` : ""}</div>
       <button className="game-reset" onClick={handleReset}>
         Restart game

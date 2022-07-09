@@ -1,5 +1,6 @@
 import "./App.css";
-import Game from "./components/Tictactoe(practice useReducer)/Game";
+import Card from "./components/card/Card";
+import CardList from "./components/card/CardList";
 
 // JSX : Javascript XML
 // ES6
@@ -7,7 +8,14 @@ import Game from "./components/Tictactoe(practice useReducer)/Game";
 function App() {
   return (
     <div>
-      <Game></Game>
+      <CardList>
+        <Card secondary></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+      </CardList>
     </div>
   );
 }
