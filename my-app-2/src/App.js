@@ -1,10 +1,10 @@
 import "./App.css";
-import Counter from "./components/info-card (tailwindcss)/Counter";
+import CardTailwind from "./components/info-card (tailwindcss)/CardTailwind";
 
 function App() {
   return (
     <div>
-      <Counter></Counter>
+      <CardTailwind></CardTailwind>
     </div>
   );
 }
