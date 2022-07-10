@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import "./Card.css";
 
 /*
  * const StyledCard = styled.tag(h1,h2,div,span,...)``
