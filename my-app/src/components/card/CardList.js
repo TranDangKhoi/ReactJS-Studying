@@ -15,6 +15,7 @@ const StyledCardList = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 6rem;
+  column-gap: 12px;
 `;
 
 const CardList = (props) => {

@@ -1,16 +1,10 @@
 import "./App.css";
-import CardList from "./components/info-card (tailwindcss)/CardList";
-import CardTailwind from "./components/info-card (tailwindcss)/CardTailwind";
-// import { GlobalStyles } from "./GlobalStyles";
+import Photo from "./components/photo/Photo";
 
 function App(props) {
   return (
     <div>
-      {/* <GlobalStyles></GlobalStyles> */}
-      <CardList>
-        <CardTailwind></CardTailwind>
-        <CardTailwind primary></CardTailwind>
-      </CardList>
+      <Photo></Photo>
     </div>
   );
 }

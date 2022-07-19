@@ -72,7 +72,7 @@ const StyledCard = styled.div`
   .card-title {
     font-weight: 700;
     font-size: 22px;
-    color: ${(props) => props.theme.colors.blue};
+    color: black;
   }
 
   .card-psl {
