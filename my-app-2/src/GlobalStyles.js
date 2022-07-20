@@ -4,6 +4,6 @@ export const GlobalStyles = createGlobalStyle`${css`
 
   body {
     font-family: "Poppins", "roboto", sans-serif;
-    background: #ccc;
+    background: white;
   }
 `}`;

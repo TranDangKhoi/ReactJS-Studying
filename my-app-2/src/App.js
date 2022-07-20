@@ -1,10 +1,9 @@
 import "./App.css";
-import Photo from "./components/photo/Photo";
-
-function App(props) {
+import Photo2 from "./components/photo (useEffect practice)/Photo2";
+function App() {
   return (
     <div>
-      <Photo></Photo>
+      <Photo2></Photo2>
     </div>
   );
 }
