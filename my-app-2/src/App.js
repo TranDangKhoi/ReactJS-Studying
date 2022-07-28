@@ -1,9 +1,10 @@
 import "./App.css";
+import Login from "./components/login/Login";
 import Photo2 from "./components/photo (useEffect practice)/Photo2";
 function App() {
   return (
     <div>
-      <Photo2></Photo2>
+      <Login></Login>
     </div>
   );
 }
