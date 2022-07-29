@@ -29,3 +29,4 @@ useEffect(
 ```
 
 - Dưới đây là ảnh sơ đồ useEffect hook để giúp bạn hiểu hơn về cleanup
+![useEffect lifecycle](https://user-images.githubusercontent.com/88824627/181730927-eada0f3b-82ea-4a32-9cf4-5e55f95778f9.svg)
