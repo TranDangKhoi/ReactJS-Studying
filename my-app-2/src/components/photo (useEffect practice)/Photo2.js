@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 const getRandomPhotos = async (page) => {
   try {
@@ -12,17 +12,21 @@ const getRandomPhotos = async (page) => {
 };
 
 const Photo2 = () => {
+  // instance
   const [randomPhotos, setRandomPhotos] = useState([]);
   const [nextPage, setNextPage] = useState(1);
-  const handleLoadMore = async () => {
+  const handleLoadMore = useRef({});
+  handleLoadMore.current = async () => {
     const images = await getRandomPhotos(nextPage);
     const newPhotos = [...randomPhotos, ...images];
     setRandomPhotos(newPhotos);
     setNextPage((nextPage) => nextPage + 1);
   };
   useEffect(() => {
-    handleLoadMore();
+    handleLoadMore.current();
   }, []);
+  // function là by references (react sẽ so sánh vị trí trong memory của 2 function là handleLoadMore trong dependency và handleLoadMore nằm ở bên ngoài) nên nếu nhét cả function handleLoadMore vào đây
+  // thì component sẽ re-render liên tục bởi dependency và function bên ngoài luôn khác nhau thì nó sẽ chạy liên tục cho tới khi bao giờ giống nhau thì thôi
   return (
     <div>
       <div className="grid grid-cols-4 gap-4 p-5">
@@ -43,7 +47,7 @@ const Photo2 = () => {
       <div className="text-center">
         <button
           className="inline-flex items-center justify-center px-8 font-sans font-semibold tracking-wide text-white bg-blue-500 rounded-lg h-[60px]"
-          onClick={handleLoadMore}
+          onClick={handleLoadMore.current}
         >
           Load more
         </button>

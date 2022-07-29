@@ -1,10 +1,10 @@
 import "./App.css";
-import Timer from "./components/cleanup (useEffect cleanup)/Timer";
-import User from "./components/username (useEffect)/User";
+import Header from "./components/event-listener (useEffect event-listener)/Header";
+import Photo2 from "./components/photo (useEffect practice)/Photo2";
 function App() {
   return (
     <div>
-      <Timer></Timer>
+      <Photo2></Photo2>
     </div>
   );
 }

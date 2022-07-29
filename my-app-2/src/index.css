@@ -7,5 +7,6 @@
 
   body {
     font-family: "Poppins", "roboto", sans-serif;
+    min-height: 300vh;
   }
 }

@@ -29,3 +29,5 @@ useEffect(
 ```
 
 - Dưới đây là ảnh sơ đồ useEffect hook để giúp bạn hiểu hơn về cleanup
+
+# Mount, Update, Unmount trong React
