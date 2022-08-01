@@ -1,9 +1,9 @@
 import "./App.css";
-import HackerNews from "./components/hackernewsapi/news/HackerNews";
+import HackerNews2 from "./components/hackernews practice/HackerNews2";
 function App() {
   return (
     <div>
-      <HackerNews></HackerNews>
+      <HackerNews2></HackerNews2>
     </div>
   );
 }

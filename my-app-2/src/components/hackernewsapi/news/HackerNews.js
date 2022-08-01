@@ -29,7 +29,7 @@ const HackerNews = () => {
     }
   };
   useEffect(() => {
-    handleFetchData.current(query);
+    handleFetchData.current();
   }, [url]);
   return (
     <div className="bg-white w-[600px] mx-auto mt-5 p-7 rounded-lg shadow-md">
