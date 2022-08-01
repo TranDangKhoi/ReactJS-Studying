@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import lodash from "lodash";
 
-const HackerNews2 = () => {
+const HackerNews3 = () => {
   const [hits, setHits] = useState([]);
   const [query, setQuery] = useState("react");
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const HackerNews2 = () => {
     }
   };
   useEffect(() => {
-    handleFetchHits.current(query);
+    handleFetchHits.current();
   }, [url]);
   return (
     <div className="w-[600px] mx-auto my-5 p-5 bg-white shadow-md rounded-md">
@@ -78,4 +78,4 @@ const HackerNews2 = () => {
   );
 };
 
-export default HackerNews2;
+export default HackerNews3;
