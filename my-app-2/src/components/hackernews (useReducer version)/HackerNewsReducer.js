@@ -102,6 +102,10 @@ const HackerNews = () => {
         </div>
         <button
           className="bg-blue-500 text-white rounded-md p-5"
+          style={{
+            opacity: state.loading ? "0.4" : "1",
+            cursor: state.loading ? "not-allowed" : "pointer",
+          }}
           onClick={() =>
             dispatch({
               type: "SET_URL",
