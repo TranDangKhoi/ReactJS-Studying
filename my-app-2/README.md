@@ -32,3 +32,8 @@ useEffect(
   ![useEffect lifecycle](https://user-images.githubusercontent.com/88824627/181787967-13243cae-fa00-4f98-80d2-6d4c542763cf.svg)
 
 # Mount, Update, Unmount trong React
+
+# useRef và useState khác nhau thế nào
+
+- useRef thì khi ref thay đổi component sẽ không re-render
+- useState thì khi state thay đổi component sẽ re-render

@@ -1,9 +1,10 @@
+import React from "react";
 import "./App.css";
-import HackerNewsReducer from "./components/hackernews (useReducer version)/HackerNewsReducer";
+import Textarea from "./components/useRef/textarea-auto-resize/Textarea";
 function App() {
   return (
     <div>
-      <HackerNewsReducer></HackerNewsReducer>
+      <Textarea></Textarea>
     </div>
   );
 }
