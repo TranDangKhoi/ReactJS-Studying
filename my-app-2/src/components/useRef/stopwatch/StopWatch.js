@@ -7,30 +7,27 @@ const StopWatch = () => {
   //       clearInterval(timer);
   //     };
   //   }, []);
-  const timerRef = useRef(false);
+  const [timer, setTimer] = useState(false);
   const [count, setCount] = useState(0);
   const handleStart = () => {
-    if (timerRef.current) return; // nếu mà timer đang chạy rồi thì không được thực hiện handleStart nữa
+    if (timer) return; // nếu mà timer đang chạy rồi thì không được thực hiện handleStart nữa
     // không thì sẽ gây lỗi chương trình
-    timerRef.current = setInterval(() => {
-      setCount((count) => count + 1);
-    }, 1000);
+    setTimer(
+      setInterval(() => {
+        setCount((count) => count + 1);
+      }, 1000)
+    );
   };
   const handleStop = () => {
-    if (!timerRef.current) return;
-    clearInterval(timerRef.current);
-    timerRef.current = false;
+    if (!timer) return;
+    clearInterval(timer);
+    setTimer(false);
   };
 
   // Sau này khi học tới react-router-dom thì mình sẽ phải handle cái timer này lại
   // Vì khi chuyển sang trang khác thì cần phải clear cái timer này về 0 giây
   // Nếu không clear thì nó vẫn sẽ tiếp tục chạy khi chuyển sang trang khác
   // Ta sẽ phải clear nó = useEffect
-  useEffect(() => {
-    return () => {
-      clearInterval(timerRef.current);
-    };
-  }, []);
 
   return (
     <div>

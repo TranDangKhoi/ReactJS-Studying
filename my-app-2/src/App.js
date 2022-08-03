@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Textarea from "./components/useRef/textarea-auto-resize/Textarea";
+import StopWatch from "./components/useRef/stopwatch/StopWatch";
 function App() {
   return (
     <div>
-      <Textarea></Textarea>
+      <StopWatch></StopWatch>
     </div>
   );
 }
