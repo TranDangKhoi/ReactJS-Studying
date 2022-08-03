@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 const StopWatch = () => {
   //   useEffect(() => {
@@ -7,21 +7,19 @@ const StopWatch = () => {
   //       clearInterval(timer);
   //     };
   //   }, []);
-  const [timer, setTimer] = useState(false);
+  const timer = useRef(false);
   const [count, setCount] = useState(0);
   const handleStart = () => {
-    if (timer) return; // nếu mà timer đang chạy rồi thì không được thực hiện handleStart nữa
+    if (timer.current) return; // nếu mà timer đang chạy rồi thì không được thực hiện handleStart nữa
     // không thì sẽ gây lỗi chương trình
-    setTimer(
-      setInterval(() => {
-        setCount((count) => count + 1);
-      }, 1000)
-    );
+    timer.current = setInterval(() => {
+      setCount((count) => count + 1);
+    }, 1000);
   };
   const handleStop = () => {
-    if (!timer) return;
-    clearInterval(timer);
-    setTimer(false);
+    if (!timer.current) return;
+    clearInterval(timer.current);
+    timer.current = false;
   };
 
   // Sau này khi học tới react-router-dom thì mình sẽ phải handle cái timer này lại
