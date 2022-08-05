@@ -36,6 +36,13 @@ const hackerNewsReducer = (state, action) => {
 const HackerNews = () => {
   const [state, dispatch] = useReducer(hackerNewsReducer, initialState);
   const handleFetchData = useRef({});
+  const isMounted = useRef(true);
+  useEffect(() => {
+    return () => {
+      // unmounted
+      isMounted.current = false;
+    };
+  });
   handleFetchData.current = async () => {
     dispatch({
       type: "SET_LOADING",
@@ -44,14 +51,18 @@ const HackerNews = () => {
     try {
       const response = await axios.get(state.url);
       // setHits(response.data?.hits || []);
-      dispatch({
-        type: "SET_HITS",
-        payload: response.data?.hits || [],
-      });
-      dispatch({
-        type: "SET_LOADING",
-        payload: false,
-      });
+      setTimeout(() => {
+        if (isMounted.current) {
+          dispatch({
+            type: "SET_HITS",
+            payload: response.data?.hits || [],
+          });
+          dispatch({
+            type: "SET_LOADING",
+            payload: false,
+          });
+        }
+      }, 3000);
     } catch (err) {
       // setLoading(false);
       dispatch({
@@ -67,7 +78,6 @@ const HackerNews = () => {
   useEffect(() => {
     handleFetchData.current();
   }, [state.url]);
-  console.log(state.query);
   return (
     <div className="bg-white w-[600px] mx-auto mt-5 p-7 rounded-lg shadow-md">
       <div className="flex gap-x-5">

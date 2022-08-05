@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Dropdown from "./components/useRef/dropdown/Dropdown";
+import HackerNewsWithHook from "./components/useEffect,useReducer,useState/hackernewsapi/news/HackerNewsWithHook";
 function App() {
   return (
     <div>
-      <Dropdown></Dropdown>
+      <HackerNewsWithHook></HackerNewsWithHook>
     </div>
   );
 }
