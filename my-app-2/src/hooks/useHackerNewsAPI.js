@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 export default function useHackerNewsAPI(initialUrl, initialData) {
+  const [query, setQuery] = useState("react");
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
@@ -31,6 +32,8 @@ export default function useHackerNewsAPI(initialUrl, initialData) {
     handleFetchData.current();
   }, [url]);
   return {
+    query,
+    setQuery,
     data,
     setUrl,
     loading,

@@ -9,8 +9,7 @@ import useHackerNewsAPI from "../../../../hooks/useHackerNewsAPI";
  * Nên đợi một lúc rồi mới bắt đầu query (sử dụng debounce)
  */
 const HackerNewsWithHook = () => {
-  const [query, setQuery] = useState("react");
-  const { data, loading, setUrl, errorMsg } = useHackerNewsAPI(
+  const { data, loading, setUrl, errorMsg, query, setQuery } = useHackerNewsAPI(
     `https://hn.algolia.com/api/v1/search?query=''`,
     { hits: [] }
   );
