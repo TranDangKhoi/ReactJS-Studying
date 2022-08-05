@@ -17,7 +17,7 @@ const Blog = () => {
         <a href="https://www.google.com" className="underline">
           Google
         </a>
-        ?
+        <img src="https://i.ibb.co/ZJF1GKK/code.png" alt="Code" />?
       </p>
       <p className="mb-5">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum

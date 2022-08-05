@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useHackerNewsAPI from "../../../../hooks/useHackerNewsAPI";
 // import lodash from "lodash";
 //https://hn.algolia.com/api/v1/search?query=react
@@ -9,8 +9,11 @@ import useHackerNewsAPI from "../../../../hooks/useHackerNewsAPI";
  * Nên đợi một lúc rồi mới bắt đầu query (sử dụng debounce)
  */
 const HackerNewsWithHook = () => {
-  const { hits, query, setQuery, loading, setUrl, errorMsg } =
-    useHackerNewsAPI();
+  const [query, setQuery] = useState("react");
+  const { data, loading, setUrl, errorMsg } = useHackerNewsAPI(
+    `https://hn.algolia.com/api/v1/search?query=''`,
+    { hits: [] }
+  );
   return (
     <div className="bg-white w-[600px] mx-auto mt-5 p-7 rounded-lg shadow-md">
       <div className="flex gap-x-5">
@@ -34,7 +37,6 @@ const HackerNewsWithHook = () => {
           <input
             type="text"
             className="w-full outline-none bg-transparent"
-            defaultValue={query}
             placeholder="Enter your content"
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -56,8 +58,8 @@ const HackerNewsWithHook = () => {
 
       <div className="mt-5 mb-5 flex flex-wrap gap-5">
         {!loading &&
-          hits.length > 0 &&
-          hits.map((item) => (
+          data.hits.length > 0 &&
+          data.hits.map((item) => (
             <h3 className="p-2 bg-gray-200 rounded-md" key={item.title}>
               {item.title}
             </h3>
