@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useHackerNewsAPI from "../../../../hooks/useHackerNewsAPI";
 // import lodash from "lodash";
 //https://hn.algolia.com/api/v1/search?query=react
