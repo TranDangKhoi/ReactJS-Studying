@@ -1,27 +1,34 @@
 import React from "react";
 import { useFormik } from "formik";
-
-const validate = (values) => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = "Please enter your first name";
-  } else if (values.firstName.length > 20) {
-    errors.firstName = "Your first name must be less than 20 characters";
-  }
-  if (!values.lastName) {
-    errors.lastName = "Please enter your last name";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Your last name must be less than 20 characters";
-  }
-  return errors;
-};
+import * as Yup from "yup";
+// const validate = (values) => {
+//   const errors = {};
+//   if (!values.firstName) {
+//     errors.firstName = "Please enter your first name";
+//   } else if (values.firstName.length > 20) {
+//     errors.firstName = "Your first name must be less than 20 characters";
+//   }
+//   if (!values.lastName) {
+//     errors.lastName = "Please enter your last name";
+//   } else if (values.lastName.length > 20) {
+//     errors.lastName = "Your last name must be less than 20 characters";
+//   }
+//   return errors;
+// };
 const SignUpForm = () => {
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
     },
-    validate,
+    validationSchema: Yup.object({
+      firstName: Yup.string()
+        .max(20, "Your first name must be less than 20 characters")
+        .required("Please enter your first name"),
+      lastName: Yup.string()
+        .max(10, "Your last name must be less than 10 characters")
+        .required("Please enter your last name"),
+    }),
     onSubmit: (values) => {
       console.log(values);
     },
