@@ -1,12 +1,11 @@
 import React from "react";
 import "./App.css";
-import MovieSearchApp from "./components/Form,Formik,Yup/movie-search-app/MovieSearchApp";
-import SignUpForm from "./components/Form,Formik,Yup/practice formik/SignUpForm";
+import SignUpForm3 from "./components/Form,Formik,Yup/practice formik/SignUpForm3";
 
 function App() {
   return (
     <div>
-      <SignUpForm></SignUpForm>
+      <SignUpForm3></SignUpForm3>
     </div>
   );
 }
