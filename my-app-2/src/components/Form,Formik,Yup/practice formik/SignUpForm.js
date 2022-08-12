@@ -45,12 +45,9 @@ const SignUpForm = () => {
         <input
           type="text"
           id="firstName"
-          name="firstName"
           className="p-4 rounded-lg border-2 border-gray-200"
           placeholder="Enter your first name"
-          value={formik.values.firstName}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          {...formik.getFieldProps("firstName")}
         />
         {formik.touched.firstName && formik.errors.firstName ? (
           <div className="text-sm text-red-500">{formik.errors.firstName}</div>
@@ -59,12 +56,9 @@ const SignUpForm = () => {
         <input
           type="text"
           id="lastName"
-          name="lastName"
           className="p-4 rounded-lg border-2 border-gray-200"
           placeholder="Enter your last name"
-          value={formik.values.lastName}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          {...formik.getFieldProps("lastName")}
         />
         {formik.touched.lastName && formik.errors.lastName ? (
           <div className="text-sm text-red-500">{formik.errors.lastName}</div>
