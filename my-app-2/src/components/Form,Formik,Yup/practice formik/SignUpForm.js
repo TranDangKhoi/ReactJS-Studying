@@ -7,7 +7,8 @@ const validate = (values) => {
     errors.firstName = "Please enter your first name";
   } else if (values.firstName.length > 20) {
     errors.firstName = "Your first name must be less than 20 characters";
-  } else if (!values.lastName) {
+  }
+  if (!values.lastName) {
     errors.lastName = "Please enter your last name";
   } else if (values.lastName.length > 20) {
     errors.lastName = "Your last name must be less than 20 characters";
@@ -42,8 +43,9 @@ const SignUpForm = () => {
           placeholder="Enter your first name"
           value={formik.values.firstName}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
-        {formik.errors.firstName ? (
+        {formik.touched.firstName && formik.errors.firstName ? (
           <div className="text-sm text-red-500">{formik.errors.firstName}</div>
         ) : null}
         <label htmlFor="lastName">Last Name</label>
@@ -55,8 +57,9 @@ const SignUpForm = () => {
           placeholder="Enter your last name"
           value={formik.values.lastName}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
-        {formik.errors.lastName ? (
+        {formik.touched.lastName && formik.errors.lastName ? (
           <div className="text-sm text-red-500">{formik.errors.lastName}</div>
         ) : null}
       </div>
