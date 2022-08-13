@@ -13,67 +13,67 @@ const MyForm = () => {
         job: "",
         terms: false,
       }}
-      validationSchema={Yup.object({
-        firstName: Yup.string().required("Please enter your first name"),
-        lastName: Yup.string().required("Please enter your last name"),
-        email: Yup.string()
-          .email("Your email address is invalid")
-          .required("Please enter your email"),
-        intro: Yup.string().required("Please tell us something about yourself"),
-        job: Yup.string().required("Please select your current job"),
-        term: Yup.boolean().oneOf(
-          [true],
-          "You must agree to the terms and conditions to continue"
-        ),
-      })}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={(values, actions) => {
+        setTimeout(() => {
+          actions.resetForm({
+            firstName: "",
+            lastName: "",
+            email: "",
+            intro: "",
+            job: "",
+            terms: false,
+          });
+          actions.setSubmitting(false);
+        }, 4000);
       }}
     >
-      <Form
-        className="p-10 w-full max-w-[500px] mx-auto my-5"
-        autoComplete="off"
-      >
-        <MyInput
-          label="First name"
-          name="firstName"
-          placeholder="Enter your first name"
-          id="firstName"
-        ></MyInput>
-        <MyInput
-          label="Last name"
-          name="lastName"
-          placeholder="Enter your last name"
-          id="lastName"
-        ></MyInput>
-        <MyInput
-          label="Email address"
-          name="email"
-          placeholder="Enter your email address"
-          id="email"
-          type="email"
-        ></MyInput>
-        <MyTextarea
-          label="Introduce yourself"
-          name="intro"
-          placeholder="Tell us something about yourself"
-          id="intro"
-        ></MyTextarea>
-        <MySelect label="Your job" name="job" id="job">
-          <option value="Developer">Developer</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Student">Student</option>
-        </MySelect>
-        <MyCheckbox name="term">
-          <p>I accept the terms and coditions</p>
-        </MyCheckbox>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white text-lg rounded-lg p-5"
+      {(formik) => (
+        <Form
+          className="p-10 w-full max-w-[500px] mx-auto my-5"
+          autoComplete="off"
         >
-          Submit
-        </button>
-      </Form>
+          <MyInput
+            label="First name"
+            name="firstName"
+            placeholder="Enter your first name"
+            id="firstName"
+          ></MyInput>
+          <MyInput
+            label="Last name"
+            name="lastName"
+            placeholder="Enter your last name"
+            id="lastName"
+          ></MyInput>
+          <MyInput
+            label="Email address"
+            name="email"
+            placeholder="Enter your email address"
+            id="email"
+            type="email"
+          ></MyInput>
+          <MyTextarea
+            label="Introduce yourself"
+            name="intro"
+            placeholder="Tell us something about yourself"
+            id="intro"
+          ></MyTextarea>
+          <MySelect label="Your job" name="job" id="job">
+            <option value="Developer">Developer</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Student">Student</option>
+          </MySelect>
+          <MyCheckbox name="term">
+            <p>I accept the terms and coditions</p>
+          </MyCheckbox>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white text-lg rounded-lg p-5"
+            disabled={formik.isSubmitting}
+          >
+            Submit
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };

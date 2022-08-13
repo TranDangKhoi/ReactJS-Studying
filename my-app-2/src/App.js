@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import MyForm from "./components/Form,Formik,Yup/form-excersise/MyForm";
+import ReactHookForm from "./components/Form,Formik,Yup/react-hook-form/ReactHookForm";
 
 function App() {
   return (
     <div>
-      <MyForm></MyForm>
+      <ReactHookForm></ReactHookForm>
     </div>
   );
 }
