@@ -1,33 +1,43 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { useEffect } from "react";
 // using react-hook-form
 const schemaValidation = Yup.object({
   firstName: Yup.string()
     .required("Please enter your first name")
     .max(10, "Your first name must be less than 10 characters"),
 });
+
 const ReactHookForm = () => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitting, isValid, isDirty, dirtyFields },
+    reset,
+    setFocus,
+    setValue,
+    control,
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: yupResolver(schemaValidation),
     mode: "onChange",
   });
+  const handleSetDemoData = () => {
+    setValue("firstName", "Tran");
+    setValue("lastName", "Khoi");
+    setValue("email", "khoi@gmail.com");
+  };
   const watchShowAge = watch("showAge", false);
   // errors = formState.errors
   // console.log(errors);
   const onSubmit = async (data) => {
     if (isValid) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-          console.log(data);
-        }, 4000);
+      console.log(data);
+      // After successfully submitted then reset form
+      reset({
+        firstName: "",
       });
     }
     // const response = await axios.get(
@@ -35,6 +45,9 @@ const ReactHookForm = () => {
     // );
     // return response.data;
   };
+  useEffect(() => {
+    setFocus("firstName");
+  }, [setFocus]);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -48,7 +61,6 @@ const ReactHookForm = () => {
           id="firstName"
           className="p-4 rounded-lg border-2 border-gray-200"
           placeholder="Enter your first name"
-          defaultValue={"Tit"}
           {...register("firstName")}
         />
         {errors?.firstName && (
@@ -70,13 +82,12 @@ const ReactHookForm = () => {
       </div>
       <div className="flex flex-col gap-2">
         <label htmlFor="email">Email address</label>
-        <input
-          type="email"
+        <MyInput
+          name="email"
+          placeholder="Please enter your email"
           id="email"
-          className="p-4 rounded-lg border-2 border-gray-200"
-          placeholder="Enter your email address"
-          {...register("email")}
-        />
+          control={control}
+        ></MyInput>
       </div>
       <div className="flex flex-col gap-2">
         <input type="checkbox" {...register("showAge")} />
@@ -98,7 +109,30 @@ const ReactHookForm = () => {
           "Submit"
         )}
       </button>
+      <button
+        className="my-3 p-4 rounded-md bg-green-400 text-white text-sm w-full"
+        onClick={handleSetDemoData}
+      >
+        Demo Data
+      </button>
     </form>
+  );
+};
+
+const MyInput = ({ control, ...props }) => {
+  return (
+    <Controller
+      name={props.name}
+      control={control}
+      defaultValue=""
+      render={({ field }) => (
+        <input
+          className="p-4 rounded-lg border-2 border-gray-200"
+          {...field}
+          {...props}
+        />
+      )}
+    ></Controller>
   );
 };
 

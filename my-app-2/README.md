@@ -67,10 +67,10 @@ console.log(count); // Ouput: 10
 
 # React Hook Form
 
-- reset: Reset toàn bộ form hoặc chỉ 1 vài trường
+- reset: Reset toàn bộ form hoặc chỉ các trường nhất định
 - watch : Theo dõi xem checkbox checked thì thực hiện chức năng gì và ngược lại
 - isSubmitting : Khi form đang trả dữ liệu về backend
 - isDirty: Khi giá trị default value được thay đổi và quay trở lại thì component sẽ re-render
 - dirtyField: Trả về giá trị boolean khi các field bị thay đổi so với default values (true khi thay đổi, false khi giống default values)
-  - Nếu không set default value thì default value sẽ là ""
-- Muốn sử dụng được inValid ta cần thêm mode onChange vào hook useForm
+- Nếu không set default value thì default value sẽ là ""
+- Muốn sử dụng được inValid ta cần thêm mode vào hook useForm
