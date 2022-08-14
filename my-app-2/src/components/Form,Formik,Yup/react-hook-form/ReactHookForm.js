@@ -17,7 +17,9 @@ const ReactHookForm = () => {
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: yupResolver(schemaValidation),
+    mode: "onChange",
   });
+  console.log("log ~ ReactHookForm ~ isValid", isValid);
   console.log("log ~ ReactHookForm ~ isSubmitting", isSubmitting);
   // errors = formState.errors
   // console.log(errors);
