@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useController, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useEffect } from "react";
@@ -120,20 +120,34 @@ const ReactHookForm = () => {
 };
 
 const MyInput = ({ control, ...props }) => {
+  const { field } = useController({
+    control,
+    defaultValue: "",
+    name: props.name,
+  });
   return (
-    <Controller
-      name={props.name}
-      control={control}
-      defaultValue=""
-      render={({ field }) => (
-        <input
-          className="p-4 rounded-lg border-2 border-gray-200"
-          {...field}
-          {...props}
-        />
-      )}
-    ></Controller>
+    <input
+      className="p-4 rounded-lg border-2 border-gray-200"
+      {...field}
+      {...props}
+    />
   );
 };
+// const MyInput = ({ control, ...props }) => {
+//   return (
+//     <Controller
+//       name={props.name}
+//       control={control}
+//       defaultValue=""
+//       render={({ field }) => (
+//         <input
+//           className="p-4 rounded-lg border-2 border-gray-200"
+//           {...field}
+//           {...props}
+//         />
+//       )}
+//     ></Controller>
+//   );
+// };
 
 export default ReactHookForm;
