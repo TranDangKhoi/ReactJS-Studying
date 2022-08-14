@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import axios from "axios";
 // using react-hook-form
 const schemaValidation = Yup.object({
   firstName: Yup.string()
@@ -13,23 +12,24 @@ const ReactHookForm = () => {
   const {
     register,
     handleSubmit,
-
-    formState: { errors, isSubmitting, isValid },
+    watch,
+    formState: { errors, isSubmitting, isValid, isDirty, dirtyFields },
   } = useForm({
     resolver: yupResolver(schemaValidation),
     mode: "onChange",
   });
-  console.log("log ~ ReactHookForm ~ isValid", isValid);
-  console.log("log ~ ReactHookForm ~ isSubmitting", isSubmitting);
+  const watchShowAge = watch("showAge", false);
   // errors = formState.errors
   // console.log(errors);
   const onSubmit = async (data) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-        console.log(data);
-      }, 4000);
-    });
+    if (isValid) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+          console.log(data);
+        }, 4000);
+      });
+    }
     // const response = await axios.get(
     //   "https://hn.algolia.com/api/v1/search?query=react"
     // );
@@ -48,6 +48,7 @@ const ReactHookForm = () => {
           id="firstName"
           className="p-4 rounded-lg border-2 border-gray-200"
           placeholder="Enter your first name"
+          defaultValue={"Tit"}
           {...register("firstName")}
         />
         {errors?.firstName && (
@@ -76,6 +77,16 @@ const ReactHookForm = () => {
           placeholder="Enter your email address"
           {...register("email")}
         />
+      </div>
+      <div className="flex flex-col gap-2">
+        <input type="checkbox" {...register("showAge")} />
+        {watchShowAge && (
+          <input
+            type="number"
+            className="p-4 rounded-lg border-2 border-gray-200"
+            placeholder="Enter your age"
+          />
+        )}
       </div>
       <button
         type="submit"
