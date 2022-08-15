@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useWatch } from "react-hook-form";
 import useClickOutside from "../../hooks/useClickOutside";
 
@@ -9,8 +9,10 @@ const DropdownHook = ({ control, setValue, name }) => {
     name: "job",
     defaultValue: "",
   });
+  const [label, setLabel] = useState("Select your job");
   const handleJobChoose = (e) => {
-    setValue(name, e.target.textContent);
+    setValue(name, e.target.dataset.value);
+    setLabel(e.target.textContent);
     setShow(false);
   };
   return (
@@ -19,7 +21,7 @@ const DropdownHook = ({ control, setValue, name }) => {
         onClick={() => setShow(!show)}
         className="p-5 cursor-pointer rounded-lg border border-gray-100 bg-white flex items-center justify-between"
       >
-        <span>{jobValue || "Select your job"}</span>
+        <span>{label}</span>
         <i className="fa-solid fa-angle-down"></i>
       </div>
       <div
@@ -30,18 +32,21 @@ const DropdownHook = ({ control, setValue, name }) => {
         <div
           className="p-5 cursor-pointer hover:bg-gray-200"
           onClick={handleJobChoose}
+          data-value="teacher"
         >
           Teacher
         </div>
         <div
           className="p-5 cursor-pointer hover:bg-gray-200"
           onClick={handleJobChoose}
+          data-value="doctor"
         >
           Doctor
         </div>
         <div
           className="p-5 cursor-pointer hover:bg-gray-200"
           onClick={handleJobChoose}
+          data-value="developer"
         >
           Developer
         </div>
