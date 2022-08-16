@@ -5,7 +5,7 @@ import RegisterFormRHF from "./components/register-form (tutorial)/register-form
 function App() {
   return (
     <div>
-      <RegisterForm></RegisterForm>
+      <RegisterFormRHF></RegisterFormRHF>
     </div>
   );
 }

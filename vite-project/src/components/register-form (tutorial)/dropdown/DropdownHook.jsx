@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useWatch } from "react-hook-form";
 import useClickOutside from "../../../hooks/useClickOutside";
 
-export const data = [
+const data = [
   {
     id: 1,
     value: "teacher",
@@ -34,9 +34,14 @@ const DropdownHook = ({ control, setValue, name, dropdownLabel }) => {
   const [label, setLabel] = useState(dropdownLabel);
   const handleJobChoose = (e) => {
     setValue(name, e.target.dataset.value);
-    setLabel(e.target.textContent);
     setShow(false);
+    setLabel(e.target.textContent);
   };
+  useEffect(() => {
+    if (dropdownLabel) {
+      setLabel(dropdownLabel);
+    }
+  }, [dropdownLabel]);
   return (
     <div className="relative" ref={nodeRef}>
       <div
@@ -52,7 +57,7 @@ const DropdownHook = ({ control, setValue, name, dropdownLabel }) => {
         }`}
       >
         {data.length > 0 &&
-          data.map((item, index) => (
+          data.map((item) => (
             <div
               className="p-5 cursor-pointer hover:bg-gray-200"
               onClick={handleJobChoose}

@@ -8,7 +8,13 @@ const CheckboxHook = ({ control, text, ...props }) => {
   });
   return (
     <label className=" cursor-pointer custom-checkbox">
-      <input type={"checkbox"} {...field} {...props} className="hidden" />
+      <input
+        type={"checkbox"}
+        checked={field.value}
+        {...field}
+        {...props}
+        className="hidden"
+      />
       <div className="flex items-center justify-center gap-x-3">
         <div className="bg-white flex items-center justify-center w-full h-full rounded-md custom-checkbox-square">
           <svg

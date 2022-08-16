@@ -8,30 +8,30 @@ import DropdownHook from "../dropdown/DropdownHook";
 import CheckboxHook from "../checkbox/CheckboxHook";
 
 const schema = yup.object({
-  username: yup.string().required("Please enter your username"),
-  email: yup
-    .string()
-    .required("Please enter your email address")
-    .email("Your email address is invalid"),
-  password: yup
-    .string()
-    .required("Please enter your password")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      {
-        message:
-          "Your password must have at least 8 characer, 1 number, 1 lowercase, 1 uppercase and 1 special character",
-      }
-    ),
-  gender: yup
-    .string()
-    .required("Please select your gender")
-    .oneOf(["male", "female"], "You can only select male or female"),
-  job: yup.string().required("Please select your job"),
-  term: yup
-    .boolean()
-    .required("Please accept to the terms and condition to continue")
-    .oneOf([true], "Please accept to the terms and condition to continue"),
+  // username: yup.string().required("Please enter your username"),
+  // email: yup
+  //   .string()
+  //   .required("Please enter your email address")
+  //   .email("Your email address is invalid"),
+  // password: yup
+  //   .string()
+  //   .required("Please enter your password")
+  //   .matches(
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+  //     {
+  //       message:
+  //         "Your password must have at least 8 characer, 1 number, 1 lowercase, 1 uppercase and 1 special character",
+  //     }
+  //   ),
+  // gender: yup
+  //   .string()
+  //   .required("Please select your gender")
+  //   .oneOf(["male", "female"], "You can only select male or female"),
+  // job: yup.string().required("Please select your job"),
+  // term: yup
+  //   .boolean()
+  //   .required("Please accept to the terms and condition to continue")
+  //   .oneOf([true], "Please accept to the terms and condition to continue"),
 });
 
 const RegisterFormRHF = () => {
@@ -40,7 +40,8 @@ const RegisterFormRHF = () => {
     handleSubmit,
     setValue,
     getValues,
-    formState: { errors, isValid, isValidating, isSubmitting },
+    reset,
+    formState: { errors, isValid, isSubmitting, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -50,7 +51,14 @@ const RegisterFormRHF = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve();
-        console.log(values);
+        reset({
+          username: "",
+          email: "",
+          password: "",
+          gender: "",
+          job: "",
+          term: false,
+        });
       }, 3000);
     });
   };
@@ -115,6 +123,7 @@ const RegisterFormRHF = () => {
               id="gender"
               name="gender"
               value="male"
+              defaultChecked={true}
             ></RadioHook>
             <span>Male</span>
           </div>
@@ -139,7 +148,9 @@ const RegisterFormRHF = () => {
             name={"job"}
             control={control}
             setValue={setValue}
-            dropdownLabel="Select your job"
+            dropdownLabel={
+              isSubmitSuccessful ? "Select your job" : "Select your job"
+            }
           ></DropdownHook>
           {errors.job && (
             <p className="text-red-500 text-sm">{errors.job.message}</p>
@@ -159,7 +170,7 @@ const RegisterFormRHF = () => {
       </div>
       <button
         className={`w-full p-5 bg-blue-500 text-white rounded-lg mt-5 font-normal ${
-          isSubmitting && "opacity-50"
+          isSubmitting && "opacity-50 cursor-not-allowed"
         }`}
         disabled={isSubmitting}
       >
