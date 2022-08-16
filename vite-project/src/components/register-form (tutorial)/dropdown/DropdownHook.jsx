@@ -1,15 +1,37 @@
 import React, { useState } from "react";
 import { useWatch } from "react-hook-form";
-import useClickOutside from "../../hooks/useClickOutside";
+import useClickOutside from "../../../hooks/useClickOutside";
 
-const DropdownHook = ({ control, setValue, name }) => {
+export const data = [
+  {
+    id: 1,
+    value: "teacher",
+    text: "Teacher",
+  },
+  {
+    id: 2,
+    value: "doctor",
+    text: "Doctor",
+  },
+  {
+    id: 3,
+    value: "developer",
+    text: "Developer",
+  },
+  {
+    id: 4,
+    value: "nurse",
+    text: "Nurse",
+  },
+];
+const DropdownHook = ({ control, setValue, name, dropdownLabel }) => {
   const { show, nodeRef, setShow } = useClickOutside();
-  const jobValue = useWatch({
+  useWatch({
     control,
     name: "job",
     defaultValue: "",
   });
-  const [label, setLabel] = useState("Select your job");
+  const [label, setLabel] = useState(dropdownLabel);
   const handleJobChoose = (e) => {
     setValue(name, e.target.dataset.value);
     setLabel(e.target.textContent);
@@ -29,7 +51,18 @@ const DropdownHook = ({ control, setValue, name }) => {
           show ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
-        <div
+        {data.length > 0 &&
+          data.map((item, index) => (
+            <div
+              className="p-5 cursor-pointer hover:bg-gray-200"
+              onClick={handleJobChoose}
+              data-value={item.value}
+              key={item.id}
+            >
+              {item.text}
+            </div>
+          ))}
+        {/* <div
           className="p-5 cursor-pointer hover:bg-gray-200"
           onClick={handleJobChoose}
           data-value="teacher"
@@ -49,7 +82,7 @@ const DropdownHook = ({ control, setValue, name }) => {
           data-value="developer"
         >
           Developer
-        </div>
+        </div> */}
       </div>
     </div>
   );

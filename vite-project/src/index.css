@@ -36,3 +36,23 @@
   width: 20px;
   height: 20px;
 }
+
+.term-checkbox {
+  background: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="checkbox"]:checked+.term-checkbox {
+  background: blue;
+}
+
+.term-checkbox i {
+  font-size: 1.2rem;
+  color: white;
+}
