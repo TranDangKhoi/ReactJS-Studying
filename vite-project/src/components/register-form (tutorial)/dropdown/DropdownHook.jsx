@@ -26,11 +26,12 @@ const data = [
 ];
 const DropdownHook = ({ control, setValue, name, dropdownLabel }) => {
   const { show, nodeRef, setShow } = useClickOutside();
-  useWatch({
+  const dropdownValue = useWatch({
     control,
     name: "job",
     defaultValue: "",
   });
+  console.log("log ~ DropdownHook ~ dropdownValue", dropdownValue);
   const [label, setLabel] = useState(dropdownLabel);
   const handleJobChoose = (e) => {
     setValue(name, e.target.dataset.value);
@@ -38,10 +39,10 @@ const DropdownHook = ({ control, setValue, name, dropdownLabel }) => {
     setLabel(e.target.textContent);
   };
   useEffect(() => {
-    if (dropdownLabel) {
+    if (dropdownValue === "") {
       setLabel(dropdownLabel);
     }
-  }, [dropdownLabel]);
+  }, [dropdownValue]);
   return (
     <div className="relative" ref={nodeRef}>
       <div

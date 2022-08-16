@@ -148,9 +148,7 @@ const RegisterFormRHF = () => {
             name={"job"}
             control={control}
             setValue={setValue}
-            dropdownLabel={
-              isSubmitSuccessful ? "Select your job" : "Select your job"
-            }
+            dropdownLabel={"Select your job"}
           ></DropdownHook>
           {errors.job && (
             <p className="text-red-500 text-sm">{errors.job.message}</p>
