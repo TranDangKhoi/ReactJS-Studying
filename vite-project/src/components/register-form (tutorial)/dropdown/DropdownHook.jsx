@@ -40,7 +40,8 @@ const DropdownHook = ({ control, setValue, name, dropdownLabel }) => {
   };
   useEffect(() => {
     if (dropdownValue === "") {
-      setLabel(dropdownLabel);
+      // Khi dropdownValue là rỗng, đồng nghĩa với khi submit form
+      setLabel(dropdownLabel); // setLabel quay trở lại dropdownLabel aka "Select your job"
     }
   }, [dropdownValue]);
   return (

@@ -41,27 +41,34 @@ const RegisterFormRHF = () => {
     setValue,
     getValues,
     reset,
+    watch,
     formState: { errors, isValid, isSubmitting, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      gender: "male",
+    },
   });
   const onSubmitHandler = (values) => {
     if (!isValid || isSubmitting) return;
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve();
+        console.log(values);
         reset({
           username: "",
           email: "",
           password: "",
-          gender: "",
+          gender: "male",
           job: "",
           term: false,
         });
       }, 3000);
     });
   };
+  const watchGender = watch("gender");
+  console.log("log ~ RegisterFormRHF ~ watchGender", watchGender);
   return (
     <form
       autoComplete="off"
@@ -123,7 +130,7 @@ const RegisterFormRHF = () => {
               id="gender"
               name="gender"
               value="male"
-              defaultChecked={true}
+              checked={watchGender === "male"}
             ></RadioHook>
             <span>Male</span>
           </div>
@@ -133,6 +140,7 @@ const RegisterFormRHF = () => {
               id="gender"
               name="gender"
               value="female"
+              checked={watchGender === "female"}
             ></RadioHook>
             <span>Female</span>
           </div>
