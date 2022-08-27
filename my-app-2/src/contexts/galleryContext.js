@@ -46,6 +46,16 @@ function GalleryProvider(props) {
     });
     setPhotos(updatedGallery);
   }
+  function addToCart(newItem) {
+    setCartItems((prevItems) => {
+      const isExisted = prevItems.some((item) => item.id === newItem.id);
+      if (isExisted) {
+        alert("That item is already existed in cart");
+        return [...prevItems];
+      }
+      return [...prevItems, newItem];
+    });
+  }
   const value = {
     photos,
     cartItems,
@@ -54,6 +64,7 @@ function GalleryProvider(props) {
     setCartItems,
     setFavoriteList,
     toggleLiked,
+    addToCart,
   };
   return (
     <GalleryContext.Provider value={value} {...props}></GalleryContext.Provider>

@@ -17,8 +17,9 @@ const PhotoList = () => {
 };
 
 const PhotoItem = ({ info: { url, isLiked, id } }) => {
-  const { toggleLiked } = useGallery();
-  console.log("log ~ PhotoItem ~ isLiked", isLiked);
+  const { toggleLiked, cartItems, addToCart } = useGallery();
+  const item = { url, isLiked, id };
+  console.log("log ~ PhotoItem ~ cartItems", cartItems);
   return (
     <div className="relative h-[300px] cursor-pointer group">
       <img src={url} alt="" className="object-cover w-full h-full" />
@@ -39,7 +40,10 @@ const PhotoItem = ({ info: { url, isLiked, id } }) => {
           />
         </svg>
       </span>
-      <button className="absolute invisible p-4 font-medium text-black transition-all -translate-x-1/2 bg-white rounded-md opacity-0 group-hover:opacity-100 group-hover:visible bottom-2 left-1/2">
+      <button
+        onClick={() => addToCart(item)}
+        className="absolute invisible p-4 font-medium text-black transition-all -translate-x-1/2 bg-white rounded-md opacity-0 group-hover:opacity-100 group-hover:visible bottom-2 left-1/2"
+      >
         Add to cart
       </button>
     </div>
