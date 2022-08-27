@@ -164,10 +164,10 @@ const RegisterFormRHF = () => {
         </div>
         <div className="flex items-center gap-5">
           <CheckboxHook
+            control={control}
             id="term"
             name="term"
             text="I agree to the terms and conditions"
-            control={control}
           ></CheckboxHook>
         </div>
         {errors.term && (

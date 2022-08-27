@@ -74,3 +74,19 @@ console.log(count); // Ouput: 10
 - dirtyField: Trả về giá trị boolean khi các field bị thay đổi so với default values (true khi thay đổi, false khi giống default values)
 - Nếu không set default value thì default value sẽ là ""
 - Muốn sử dụng được inValid ta cần thêm mode vào hook useForm
+
+# createPortal
+
+- Lôi một component hoặc 1 đoạn code đang nằm trong một element nào đó ra ngoài cùng và nằm cùng cấp với div root
+- Công dụng:
+- Dùng để ẩn/hiện modal bởi modal lúc nào cũng cần phải nằm bên ngoài cùng bởi tính chất phải sử dụng nhiều z-index
+- Dùng để ẩn/hiện dropdown nếu như lỡ chẳng may thằng cha của nó có overflow-hidden
+- Dùng để ẩn/hiện tooltip
+
+# Context
+
+- Context sẽ cung cấp cho ta 1 phương pháp để chia sẻ những giá trị giữa các component với nhau
+
+# Props Drilling là gì
+
+- Prop drilling là điều xảy ra khi bạn cần truyền dữ liệu từ một component cha xuống một component thấp hơn trong cây component, drilling - khoan vào các component khác mà các component đấy có thể không cần giá trị props, trong khi chỉ một vài component là cần thôi

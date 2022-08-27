@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import lodash from "lodash";
 import axios from "axios";
 
 const HackerNews = () => {
-  const [hits, setHits] = useState([]);
-  const [query, setQuery] = useState("react");
-  const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [products, setProducts] = useState([]);
+  const [query, setQuery] = useState("");
   const handleFetchData = useRef({});
   const isMounted = useRef(true);
-  const [url, setUrl] = useState(
-    `https://hn.algolia.com/api/v1/search?query=${query}`
-  );
   useEffect(() => {
     isMounted.current = true;
     return () => {
@@ -19,26 +15,24 @@ const HackerNews = () => {
     };
   });
   handleFetchData.current = async () => {
-    setLoading(true);
     try {
-      const response = await axios.get(url);
-
-      if (isMounted.current) {
-        setHits(response.data?.hits || []);
-        setLoading(false);
-      }
+      const response = await axios.get(
+        `http://localhost:8386/api/v1/product/search/query=${query}`
+      );
+      setProducts(response.data);
+      console.log(response);
+      return response;
     } catch (err) {
-      setLoading(false);
-      setErrorMsg(`Oops! Something went wrong please try again later ${err}`);
+      return err;
     }
   };
   useEffect(() => {
-    handleFetchData.current();
-  }, [url]);
+    handleFetchData.current(query);
+  }, [query]);
   return (
     <div className="bg-white w-[600px] mx-auto mt-5 p-7 rounded-lg shadow-md">
       <div className="flex gap-x-5">
-        <div className="flex items-center gap-5 w-full border border-gray-200 rounded-lg py-3 px-5 focus:border-blue-300">
+        <div className="flex items-center w-full gap-5 px-5 py-3 border border-gray-200 rounded-lg focus:border-blue-300">
           <span className="flex-shrink-0 text-gray-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -57,36 +51,17 @@ const HackerNews = () => {
           </span>
           <input
             type="text"
-            className="w-full outline-none bg-transparent"
-            defaultValue={query}
+            className="w-full bg-transparent outline-none"
             placeholder="Enter your content"
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={lodash.debounce((e) => setQuery(e.target.value), 1000)}
           />
         </div>
-        <button
-          className="bg-blue-500 text-white rounded-md p-5"
-          onClick={() =>
-            setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)
-          }
-        >
-          Search
-        </button>
       </div>
 
-      {loading && (
-        <div className="loading w-8 h-8 rounded-full border-4 border-r-4 border-blue-400 border-r-transparent animate-spin mx-auto my-10"></div>
-      )}
-      {!loading && errorMsg && <p className="text-red-500">{errorMsg}</p>}
-
-      <div className="mt-5 mb-5 flex flex-wrap gap-5">
-        {!loading &&
-          hits.length > 0 &&
-          hits.map((item) => (
-            <h3 className="p-2 bg-gray-200 rounded-md" key={item.title}>
-              {item.title}
-            </h3>
-          ))}
-      </div>
+      {/* {loading && (
+        <div className="w-8 h-8 mx-auto my-10 border-4 border-r-4 border-blue-400 rounded-full loading border-r-transparent animate-spin"></div>
+      )} */}
+      {/* {!loading && errorMsg && <p className="text-red-500">{errorMsg}</p>} */}
     </div>
   );
 };
