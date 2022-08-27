@@ -1,7 +1,4 @@
-import { useContext } from "react";
-import { useState } from "react";
-import { createContext } from "react";
-
+import { useContext, useState, createContext } from "react";
 const fakeData = [
   {
     id: 1,
@@ -34,17 +31,17 @@ const fakeData = [
     isLiked: true,
   },
 ];
-
 const GalleryContext = createContext();
+
 function GalleryProvider(props) {
-  const [gallery, setGallery] = useState([fakeData]);
+  const [photos, setPhotos] = useState(fakeData);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   const value = {
-    gallery,
+    photos,
     cartItems,
     favoriteList,
-    setGallery,
+    setPhotos,
     setCartItems,
     setFavoriteList,
   };
@@ -54,10 +51,9 @@ function GalleryProvider(props) {
 }
 
 function useGallery() {
-  const context = useContext();
-  if (typeof context === "undefined") {
-    throw new Error("useGallery must be used inside GalleryProvider");
-  }
+  const context = useContext(GalleryContext);
+  if (typeof context === "undefined")
+    throw new Error("useGallery must be used within GalleryProvider");
   return context;
 }
 

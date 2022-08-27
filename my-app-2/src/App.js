@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
 import "./App.css";
 import HeaderMain from "./components/ContextReact/HeaderMain";
+import PhotoList from "./components/Gallery/PhotoList";
 import { AuthProvider } from "./contexts/authContext";
-import { GalleryProvider } from "./contexts/galeryContext";
+import { GalleryProvider } from "./contexts/galleryContext";
 // Context
 // VD: Trong App(status: false) có Header, trong Header lại có Menu -> User -> Profile
 // Nếu ta dùng props để truyền giá trị status kia qua từng component như vậy thì sẽ gây ra 1 tình trạng đó chính là Props Drilling
@@ -38,6 +39,7 @@ function App() {
       <AuthProvider>
         <GalleryProvider>
           <HeaderMain></HeaderMain>
+          <PhotoList></PhotoList>
         </GalleryProvider>
       </AuthProvider>
     </Fragment>
