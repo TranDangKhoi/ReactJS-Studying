@@ -37,6 +37,15 @@ function GalleryProvider(props) {
   const [photos, setPhotos] = useState(fakeData);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
+  function toggleLiked(photoId) {
+    const updatedGallery = photos.map((photo) => {
+      if (photo.id === photoId) {
+        return { ...photo, isLiked: !photo.isLiked };
+      }
+      return photo;
+    });
+    setPhotos(updatedGallery);
+  }
   const value = {
     photos,
     cartItems,
@@ -44,6 +53,7 @@ function GalleryProvider(props) {
     setPhotos,
     setCartItems,
     setFavoriteList,
+    toggleLiked,
   };
   return (
     <GalleryContext.Provider value={value} {...props}></GalleryContext.Provider>
