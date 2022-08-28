@@ -66,12 +66,11 @@ function GalleryProvider(props) {
     });
   }
   function removeFromCart(removeItemId) {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== removeItemId)
-    );
-    setStoredCart((prevItems) =>
-      prevItems.filter((item) => item.id !== removeItemId)
-    );
+    setCartItems((prevItems) => {
+      const result = prevItems.filter((item) => item.id !== removeItemId);
+      setStoredCart(result);
+      return result;
+    });
   }
   const value = {
     photos,
