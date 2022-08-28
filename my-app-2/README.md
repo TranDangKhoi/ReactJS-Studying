@@ -90,3 +90,9 @@ console.log(count); // Ouput: 10
 # Props Drilling là gì
 
 - Prop drilling là điều xảy ra khi bạn cần truyền dữ liệu từ một component cha xuống một component thấp hơn trong cây component, drilling - khoan vào các component khác mà các component đấy có thể không cần giá trị props, trong khi chỉ một vài component là cần thôi
+
+# Lazy Initialize State
+
+# useLocalStorage
+
+- Là 1 hook được viết sẵn trên useHook

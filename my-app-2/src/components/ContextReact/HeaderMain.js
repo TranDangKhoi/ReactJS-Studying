@@ -5,8 +5,6 @@ import { useGallery } from "../../contexts/galleryContext";
 const HeaderMain = () => {
   const { user, setUser } = useAuth();
   const { photos, cartItems } = useGallery();
-  console.log("log ~ HeaderMain ~ cartItems", cartItems);
-  console.log("log ~ HeaderMain ~ photos", photos);
   const favoriteCount =
     photos.length > 0
       ? photos.filter((item) => item.isLiked === true).length
