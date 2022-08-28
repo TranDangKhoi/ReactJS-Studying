@@ -3,7 +3,6 @@ import { useGallery } from "../../contexts/galleryContext";
 import PropTypes from "prop-types";
 const PhotoList = () => {
   const { photos } = useGallery();
-  console.log(photos);
   return (
     <div className="px-5 py-10">
       <div className="grid grid-cols-4 gap-7">
@@ -17,9 +16,8 @@ const PhotoList = () => {
 };
 
 const PhotoItem = ({ info: { url, isLiked, id } }) => {
-  const { toggleLiked, cartItems, addToCart } = useGallery();
+  const { toggleLiked, addToCart } = useGallery();
   const item = { url, isLiked, id };
-  console.log("log ~ PhotoItem ~ cartItems", cartItems);
   return (
     <div className="relative h-[300px] cursor-pointer group">
       <img src={url} alt="" className="object-cover w-full h-full" />
