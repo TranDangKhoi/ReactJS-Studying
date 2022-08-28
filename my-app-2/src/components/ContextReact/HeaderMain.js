@@ -4,12 +4,14 @@ import { useGallery } from "../../contexts/galleryContext";
 
 const HeaderMain = () => {
   const { user, setUser } = useAuth();
-  const { photos } = useGallery();
+  const { photos, cartItems } = useGallery();
+  console.log("log ~ HeaderMain ~ cartItems", cartItems);
   console.log("log ~ HeaderMain ~ photos", photos);
   const favoriteCount =
     photos.length > 0
       ? photos.filter((item) => item.isLiked === true).length
       : 0;
+  const cartItemsCount = cartItems.length;
   return (
     <div className="flex items-center justify-center p-4 bg-white shadow-md">
       {user ? (
@@ -69,7 +71,7 @@ const HeaderMain = () => {
             />
           </svg>
           <span className=" absolute top-0 right-0 translate-x-1/2 flex items-center justify-center w-5 h-5 text-[12px] text-white bg-pink-500 rounded-full">
-            0
+            {cartItemsCount}
           </span>
         </span>
         <span className="relative w-8">
