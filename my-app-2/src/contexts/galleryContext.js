@@ -36,8 +36,12 @@ const GalleryContext = createContext();
 
 function GalleryProvider(props) {
   const { storedValue, setValue } = useLocalStorage("photos", fakeData);
+  const { storedValue: storedCart, setValue: setStoredCart } = useLocalStorage(
+    "cartItems",
+    []
+  );
   const [photos, setPhotos] = useState(storedValue);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(storedCart);
   const [favoriteList, setFavoriteList] = useState([]);
   function toggleLiked(photoId) {
     const updatedGallery = photos.map((photo) => {
@@ -54,13 +58,18 @@ function GalleryProvider(props) {
       const isExisted = prevItems.some((item) => item.id === newItem.id);
       if (isExisted) {
         alert("That item is already existed in cart");
+        setStoredCart([...prevItems]);
         return [...prevItems];
       }
+      setStoredCart([...prevItems, newItem]);
       return [...prevItems, newItem];
     });
   }
   function removeFromCart(removeItemId) {
     setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== removeItemId)
+    );
+    setStoredCart((prevItems) =>
       prevItems.filter((item) => item.id !== removeItemId)
     );
   }
