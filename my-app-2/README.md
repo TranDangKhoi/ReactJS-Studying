@@ -96,3 +96,25 @@ console.log(count); // Ouput: 10
 # useLocalStorage
 
 - Là 1 hook được viết sẵn trên useHook
+
+# Ý nghĩa của các component trong React-Router-Dom v6
+
+- BrowserRoutes : Dùng để bọc thằng <App/> -> enable chức năng router cho website
+
+- Routes: Dùng để chứa các <Route/>
+
+- Route: Dùng để config path cho các <Link/> và lựa chọn nội dung cho mỗi link, nếu không dùng thẻ này mà chỉ dùng <Link/> trang sẽ bị trắng tinh khôi hoặc trang sẽ bị lỗi 404
+
+- Link: giống như thẻ a, dùng đẻ điều hướng tới các trang khác mà không bị reload
+
+- NavLink: Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive
+
+- Outlet: Đóng vai trò giống như content của trang khi ta sử dụng Nested Routes và nhét Navigation Bar vào trong Routes
+
+- useParams :
+  - Trong useParam có 1 thứ gọi là slug, vậy nó là gì ?
+  - Ví dụ giờ ta có một api :<br>
+    fetching.com/blog?search=hello-world
+  - // slug sẽ là thứ nằm sau blog/
+  - VD: localhost:3000/blog/hello-world
+  - Thì slug sẽ = hello-world
