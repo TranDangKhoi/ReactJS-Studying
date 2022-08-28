@@ -1,4 +1,5 @@
 import { useContext, useState, createContext } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 const fakeData = [
   {
     id: 1,
@@ -34,7 +35,8 @@ const fakeData = [
 const GalleryContext = createContext();
 
 function GalleryProvider(props) {
-  const [photos, setPhotos] = useState(fakeData);
+  const { storedValue, setValue } = useLocalStorage("photos", fakeData);
+  const [photos, setPhotos] = useState(storedValue);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   function toggleLiked(photoId) {
@@ -45,6 +47,7 @@ function GalleryProvider(props) {
       return photo;
     });
     setPhotos(updatedGallery);
+    setValue(updatedGallery);
   }
   function addToCart(newItem) {
     setCartItems((prevItems) => {
