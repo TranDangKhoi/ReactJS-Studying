@@ -4,9 +4,20 @@ import useClickOutside from "../../../hooks/useClickOutside";
 const Dropdown = () => {
   const { nodeRef, setShow, show } = useClickOutside(false);
   return (
+    <>
+      <DropdownBlock nodeRef={nodeRef} setShow={setShow} show={show} />;
+      <DropdownBlock nodeRef={nodeRef} setShow={setShow} show={show} />;
+    </>
+  );
+};
+
+export default Dropdown;
+
+function DropdownBlock({ nodeRef, setShow, show }) {
+  return (
     <div className="relative w-full max-w-[500px] mx-auto my-5" ref={nodeRef}>
       <div
-        className="p-5 border-2 border-gray-200 rounded-lg w-full cursor-pointer"
+        className="w-full p-5 border-2 border-gray-200 rounded-lg cursor-pointer"
         onClick={() => setShow(!show)}
       >
         Selecte one
@@ -22,6 +33,4 @@ const Dropdown = () => {
       </div>
     </div>
   );
-};
-
-export default Dropdown;
+}

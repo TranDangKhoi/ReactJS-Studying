@@ -5,7 +5,7 @@ import React, { useState } from "react";
 const Form = () => {
   // Tạo ra 1 state để lưu trữ hết tca giá trị trong form
   const [values, setValues] = useState({
-    fullName: "",
+    fullName: "Khoi",
     email: "",
     hobby: false,
   }); // Tạo ra 1 state với giá trị mặc định là 1 object

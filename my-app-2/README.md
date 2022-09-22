@@ -118,3 +118,48 @@ console.log(count); // Ouput: 10
   - // slug sẽ là thứ nằm sau blog/
   - VD: localhost:3000/blog/hello-world
   - Thì slug sẽ = hello-world
+
+# Higher Order Components
+
+- Khi ta phát triển một component, và nó sử dụng đi, sử dụng lại một logic nào đó và chúng ta muốn sử dụng cái logic đó từ component này qua component kia mà không cần phải viết lại -> THÌ ta sẽ phải sử dụng HOCS
+
+- VD:
+  - Giờ ta có component A sử dụng axios để fetch data về, và khi data chưa được fetch về ta sẽ có một hiệu ứng loading
+  - Ở component B và component C, ta cũng sẽ sử dụng axios để fetch data về, nhưng ta lại không muốn viết lại logic của hiệu ứng loading, mà muốn sử dụng lại nó
+    -> Ta sẽ phải áp dụng HOCS để làm việc này
+
+# Vấn đề khi sử dụng HOCS
+
+- Giả dụ giờ ta có 1 props data được truyền vào bên trong Component ở file withLoading
+
+```js
+function withLoading(Component) {
+  return (props) => {
+    useEffect(() => {
+      // Fetching data code...
+    }, []);
+    return (
+      <Component
+        data={data} // Đây là props data
+        {...props}
+      ></Component>
+    );
+  };
+}
+
+export default withLoading;
+```
+
+- Sau đó bên file App.js ta cũng tạo ra một biến có tên là data
+
+```js
+const data = [1, 2, 3];
+```
+
+- Truyền vào bên trong components ở bên dưới, VD:
+
+```js
+<Homepage data={data}></Homepage>
+```
+
+- Thì vô hình chung, khi bạn get ra data ở Homepage thì data sẽ không còn là data mà bạn fetch được từ api ở file withLoading.js nữa, mà sẽ là data được lấy từ data ở App.js
