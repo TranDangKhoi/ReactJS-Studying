@@ -122,6 +122,7 @@ console.log(count); // Ouput: 10
 # Higher Order Components
 
 - Khi ta phát triển một component, và nó sử dụng đi, sử dụng lại một logic nào đó và chúng ta muốn sử dụng cái logic đó từ component này qua component kia mà không cần phải viết lại -> THÌ ta sẽ phải sử dụng HOCS
+- Kỹ thuật này cùng với render props thường được sử dụng trước khi hình thành ra khái niệm custom hooks
 
 - VD:
   - Giờ ta có component A sử dụng axios để fetch data về, và khi data chưa được fetch về ta sẽ có một hiệu ứng loading
@@ -140,7 +141,7 @@ function withLoading(Component) {
     }, []);
     return (
       <Component
-        data={data} // Đây là props data
+        data={data} // Đây là props data 💛
         {...props}
       ></Component>
     );

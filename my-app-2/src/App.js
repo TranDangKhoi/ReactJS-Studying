@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import FetchingData from "./components/advanced-react/hocs/FetchingData";
-
+import Title from "./components/advanced-react/render-props/Title";
+// render props
 // HOCS = Higher-Order Components
 function App() {
   return (
     <div>
-      <FetchingData></FetchingData>
+      <Title render={() => <h1>Hello 😀</h1>}></Title>
     </div>
   );
 }
