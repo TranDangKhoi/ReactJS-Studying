@@ -131,7 +131,7 @@ console.log(count); // Ouput: 10
 
 # Vấn đề khi sử dụng HOCS
 
-- Giả dụ giờ ta có 1 props data được truyền vào bên trong Component ở file withLoading
+1. Giả dụ giờ ta có 1 props data được truyền vào bên trong Component ở file withLoading
 
 ```js
 function withLoading(Component) {
@@ -164,3 +164,30 @@ const data = [1, 2, 3];
 ```
 
 - Thì vô hình chung, khi bạn get ra data ở Homepage thì data sẽ không còn là data mà bạn fetch được từ api ở file withLoading.js nữa, mà sẽ là data được lấy từ data ở App.js
+
+2. Nếu sau này bạn tạo thêm các file sử dụng nhiều HOCS khác nhau mà muốn sử dụng ở nhiều components cũng gây ra rất nhiều trắc trở, khó khăn khi debug.- Ví dụ là ở 3 components A, B, C đi, cả 3 component này đều sử dụng withLoading.js, withErrorBoundaries.js, withSearch.js,...
+
+- Thì ở phần
+
+```js
+export default ComponentName;
+```
+
+- Bạn sẽ phải bọc tất cả các HOCS kia vào mỗi cái trong 3 components đó, sau này còn rất nhiều lỗi phát sinh, nó báo lỗi mình không biết lỗi trong file nào rất khó debug.
+
+```js
+// Component A:
+export default withLoading(withErrorBoundaries(withSearch(ComponentA)));
+// Component B:
+export default withLoading(withErrorBoundaries(ComponentA));
+// Component C:
+export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
+// Giờ mà lỗi thì ối dồi ôi luôn, không biết đang conflict với cái nào
+```
+
+# Lifting State
+
+- Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
+- Nhược điểm: Khi làm dự án lớn nếu ta cứ liên tục chọc ngoáy state của thg component cha xuống component con rồi truyền qua hàng đống component khác như vậy thì mình đã nói rồi -> nó sẽ gây ra hiện tượng props drilling
+
+# Props Render - một phương pháp để xử lí Lifting State
