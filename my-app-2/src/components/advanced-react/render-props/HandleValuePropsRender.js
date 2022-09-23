@@ -2,9 +2,7 @@ import React from "react";
 import { useState } from "react";
 const HandleValuePropsRender = () => {
   return (
-    <Input
-      render={(value) => <DisplayValue value={value}></DisplayValue>}
-    ></Input>
+    <Input>{(value) => <DisplayValue value={value}></DisplayValue>}</Input>
   );
 };
 
@@ -23,7 +21,7 @@ function Input(props) {
         id="value"
         onChange={(e) => setValue(e.target.value)}
       />
-      {props.render(value)}
+      {props.children(value)}
     </>
   );
 }

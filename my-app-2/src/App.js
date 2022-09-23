@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       {/* <Title>{() => <h1>Hello 😀</h1>}</Title> */}
-      <HandleValueHocs></HandleValueHocs>
+      <HandleValuePropsRender></HandleValuePropsRender>
     </div>
   );
 }
