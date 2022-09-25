@@ -1,4 +1,61 @@
-# useEffect là gì?
+## **1. Props là gì? ( cơ bản )** <br>
+
+- Props là một object, và là từ viết tắt của Properties.
+  _ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
+  _ Ví dụ về đoạn mã HTML như sau: <br>
+  **img src="img_girl.jpg" width="500" height="600"**
+  -> Hầu hết các attribute như width, src, height cũng có thể được coi là Props của các thẻ img,<br>
+  Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con.<br>
+
+## 2. JSX là gì?
+
+- JSX là một cú pháp mở rộng cho JavaScript.
+  -> JSX = Javascript + XML. Nó biến cú pháp dạng gần như XML về thành Javascript. Giúp người lập trình có thể code ReactJS bằng cú pháp của XML thay vì sử dụng Javascript. Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement. Khi sử dụng hook phải sử dụng ở trong functional component
+
+## 3. Children Props là gì?
+
+## 4. State là gì?
+
+- State là thông tin được lưu bên trong component đó và componenent đó có thể tùy chỉnh cái state đó (những thông tin đó)
+  VD: Làm trang signup
+  -> Trong signup sẽ có username, password, email, ... đây là những thông tin thuộc component của trang Signup
+
+* Để dùng state thì sẽ sử dụng một cái hook gọi là useState
+
+## 5. React Hook là gì?
+
+- React Hook là tính năng mới ở trong React, cho phép ta sử dụng state và các tính năng khác của react mà không cần phải sử dụng class
+
+## 6. useState là gì?
+
+- useState cho phép chúng ta khai báo local state trong Function Component cách mà trước để chỉ dùng cho Class Component
+  - const [state, setState] = useState(initialStateValue)
+  - Như trên, chúng ta có thể hiểu
+  - state: định nghĩa tên của state nó có thể là đơn giá trị hoặc object,.. (là tham số của useState)
+  - setState: định nghĩa tên function dùng cho việc update state (là thamg số của useState)
+  - initialStateValue: là giá trị ban đầu của state.
+- VD:
+
+* Giờ ta sẽ ví dụ một bài tập về toggle checkbox của máy iphone, và yêu cầu của bài tập là khi ta click vào checkbox đó thì khối màu trắng sẽ di chuyển qua phải và thay đổi background. Vậy ta sẽ làm thế nào?
+* Đầu tiên code css cho khối màu trắng và background xám của nó ở trạng thái tắt và bật (khi bật sẽ addClass active vào)
+* Sau khi code xong CSS rồi ta sẽ bắt đầu sử dụng useState cùng với destructuring array
+* Như sau:
+  - const[on,setOn] = useState(false);
+  - state : on (giá trị)
+  - setState : setOn (tên của state, dùng để update state)
+  - initialStateValue : false (giá trị ban đầu của state ý ở đây là khi mở trang web lên thì checkbox sẽ đang ở dạng tắt)
+
+## 7. Những nguyên tắc khi sử dụng hook
+
+- Phải sử dụng ở phía trên cùng
+- Không được viết ở bên trong vòng lặp
+- Không được viết ở bên trong câu điều kiện
+- Không được viết ở bên trong function
+
+## 8. Stale state là gì?
+- Later
+
+## 9. useEffect là gì?
 
 - Thường được dùng khi làm việc liên quan tới những side effects
 - side effects là những cái vấn đề khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
@@ -10,7 +67,7 @@ VD:
   }
   -> đây là 1 ví dụ về side effect. Function trên không return lại giá trị gì cả, nhưng lại thực hiện 1 chức năng nhất định gây ra tác động ở bên ngoài
 
-# Cleanup function là gì
+## 10. Cleanup function là gì
 
 - Nói dễ hiểu thì:
   Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng gì đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
@@ -31,9 +88,9 @@ useEffect(
 - Dưới đây là ảnh sơ đồ useEffect hook để giúp bạn hiểu hơn về cleanup
   ![useEffect lifecycle](https://user-images.githubusercontent.com/88824627/181787967-13243cae-fa00-4f98-80d2-6d4c542763cf.svg)
 
-# Mount, Update, Unmount trong React
+## 11. Mount, Update, Unmount trong React
 
-# useRef và useState giống và khác nhau thế nào ?
+## 12. useRef và useState giống và khác nhau thế nào ?
 
 - Cả hai đều chứa dữ liệu của chúng trong khi render và update UI, nhưng chỉ có useState là gây ra tình trạng re-render
 - useRef trả về 1 object có một property bên trong object là current nắm giữ giá trị của useRef
@@ -65,7 +122,7 @@ console.log(count); // Ouput: 10
   <br>
   -> Về cơ bản, thì useRef không gây re-render còn useState thì có và useRef thường sử dụng để truy cập vào DOM hoặc vào components. Vậy nên sử dụng useState khi bạn muốn update dữ liệu và muốn update UI, còn nếu bạn chỉ muốn lấy ra data trong quá trình mount tới khi unmount thì useRef là sự lựa chọn dành cho bạn
 
-# React Hook Form
+## 13. React Hook Form
 
 - reset: Reset toàn bộ form hoặc chỉ các trường nhất định
 - watch : Theo dõi xem checkbox checked thì thực hiện chức năng gì và ngược lại
@@ -75,7 +132,7 @@ console.log(count); // Ouput: 10
 - Nếu không set default value thì default value sẽ là ""
 - Muốn sử dụng được inValid ta cần thêm mode vào hook useForm
 
-# createPortal
+## 14. createPortal
 
 - Lôi một component hoặc 1 đoạn code đang nằm trong một element nào đó ra ngoài cùng và nằm cùng cấp với div root
 - Công dụng:
@@ -83,21 +140,21 @@ console.log(count); // Ouput: 10
 - Dùng để ẩn/hiện dropdown nếu như lỡ chẳng may thằng cha của nó có overflow-hidden
 - Dùng để ẩn/hiện tooltip
 
-# Context
+## 15. Context
 
 - Context sẽ cung cấp cho ta 1 phương pháp để chia sẻ những giá trị giữa các component với nhau
 
-# Props Drilling là gì
+## 16. Props Drilling là gì
 
 - Prop drilling là điều xảy ra khi bạn cần truyền dữ liệu từ một component cha xuống một component thấp hơn trong cây component, drilling - khoan vào các component khác mà các component đấy có thể không cần giá trị props, trong khi chỉ một vài component là cần thôi
 
-# Lazy Initialize State
+## 17. Lazy Initialize State
 
-# useLocalStorage
+## 18. useLocalStorage
 
 - Là 1 hook được viết sẵn trên useHook
 
-# Ý nghĩa của các component trong React-Router-Dom v6
+## 19. Ý nghĩa của các component trong React-Router-Dom v6
 
 - BrowserRoutes : Dùng để bọc thằng <App/> -> enable chức năng router cho website
 
@@ -119,7 +176,7 @@ console.log(count); // Ouput: 10
   - VD: localhost:3000/blog/hello-world
   - Thì slug sẽ = hello-world
 
-# Higher Order Components
+## 20. Higher Order Components
 
 - Khi ta phát triển một component, và nó sử dụng đi, sử dụng lại một logic nào đó và chúng ta muốn sử dụng cái logic đó từ component này qua component kia mà không cần phải viết lại -> THÌ ta sẽ phải sử dụng HOCS
 - Kỹ thuật này cùng với render props thường được sử dụng trước khi hình thành ra khái niệm custom hooks
@@ -129,7 +186,7 @@ console.log(count); // Ouput: 10
   - Ở component B và component C, ta cũng sẽ sử dụng axios để fetch data về, nhưng ta lại không muốn viết lại logic của hiệu ứng loading, mà muốn sử dụng lại nó
     -> Ta sẽ phải áp dụng HOCS để làm việc này
 
-# Vấn đề khi sử dụng HOCS
+## 21. Vấn đề khi sử dụng HOCS
 
 1. Giả dụ giờ ta có 1 props data được truyền vào bên trong Component ở file withLoading
 
@@ -185,7 +242,7 @@ export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
 // Giờ mà lỗi thì ối dồi ôi luôn, không biết đang conflict với cái nào
 ```
 
-# Lifting State
+## 22. Lifting State
 
 - Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
 - Nhược điểm: Khi làm dự án lớn nếu ta cứ liên tục chọc ngoáy state của thg component cha xuống component con rồi truyền qua hàng đống component khác như vậy thì mình đã nói rồi -> nó sẽ gây ra hiện tượng props drilling
