@@ -190,4 +190,62 @@ export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
 - Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
 - Nhược điểm: Khi làm dự án lớn nếu ta cứ liên tục chọc ngoáy state của thg component cha xuống component con rồi truyền qua hàng đống component khác như vậy thì mình đã nói rồi -> nó sẽ gây ra hiện tượng props drilling
 
-# Props Render - một phương pháp để xử lí Lifting State
+# Props Render - một phương pháp để xử lí Lifting State & Props Drilling
+
+- Props Render là một hình thức chia sẻ code giữ các React components bằng cách dùng một đối tượng props có giá trị là một function
+  VD:
+
+```js
+// Bên file Header.js tạo 1 component Header
+const Header = (props) => props.render();
+
+export default Title;
+// Bên file App.js thực hiện render ra nội dung:
+<Header render={(yourName) => <h1>Hello {yourName}</h1>}></Header>;
+```
+
+- Hoặc ta cũng có thể sử dụng props.children() như sau:
+
+```js
+// Bên file Header.js tạo 1 component Header và thực hiện 1 số thao tác như sau:
+const Header = (props) => props.children();
+
+// Bên file App.js thực hiện nhét nội dung vào giữa thẻ đóng và thẻ mở của Component Header
+<Header>{(yourName) => <h1>Hello {yourName}</h1>}
+```
+
+- Vài lưu ý khi sử dụng props rendering:
+
+  - Ví dụ, bạn đang có một ComponentA, bên trong ComponentA lại có 1 component khác nữa (tạm gọi là ComponentB) và bên trong ComponentB lại có ComponentC và mỗi component đó đều sử dụng props render như sau:
+
+  ```js
+  const MyComponent = () => {
+    return (
+      <div>
+        <ComponentA>
+          {(value) => (
+            <div>
+              <ComponentB>
+                {(value2) => (
+                  <div>
+                    <ComponentC>
+                      {(value3) => (
+                        <div>
+                          <span>Hahaha</span>
+                        </div>
+                      )}
+                    </ComponentC>
+                  </div>
+                )}
+              </ComponentB>
+            </div>
+          )}
+        </ComponentA>
+      </div>
+    );
+  };
+  ```
+
+  - Nhìn vào code ở bên trên thì chúa Giê Su cũng chỉ muốn hiện lên và nói với bạn rằng kys
+
+- Cũng có kha khá các thư viện nổi tiếng hiện nay vẫn sử dụng render props, điển hình như là Formik, Downshift và React Router
