@@ -53,6 +53,7 @@
 - Không được viết ở bên trong function
 
 ## 8. Stale state là gì?
+
 - Later
 
 ## 9. useEffect là gì?
@@ -306,3 +307,38 @@ const Header = (props) => props.children();
   - Nhìn vào code ở bên trên thì chúa Giê Su cũng chỉ muốn hiện lên và nói với bạn rằng kys
 
 - Cũng có kha khá các thư viện nổi tiếng hiện nay vẫn sử dụng render props, điển hình như là Formik, Downshift và React Router
+
+# Tổng quan sơ lược lại về HOCS, Render Props và Custom hooks
+
+- Dùng cái nào là theo quyết định của leader, mỗi cái đều có một ưu điểm riêng, nên học cả 3 để hiểu cả 3, đồng thời hiểu được cách dùng để học các thư viện, đọc code người khác, phỏng vấn, ...
+
+# React Composition (Compound Component)
+
+- Dùng để chia nhỏ component thành các components nhỏ hơn để dễ dàng xử lí và maintain, hạn chế việc xây dựng quá nhiều components và giống nhau
+- VD ta code như sau:
+
+```js
+// file Accordion.js
+const Accordion = () => {
+  const [show, setShow] = useState(false);
+  const handleToggleShow = () => {
+    setShow((show) => !show);
+  };
+  return (
+    // Something...
+  );
+};
+
+// file Editable.js
+const Editable = () => {
+  const [edit, setEdit] = useState(false);
+  const handleToggleEdit = () => {
+    setEdit((edit) => !edit);
+  };
+  return (
+    // Something...
+  );
+};
+```
+
+- Thì ở 2 đoạn code trên bạn có thấy đoạn code nằm trên dòng return nó giống y đúc nhau không... Nếu là "CÓ" thì bạn đoán chuẩn rồi, giờ ta sẽ cùng tìm cách làm thế nào để làm code gọn hơn, dễ hiểu hơn
