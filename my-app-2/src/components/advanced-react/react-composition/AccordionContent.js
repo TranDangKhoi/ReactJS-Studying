@@ -1,6 +1,8 @@
 import React from "react";
+import { useAccordion } from "../../../contexts/accordion-context";
 // Dây là 1 specialized component
-const AccordionContent = ({ show, children }) => {
+const AccordionContent = ({ children }) => {
+  const { show } = useAccordion();
   return (
     <>
       {show && (
