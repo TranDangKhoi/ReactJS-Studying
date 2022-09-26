@@ -1,9 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import "./App.css";
-import Accordion from "./components/advanced-react/react-composition/Accordion";
-import Editable from "./components/advanced-react/react-composition/Editable";
-import HandleValuePropsRender from "./components/advanced-react/render-props/HandleValuePropsRender";
 import Switch from "./components/switch/Switch";
 
 function useToggle() {
@@ -11,14 +8,20 @@ function useToggle() {
   const handleToggle = () => {
     setOn(!on);
   };
-  return { on, handleToggle };
+  // toggleProps
+  return {
+    on,
+    toggleProps: {
+      onClick: handleToggle,
+    },
+  };
 }
-
+// Props Collection
 function App() {
-  const { on, handleToggle } = useToggle();
+  const { on, toggleProps } = useToggle();
   return (
     <div>
-      <Switch on={on} onClick={handleToggle}></Switch>
+      <Switch on={on} {...toggleProps}></Switch>
       <br />
       <button aria-label="custom-button">{on ? "on" : "off"}</button>
     </div>

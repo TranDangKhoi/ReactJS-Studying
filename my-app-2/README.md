@@ -346,3 +346,58 @@ const Editable = () => {
 - Ta sẽ sử dụng custom hooks kết hợp với context, trong đó:
   - Custom Hook sẽ viết logic để xử lí việc đóng mở accordion, edit section
   - Context sẽ sử dụng để rút ngắn code, lược bớt props truyền vào component từ đó giúp component trông gọn gàng hơn, sau này ai muốn xem code thì dễ debug và maintain hơn
+
+# Props Collection - học từ Kentc Dodds (aka creator of Remix)
+
+- Props Collection (Props được lưu dưới dạng danh sách)
+- Ví dụ bây giờ bạn muốn thực hiện 2 hoặc nhiều chức năng cùng một lúc khi click vào một thẻ nào đó, ví dụ như sau:
+
+```js
+// Function bật/tắt
+function useToggle() {
+  const [on, setOn] = useState(false);
+  const handleToggle = () => {
+    setOn(!on);
+  };
+  return {
+    on,
+    handleToggle,
+  };
+}
+
+// Trong component invoke chức năng khi onClick
+<button
+  onClick={() => {
+    console.log("Hello man"); // function thứ nhất
+    handleToggle(); // function thứ hai
+  }}
+>
+  Nhấn vào tôi >.<
+</button>;
+```
+
+- Thì bạn có thể thấy cách này trông không được hay cho lắm, vì vậy nên ta có thể sử dụng kiến thức về props collection vọc được từ Kentc Dodds:
+
+```js
+// Function bật/tắt
+function useToggle() {
+  const [on, setOn] = useState(false);
+  const handleToggle = () => {
+    setOn(!on);
+  };
+  // toggleProps
+  return {
+    on,
+    toggleProps: {
+      onClick: handleToggle, // thực hiện chức năng handleToggle nằm ở bên trên
+    },
+  };
+}
+// Trong component thực hiện các chức năng nằm trong toggleProps:
+<button {...toggleProps}>
+  Nhấn vào tôi >.<
+</button>;
+
+```
+
+- Nhưng như vậy là chưa đủ để có thể invoke 2 function cùng 1 lúc, ta sẽ cùng tiếp tục tìm hiểu tới phần tiếp theo
