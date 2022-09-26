@@ -417,7 +417,6 @@ function useToggle() {
 - Giờ ta áp dụng vào code:
 
 ```js
-// Buổi sáng thứ 7
 function useToggle() {
   const [on, setOn] = useState(false);
   const batDen = () => {
@@ -437,7 +436,7 @@ function useToggle() {
     getToggleProps,
   };
 }
-
+// Sáng thứ 7
 const SangThu7 = () => {
   return (
     <>
@@ -454,7 +453,7 @@ const SangThu7 = () => {
     </>
   );
 };
-
+// Sáng chủ nhật
 const sangChuNhat = () => {
   return (
     <>
