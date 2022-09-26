@@ -408,7 +408,7 @@ function useToggle() {
 
 - Giờ ta sẽ tìm hiểu xem làm cách nào để sử dụng props getter
 
-- Props getter được sử dụng nhằm mục đích muốn inject thêm code vào 1 sự kiện nào đó (onClick, onChange, ...etc)
+- Props getter được sử dụng nhằm mục đích chính là để code trông sạch hơn, chứ không truyền props loạn xạ vào trong component, ngoài ra còn hỗ trợ bạn khi bạn muốn inject thêm code vào 1 sự kiện nào đó (onClick, onChange, ...etc)
 
 - Nói vậy có thể bạn chưa hiểu thì bây giờ mình sẽ ví dụ một trường hợp như sau:
   - Buổi sáng thứ 7, bạn thức dậy và điều đầu tiên bạn làm là BẬT công tắc đèn lên để DẬY ĐÁNH RĂNG
