@@ -401,3 +401,70 @@ function useToggle() {
 ```
 
 - Nhưng như vậy là chưa đủ để có thể invoke 2 function cùng 1 lúc, ta sẽ cùng tiếp tục tìm hiểu tới phần tiếp theo
+
+# Props Getter
+
+- Như bạn thấy ở nội dung trên thì đó là cách truyền 1 object là toggleProps, chứa 1 function vào trong 1 element/component
+
+- Giờ ta sẽ tìm hiểu xem làm cách nào để sử dụng props getter
+
+- Props getter được sử dụng nhằm mục đích muốn inject thêm code vào 1 sự kiện nào đó (onClick, onChange, ...etc)
+
+- Nói vậy có thể bạn chưa hiểu thì bây giờ mình sẽ ví dụ một trường hợp như sau:
+  - Buổi sáng thứ 7, bạn thức dậy và điều đầu tiên bạn làm là BẬT công tắc đèn lên để DẬY ĐÁNH RĂNG
+  - Nhưng sang buổi sáng chủ nhật, bạn được nghỉ ngơi nên bạn chỉ bật công tắc đèn và nằm đó tiếp không thực hiện bất kì thứ gì khác
+-
+- Giờ ta áp dụng vào code:
+
+```js
+// Buổi sáng thứ 7
+function useToggle() {
+  const [on, setOn] = useState(false);
+  const batDen = () => {
+    setOn(true);
+  };
+  function getToggleProps({ onClick, ...props } = {}) {
+    return {
+      onClick: () => {
+        onClick && onClick(); // Nếu mà trong getToggleProps mà có 1 props là onClick thì thực hiện function onClick nằm trong props đó
+        batDen(); // Thực hiện chức năng bật đèn lên
+      },
+      ...props,
+    };
+  }
+  return {
+    on,
+    getToggleProps,
+  };
+}
+
+const SangThu7 = () => {
+  return (
+    <>
+      <button
+        {...getToggleProps({
+          onClick: () => {
+            dayDanhRang(); // lúc này ta sẽ inject đoạn code dayDanhRang vào đây, bởi vì sáng thứ 7 ta bật đèn xong đánh răng mà
+          },
+        })}
+      >
+        {on ? "Đèn đang bật" : "Đèn đang tắt"}
+      </button>
+      ;
+    </>
+  );
+};
+
+const sangChuNhat = () => {
+  return (
+    <>
+      <button
+        {...getToggleProps()} // lúc này ta không truyền gì vào cả, bởi vì sáng chủ nhật ta chỉ dậy bật đèn và nằm đó thôi mà, chứ không làm gì thêm
+      >
+        {on ? "Đèn đang bật" : "Đèn đang tắt"}
+      </button>
+      ;
+    </>
+  );
+};
+```

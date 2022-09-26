@@ -8,22 +8,37 @@ function useToggle() {
   const handleToggle = () => {
     setOn(!on);
   };
-  // toggleProps
+  function getToggleProps({ onClick, ...props } = {}) {
+    return {
+      onClick: () => {
+        onClick && onClick(); // Nếu mà trong getToggleProps mà có 1 props là onClick thì thực hiện function onClick nằm trong props đó
+        handleToggle(); // Thực hiện chức năng bật/tắt công tắc
+      },
+      ...props,
+    };
+  }
   return {
     on,
-    toggleProps: {
-      onClick: handleToggle,
-    },
+    getToggleProps,
   };
 }
 // Props Collection
 function App() {
-  const { on, toggleProps } = useToggle();
+  const { on, getToggleProps } = useToggle();
   return (
     <div>
-      <Switch on={on} {...toggleProps}></Switch>
+      <Switch {...getToggleProps({ on })}></Switch>
       <br />
-      <button aria-label="custom-button">{on ? "on" : "off"}</button>
+      <button
+        aria-label="custom-button"
+        {...getToggleProps({
+          onClick: () => {
+            console.log("Hello");
+          },
+        })}
+      >
+        {on ? "on" : "off"}
+      </button>
     </div>
   );
 }
