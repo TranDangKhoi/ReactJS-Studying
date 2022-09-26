@@ -454,7 +454,7 @@ const SangThu7 = () => {
   );
 };
 // Sáng chủ nhật
-const sangChuNhat = () => {
+const SangChuNhat = () => {
   return (
     <>
       <button
