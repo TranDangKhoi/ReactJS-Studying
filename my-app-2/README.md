@@ -223,7 +223,9 @@ const data = [1, 2, 3];
 
 - Thì vô hình chung, khi bạn get ra data ở Homepage thì data sẽ không còn là data mà bạn fetch được từ api ở file withLoading.js nữa, mà sẽ là data được lấy từ data ở App.js
 
-2. Nếu sau này bạn tạo thêm các file sử dụng nhiều HOCS khác nhau mà muốn sử dụng ở nhiều components cũng gây ra rất nhiều trắc trở, khó khăn khi debug.- Ví dụ là ở 3 components A, B, C đi, cả 3 component này đều sử dụng withLoading.js, withErrorBoundaries.js, withSearch.js,...
+2. Nếu sau này bạn tạo thêm các file sử dụng nhiều HOCS khác nhau mà muốn sử dụng ở nhiều components cũng gây ra rất nhiều trắc trở, khó khăn khi debug.
+
+- Ví dụ là ở 3 components A, B, C đi, cả 3 component này đều sử dụng withLoading.js, withErrorBoundaries.js, withSearch.js,...
 
 - Thì ở phần
 
@@ -246,6 +248,7 @@ export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
 ## 22. Lifting State
 
 - Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
+
 - Nhược điểm: Khi làm dự án lớn nếu ta cứ liên tục chọc ngoáy state của thg component cha xuống component con rồi truyền qua hàng đống component khác như vậy thì mình đã nói rồi -> nó sẽ gây ra hiện tượng props drilling
 
 # Props Render - một phương pháp để xử lí Lifting State & Props Drilling
@@ -344,12 +347,14 @@ const Editable = () => {
 - Thì ở 2 đoạn code trên bạn có thấy đoạn code nằm trên dòng return nó giống y đúc nhau không... Nếu là "CÓ" thì bạn đoán chuẩn rồi, giờ ta sẽ cùng tìm cách làm thế nào để làm code gọn hơn, dễ hiểu hơn
 
 - Ta sẽ sử dụng custom hooks kết hợp với context, trong đó:
+
   - Custom Hook sẽ viết logic để xử lí việc đóng mở accordion, edit section
   - Context sẽ sử dụng để rút ngắn code, lược bớt props truyền vào component từ đó giúp component trông gọn gàng hơn, sau này ai muốn xem code thì dễ debug và maintain hơn
 
 # Props Collection - học từ Kentc Dodds (aka creator of Remix)
 
 - Props Collection (Props được lưu dưới dạng danh sách)
+
 - Ví dụ bây giờ bạn muốn thực hiện 2 hoặc nhiều chức năng cùng một lúc khi click vào một thẻ nào đó, ví dụ như sau:
 
 ```js
@@ -411,8 +416,10 @@ function useToggle() {
 - Props getter được sử dụng nhằm mục đích chính là để code trông sạch hơn, chứ không truyền props loạn xạ vào trong component, ngoài ra còn hỗ trợ bạn khi bạn muốn inject thêm code vào 1 sự kiện nào đó (onClick, onChange, ...etc)
 
 - Nói vậy có thể bạn chưa hiểu thì bây giờ mình sẽ ví dụ một trường hợp như sau:
+
   - Buổi sáng thứ 7, bạn thức dậy và điều đầu tiên bạn làm là BẬT công tắc đèn lên để DẬY ĐÁNH RĂNG
   - Nhưng sang buổi sáng chủ nhật, bạn được nghỉ ngơi nên bạn chỉ bật công tắc đèn và nằm đó tiếp không thực hiện bất kì thứ gì khác
+
 - Giờ ta áp dụng vào code:
 
 ```js
@@ -468,4 +475,41 @@ const SangChuNhat = () => {
 ```
 
 - Đây là 1 ví dụ đơn giản về props getter và props collection hoy, còn rất nhiều thứ khác và nói thật thì cái này rất khó viết và khó học
+
 - Sau này các dự án ở công ty thường sẽ không sử dụng các cách mình đã và đang chuẩn bị viết thêm sau đây, họ thường sẽ viết custom hooks và context nhiều hơn, và đa số là đều đã và đang sử dụng Redux, Zustard rồi, các code này chỉ để tham khảo, học thêm để biết thêm kiến thức áp dụng vào project cá nhân hoặc để hiểu khi đọc code của người khác (phòng trường hợp người ta sử dụng cách này) thôi ^^ thui nói tới đây thui cya
+
+# Control Props
+
+- Control Props là 1 pattern biến cái component của các bạn thành 1 controlled component.
+
+- Controlled Components là những thứ như input, select,textarea, ... đại khái là những thứ có state của riêng nó dựa vào user input, giờ ta sẽ làm 1 ví dụ đếm số đơn giản như sau:
+
+- Ví dụ giờ ta có 1 component như sau:
+
+```js
+const CounterControlProps = () => {
+  return (
+    <div className="flex text-[25px] items-center border-2 rounded-lg border-gray-200 w-full gap-x-5 max-w-[200px] mx-auto my-6 justify-around">
+      <button className="cursor-pointer select-none decrement">-</button>
+      <span>0</span>
+      <div className="cursor-pointer select-none increment">+</div>
+    </div>
+  );
+};
+```
+
+- Như bạn thấy ở trên thì đây chỉ là 1 bài toán cộng trừ số cơ bản của React mà ai cũng biết
+
+- Giờ ta sẽ tách 2 cái button và mục hiển thị số kia ra thành 3 component riêng biệt, lần lượt là: Decrement, Count, Increment, ta sẽ được như sau:
+
+```js
+const CounterControlProps = () => {
+  return (
+    <div className="flex text-[25px] items-center border-2 rounded-lg border-gray-200 w-full gap-x-5 max-w-[200px] mx-auto my-6 justify-around">
+      <Decrement></Decrement>
+      <Count></Count>
+      <Increment></Increment>
+    </div>
+  );
+};
+```
