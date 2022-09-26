@@ -342,3 +342,7 @@ const Editable = () => {
 ```
 
 - Thì ở 2 đoạn code trên bạn có thấy đoạn code nằm trên dòng return nó giống y đúc nhau không... Nếu là "CÓ" thì bạn đoán chuẩn rồi, giờ ta sẽ cùng tìm cách làm thế nào để làm code gọn hơn, dễ hiểu hơn
+
+- Ta sẽ sử dụng custom hooks kết hợp với context, trong đó:
+  - Custom Hook sẽ viết logic để xử lí việc đóng mở accordion, edit section
+  - Context sẽ sử dụng để rút ngắn code, lược bớt props truyền vào component từ đó giúp component trông gọn gàng hơn, sau này ai muốn xem code thì dễ debug và maintain hơn
