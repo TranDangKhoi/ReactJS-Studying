@@ -6,7 +6,10 @@ import CounterControlProps from "./components/control-props/CounterControlProps"
 function App() {
   return (
     <div>
-      <CounterControlProps></CounterControlProps>
+      <CounterControlProps
+        initialValue={5}
+        onChange={() => {}}
+      ></CounterControlProps>
     </div>
   );
 }

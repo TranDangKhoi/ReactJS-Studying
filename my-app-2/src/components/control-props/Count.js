@@ -1,7 +1,9 @@
 import React from "react";
+import { useCount } from "../../contexts/count-context";
 
 const Count = () => {
-  return <span>0</span>;
+  const { count } = useCount();
+  return <span>{count}</span>;
 };
 
 export default Count;
