@@ -7,7 +7,7 @@ import { useState } from "react";
 const CounterControlProps = ({ value = null, initialValue = 0, onChange }) => {
   const [count, setCount] = useState(initialValue);
   // 2 dấu chấm than sẽ convert giá trị đó sang dạng boolean
-  // Câu lệnh điều kiện bên dưới mang hàm ý là isControlled === value (giá trị ng khác nhập vào) khác null và phải có onChange
+  // Câu lệnh điều kiện bên dưới mang hàm ý là isControlled === value (giá trị ng khác nhập vào) khác null và onChange trả về true
   const isControlled = value !== null && !!onChange;
   const getCount = () => (isControlled ? value : count);
   const handleCountChange = (newValue) => {
