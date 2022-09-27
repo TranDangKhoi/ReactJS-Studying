@@ -7,8 +7,14 @@ import CounterControlProps from "./components/control-props/CounterControlProps"
 function App() {
   // Giả dụ đây là đoạn code mà dev khác muốn can thiệp vào
   const [count, setCount] = useState(5);
-  const handleCountChange = () => {
-    setCount((count) => count + 1);
+  const handleCountChange = (newCount) => {
+    // setCount((count) => count + 1);
+    // Thử thêm một chút code xử lí logic xíu nha
+    if (newCount > 10) {
+      setCount(0);
+    } else {
+      setCount(newCount);
+    }
   };
   return (
     <div>

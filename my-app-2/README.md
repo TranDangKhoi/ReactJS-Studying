@@ -478,21 +478,32 @@ const SangChuNhat = () => {
 
 - Sau này các dự án ở công ty thường sẽ không sử dụng các cách mình đã và đang chuẩn bị viết thêm sau đây, họ thường sẽ viết custom hooks và context nhiều hơn, và đa số là đều đã và đang sử dụng Redux, Zustard rồi, các code này chỉ để tham khảo, học thêm để biết thêm kiến thức áp dụng vào project cá nhân hoặc để hiểu khi đọc code của người khác (phòng trường hợp người ta sử dụng cách này) thôi ^^ thui nói tới đây thui cya
 
-# Control Props
+# Control Props - 1 kiến thức cực advanced, suy nghĩ kĩ trước khi đọc (bởi tôi cũng chưa hiểu rõ nữa :( )
 
 - Control Props là 1 pattern biến cái component của các bạn thành 1 controlled component.
 
-- Controlled Components là những thứ như input, select,textarea, ... đại khái là những thứ có state của riêng nó dựa vào user input, giờ ta sẽ làm 1 ví dụ đếm số đơn giản như sau:
+- Controlled Components là những thứ như input, select,textarea, ... đại khái là những thứ có state của riêng nó dựa vào user input, giờ ta sẽ làm 1 ví dụ tăng/giảm số đơn giản như sau:
 
 - Ví dụ giờ ta có 1 component như sau:
 
 ```js
 const CounterControlProps = () => {
+  const [count, setCount] = useState(0);
   return (
     <div className="flex text-[25px] items-center border-2 rounded-lg border-gray-200 w-full gap-x-5 max-w-[200px] mx-auto my-6 justify-around">
-      <button className="cursor-pointer select-none decrement">-</button>
-      <span>0</span>
-      <div className="cursor-pointer select-none increment">+</div>
+      <button
+        onClick={() => setCount((count) => count - 1)}
+        className="cursor-pointer select-none decrement"
+      >
+        -
+      </button>
+      <span>{count}</span>
+      <button
+        onClick={() => setCount((count) => count - 1)}
+        className="cursor-pointer select-none increment"
+      >
+        +
+      </button>
     </div>
   );
 };
@@ -504,6 +515,7 @@ const CounterControlProps = () => {
 
 ```js
 const CounterControlProps = () => {
+  const [count, setCount] = useState(0);
   return (
     <div className="flex text-[25px] items-center border-2 rounded-lg border-gray-200 w-full gap-x-5 max-w-[200px] mx-auto my-6 justify-around">
       <Decrement></Decrement>
@@ -513,3 +525,132 @@ const CounterControlProps = () => {
   );
 };
 ```
+
+- Lúc này thì để giữ được chức năng bấm dấu "+" và dấu "-" được giữ nguyên thì 1 là ta phải truyền state dưới dạng props vào components, 2 là ta viết state riêng cho từng component (thứ mà không được khuyến khích làm cho lắm vì nó dễ gây loạn và không được tối ưu)
+
+- Sau này khi đi làm, thì việc các devs khác làm lại chức năng của mình cũng xảy ra kha khá nhiều, ví dụ khi là chức năng của mình, giá trị khởi tạo là con số 0 rồi khi nhấn nút "tăng/giảm" thì chỉ tăng/giảm 1 đơn vị thôi, sau này các devs khác muốn làm lại chức năng (vd: tăng/giảm 3 đơn vị, giá trị khởi tạo là 5) thì lại phải lục lại code -> KHÁ TỐN THỜI GIAN
+  <br>
+  -> Vậy nên ta sẽ sử dụng control props để các devs khác có thể ghi đè lên logic code của mình
+
+## Vậy ta phải làm thế nào ?
+
+- Đầu tiên tạo 1 file counter-context.js, nếu không biết viết context, bạn có thể tìm hiểu ở đây
+
+  - [Context Trong React Viblo](https://viblo.asia/p/context-api-trong-react-XL6lAovJKek)
+  - [React Documentation - Context](https://en.reactjs.org/docs/context.html)
+
+- Như sau:
+
+```js
+import { useContext } from "react";
+import { createContext } from "react";
+
+const CountContext = createContext(undefined);
+function CountProvider({ value, ...props }) {
+  return (
+    <CountContext.Provider value={value} {...props}></CountContext.Provider>
+  );
+}
+
+function useCount() {
+  const context = useContext(CountContext);
+  if (typeof context === "undefined") {
+    throw new Error("useCount must be used within CountProvider");
+  }
+  return context;
+}
+
+export { useCount, CountProvider };
+```
+
+- Sau đó ta sẽ sang file CounterControlProps.js nha:
+
+```js
+const CounterControlProps = ({ value = null, initialValue = 0, onChange }) => {
+  const [count, setCount] = useState(initialValue);
+  // 2 dấu chấm than sẽ convert giá trị đó sang dạng boolean
+  const isControlled = value !== null && !!onChange;
+  const getCount = () => (isControlled ? value : count);
+  const handleCountChange = (newValue) => {
+    isControlled ? onChange(newValue) : setCount(newValue);
+  };
+  const handleIncrement = () => {
+    handleCountChange(getCount() + 1);
+  };
+  const handleDecrement = () => {
+    handleCountChange(getCount() - 1);
+  };
+  return (
+    <CountProvider
+      value={{ handleDecrement, handleIncrement, count: getCount() }}
+    >
+      <div className="flex text-[25px] items-center border-2 rounded-lg border-gray-200 w-full gap-x-5 max-w-[200px] mx-auto my-6 justify-around">
+        <Decrement></Decrement>
+        <Count></Count>
+        <Increment></Increment>
+      </div>
+    </CountProvider>
+  );
+};
+```
+
+- Giờ mình sẽ giải thích từng giá trị props được truyền vào trong component nha
+
+```js
+// Giải thích từng props cho các bạn hiểu
+// value: là một prop mà các devs khác sẽ truyền vào bên App.js để chỉnh sửa logic
+// initialValue là prop để gán giá trị khởi tạo cho state count kia khi mà không truyền value vào
+// Như sau:
+<CounterControlProps
+value={} // không truyền value vào
+></CounterControlProps>
+// onChange là hàm để các devs khác đè logic code của họ vào logic code của mình VÀ NẾU KHÔNG CHÈN LOGIC CODE NÀO THÌ VẪN PHẢI TRUYỀN VÀO COMPONENT dưới dạng function rỗng
+// Như sau:
+<CounterControlProps
+value={} // không truyền value vào
+onChange={() => {}} // function rỗng
+></CounterControlProps>
+```
+
+- Bên file Increment và Decrement các bạn đơn thuần chỉ cần sử dụng function handleIncrement và handleDecrement và gán cho event onClick thôi, như sau:
+
+```js
+// file Increment.js
+const Increment = () => {
+  const { handleIncrement } = useCount();
+  return (
+    <div
+      onClick={handleIncrement}
+      className="cursor-pointer select-none increment"
+    >
+      +
+    </div>
+  );
+};
+
+// file Decrement.js
+const Decrement = () => {
+  const { handleDecrement } = useCount();
+  return (
+    <button
+      onClick={handleDecrement}
+      className="cursor-pointer select-none decrement"
+    >
+      -
+    </button>
+  );
+};
+```
+
+- Có thể bạn sẽ thắc mắc: Ủa, handleIncrement và handleDecrement được lấy từ đâu ra vậy?
+- Thì xin thưa rằng là nó được truyền vào từ prop value của CounterProvider
+
+```js
+<CountProvider
+  value={{ handleDecrement, handleIncrement, count: getCount() }}
+></CountProvider>
+```
+
+- Và đương nhiên chức năng của 2 function đó đã được xử lí trong file CounterControlProps.js, bạn có thể scroll lại lên trên để đọc cách viết
+
+## Bây giờ, ta sẽ cùng tìm hiểu cách làm thế nào để các devs khác có thể chèn logic code của họ vào code cùa mình mà không cần mở file CounterControlProps.js ra nhé
