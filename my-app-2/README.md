@@ -654,3 +654,28 @@ const Decrement = () => {
 - Và đương nhiên chức năng của 2 function đó đã được xử lí trong file CounterControlProps.js, bạn có thể scroll lại lên trên để đọc cách viết
 
 ## Bây giờ, ta sẽ cùng tìm hiểu cách làm thế nào để các devs khác có thể chèn logic code của họ vào code cùa mình mà không cần mở file CounterControlProps.js ra nhé
+
+- Giờ giả dụ mình là dev khác và mình sẽ chèn 1 đoạn code có logic như sau: set cho giá trị khởi tạo là 5 và khi tăng giá trị count > 10 thì tự động set giá trị count về 0
+
+```js
+function App() {
+  const [count, setCount] = useState(5);
+  const handleCountChange = (newCount) => {
+    if (newCount > 10) {
+      setCount(0);
+    } else {
+      setCount(newCount);
+    }
+  };
+  return (
+    <div>
+      <CounterControlProps
+        value={count}
+        onChange={handleCountChange}
+      ></CounterControlProps>
+    </div>
+  );
+}
+```
+
+- Đó thì đây là ví dụ đơn giản thui, sau này đi làm tới level cao hơn thì còn kha khá nhiều vấn đề cần phải viết thêm ^^
