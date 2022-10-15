@@ -323,7 +323,7 @@ export default Learn;
 ```
 
 - Trang web sẽ được như sau ^^:
-  [!Outlet learning](https://discloud-storage.herokuapp.com/file/cf53ea0b867ea5dd563ce16a4c80f634/route.png)
+  ![Outlet learning](https://discloud-storage.herokuapp.com/file/cf53ea0b867ea5dd563ce16a4c80f634/route.png)
 
 - useParams :
   - Trong useParam có 1 thứ gọi là slug, vậy nó là gì ?
