@@ -167,7 +167,163 @@ console.log(count); // Ouput: 10
 
 - NavLink: Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive
 
-- Outlet: Đóng vai trò giống như content của trang khi ta sử dụng Nested Routes và nhét Navigation Bar vào trong Routes
+- Outlet: Đóng vai trò giống như content của trang khi ta sử dụng Nested Routes
+  VD:
+
+```js
+// Tạo ra 2 đường link dẫn tới 2 đường dẫn khác nhau như sau:
+const Learning = () => {
+  return (
+    <div className="learn">
+      <Link to={"/learn/courses"}>Show your courses</Link>
+      <Link to={"learn/bundles"}>Show your bundles</Link>
+    </div>
+  );
+};
+```
+
+- Tiếp theo, ta sẽ tạo ra nội dung của trang chứa đường dẫn `/learn/courses` này:
+
+```js
+import React from "react";
+
+const Courses = () => {
+  return (
+    <div className="grid grid-cols-4 gap-x-4">
+      <div>Course 1</div>
+      <div>Course 2</div>
+      <div>Course 3</div>
+      <div>Course 4</div>
+      <div>Course 5</div>
+      <div>Course 6</div>
+    </div>
+  );
+};
+
+export default Courses;
+```
+
+- Ngoài ra, còn một điều quan trọng nữa là, ở bên App.js chúng ta cũng không được quên phải định nghĩa component bạn muốn hiển thị cho Route nữa:
+
+```jsx
+// Có 2 cách mà thường các trang web sẽ làm
+// Cách 1: làm biến mất nội dung của trang /learn, sau đó điều hướng sang learn/courses
+function App() {
+  return (
+    <>
+      <PagesLink></PagesLink>
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route
+          path="/navigate"
+          element={<Navigate replace to={"/learn"}></Navigate>}
+        ></Route>
+        <Route path="/learn" element={<Learn></Learn>}></Route>
+        <Route path="/learn/bundle" element={<Bundle></Bundle>}></Route>
+        <Route path="/learn/courses" element={<Courses></Courses>}></Route>
+        {/*
+        Tạo ra 2 đường dẫn nằm ngoài như này, để khi click vào thì nội dung của Outlet không chứa nội dung của /learn. HAY nói cách khác, là các nội dung mà bạn thấy trong trang /learn sẽ biến mất khi bạn click sang trang courses
+        */}
+      </Routes>
+    </>
+  );
+}
+```
+
+- Sau khi code như trên xong, các bạn biết ta sẽ phải đặt Outlet ở đâu rồi chứ, đọc khái niệm thì Outlet chính là nội dung của trang web, mà nội dung của trang web đang nằm hoàn toàn trong Routes, vậy nên ta phải đặt Outlet ở dưới cùng file PagesLink, như sau:
+
+```jsx
+import React from "react";
+import { Link, Outlet } from "react-router-dom";
+const PagesLink = () => {
+  return (
+    <>
+      <ul>
+        <li>
+          <Link className="text-blue-300" to="/">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link className="text-blue-300" to="/learn">
+            Learn
+          </Link>
+        </li>
+      </ul>
+      <Outlet></Outlet>
+      {/*
+      Đây Outlet nằm ở đây
+      */}
+    </>
+  );
+};
+
+export default PagesLink;
+```
+
+- Hoặc bạn có thể đặt ở dưới `<PagesLink></PagesLink>` nằm trong file `App.js`
+
+```jsx
+// Cách 2: Giữ nguyên nội dung trang /learn nhưng vẫn điều hướng sang trang /courses, nhưng courses sẽ nằm ở đâu đó dựa trên Outlet, trong trường hợp này mình sẽ code nằm dưới nội dung trang /learn
+
+// Đầu tiên là sửa lại đoạn code ở cách 1 bằng cách sử dụng nested routes (routes lồng nhau)
+function App() {
+  return (
+    <>
+      <PagesLink></PagesLink>
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route
+          path="/navigate"
+          element={<Navigate replace to={"/learn"}></Navigate>}
+        ></Route>
+        <Route path="/learn" element={<Learn></Learn>}>
+          <Route path="courses" element={<Courses></Courses>}></Route>
+          <Route path="bundle" element={<Bundle></Bundle>}></Route>
+        </Route>
+        {/*
+        Đó thì như bạn thấy đây, Route chứa path /learn đang lồng vào 2 thằng course và bundle (lưu ý nếu sử dụng nested routes thì không cần tới dấu "/", BÂY GIỜ ta sẽ không thể sử dụng Outlet ở trang )
+        */}
+      </Routes>
+    </>
+  );
+}
+```
+
+- Nào, giờ chúng ta sẽ cùng đặt lại `Outlet` nha, nếu sử dụng `Nested Routes` như trên kia, thì Outlet phải nằm ở dưới cùng của file `Learn.js` (tức là dưới cùng của file chứa thằng Route cha và ở đây là `Learn.js`), vậy nên ta sẽ đặt `Outlet` như sau:
+
+```jsx
+import React from "react";
+import { Link, Outlet } from "react-router-dom";
+
+const Learn = () => {
+  return (
+    <div className="learn">
+      <h3>This is a learnpage</h3>
+      <h4>All courses are listed here</h4>
+      <ul>
+        <li>
+          <Link className="font-bold text-green-400" to={"/learn/courses"}>
+            Courses
+          </Link>
+        </li>
+        <li>
+          <Link className="font-bold text-green-400" to={"/learn/bundle"}>
+            Bundle
+          </Link>
+        </li>
+      </ul>
+      <Outlet></Outlet>
+      {/* Đây Outlet nằm ở đây */}
+    </div>
+  );
+};
+
+export default Learn;
+```
+
+- Trang web sẽ được như sau ^^:
+  [!Outlet learning](https://discloud-storage.herokuapp.com/file/cf53ea0b867ea5dd563ce16a4c80f634/route.png)
 
 - useParams :
   - Trong useParam có 1 thứ gọi là slug, vậy nó là gì ?

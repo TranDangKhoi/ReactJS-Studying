@@ -1,28 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import "./App.css";
-import CounterControlProps from "./components/control-props/CounterControlProps";
-
+import Home from "./components/Router in React v2/Home";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Learn from "./components/Router in React v2/Learn";
+import PagesLink from "./components/Router in React v2/Link";
+import Courses from "./components/Router in React v2/Courses";
+import Bundle from "./components/Router in React v2/Bundle";
 // Props Collection
 function App() {
-  // Giả dụ đây là đoạn code mà dev khác muốn can thiệp vào
-  const [count, setCount] = useState(5);
-  const handleCountChange = (newCount) => {
-    // setCount((count) => count + 1);
-    // Thử thêm một chút code xử lí logic xíu nha
-    if (newCount > 10) {
-      setCount(0);
-    } else {
-      setCount(newCount);
-    }
-  };
   return (
-    <div>
-      <CounterControlProps
-        value={count}
-        onChange={handleCountChange}
-      ></CounterControlProps>
-    </div>
+    <>
+      <PagesLink></PagesLink>
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route
+          path="/navigate"
+          element={<Navigate replace to={"/learn"}></Navigate>}
+        ></Route>
+        <Route path="/learn" element={<Learn></Learn>}>
+          <Route path="courses" element={<Courses></Courses>}></Route>
+          <Route path="bundle" element={<Bundle></Bundle>}></Route>
+        </Route>
+      </Routes>
+    </>
   );
 }
 
