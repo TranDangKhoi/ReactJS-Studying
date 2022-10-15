@@ -165,7 +165,37 @@ console.log(count); // Ouput: 10
 
 - Link: giống như thẻ a, dùng đẻ điều hướng tới các trang khác mà không bị reload
 
-- NavLink: Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive
+- NavLink: Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive, NavLink isActive được sử dụng như sau:
+
+```jsx
+<>
+  <NavLink
+    style={({ isActive }) => {
+      return {
+        color: isActive ? "red" : "black",
+      };
+    }}
+    {/*
+    Nếu đang ở trong trang đó thì isActive === true và khi đó thẻ NavLink này sẽ đổi màu sang màu đỏ. VÀ NGƯỢC LẠi, nếu đang ở trang khác thì NavLink này sẽ chuyển sang màu đen và NavLink trang kia sẽ có isActive === true
+    */}
+    className="block"
+    to={`/learn/courses/${randomCourseName}`}
+  >
+    {randomCourseName}
+  </NavLink>
+  <NavLink
+    style={({ isActive }) => {
+      return {
+        color: isActive ? "red" : "black",
+      };
+    }}
+    className="block"
+    to={`/learn/courses/tests`}
+  >
+    Test
+  </NavLink>
+</>
+```
 
 - Outlet: Đóng vai trò giống như content của trang khi ta sử dụng Nested Routes
   VD:
@@ -326,12 +356,28 @@ export default Learn;
   ![Outlet learning](https://discloud-storage.herokuapp.com/file/cf53ea0b867ea5dd563ce16a4c80f634/route.png)
 
 - useParams :
+
   - Trong useParam có 1 thứ gọi là slug, vậy nó là gì ?
   - Ví dụ giờ ta có một api :<br>
     fetching.com/blog?search=hello-world
   - // slug sẽ là thứ nằm sau blog/
   - VD: localhost:3000/blog/hello-world
   - Thì slug sẽ = hello-world
+
+- useNavigate: Dùng để navigate sử dụng url path:
+
+```jsx
+const Homepage = () => {
+  const navigate = useNavigate();
+  return (
+    <>
+      <button onClick={() => navigate("/about-us", { state: "Khoi" })}></button>
+    </>
+  );
+};
+```
+
+- useLocation: Gồm rất nhiều thuộc tính (pathName, hash, search, state, key), dùng để truyền state, lấy ra pathName, ...
 
 ## 20. Higher Order Components
 
