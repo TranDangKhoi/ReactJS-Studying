@@ -141,6 +141,12 @@ console.log(count); // Ouput: 10
 - Dùng để ẩn/hiện dropdown nếu như lỡ chẳng may thằng cha của nó có overflow-hidden
 - Dùng để ẩn/hiện tooltip
 
+- Ví dụ về cách viết:
+
+```jsx
+
+```
+
 ## 15. Context
 
 - Context sẽ cung cấp cho ta 1 phương pháp để chia sẻ những giá trị giữa các component với nhau

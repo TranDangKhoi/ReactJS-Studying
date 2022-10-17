@@ -1,36 +1,41 @@
 import React from "react";
 import { useState } from "react";
 import "./App.css";
-import Home from "./components/Router in React v2/Home";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Learn from "./components/Router in React v2/Learn";
-import PagesLink from "./components/Router in React v2/Link";
-import Courses from "./components/Router in React v2/Courses";
-import Bundle from "./components/Router in React v2/Bundle";
-import CourseDetail from "./components/Router in React v2/CourseDetail";
-import Dashboard from "./components/Router in React v2/Dashboard";
+import DropdownPortal2 from "./components/Portal in React/DropdownPortal2";
+import Modal from "./components/Portal in React/Modal";
+import Modal2 from "./components/Portal in React/Modal2";
+import Portal from "./components/Portal in React/Portal";
+import Tooltip from "./components/Portal in React/Tooltip";
+import Tooltip2 from "./components/Portal in React/Tooltip2";
 // Props Collection
 function App() {
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <PagesLink></PagesLink>
-      <Routes>
-        <Route path="/" element={<Home></Home>}></Route>
-        <Route
-          path="/navigate"
-          element={<Navigate replace to={"/learn"}></Navigate>}
-        ></Route>
-        <Route path="/learn" element={<Learn></Learn>}>
-          <Route path="courses" element={<Courses></Courses>}>
-            <Route
-              path=":courseId"
-              element={<CourseDetail></CourseDetail>}
-            ></Route>
-          </Route>
-          <Route path="bundle" element={<Bundle></Bundle>}></Route>
-        </Route>
-        <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-      </Routes>
+      <div>
+        <Modal open={showModal} handleClose={() => setShowModal(false)}></Modal>
+      </div>
+      <button
+        className="p-4 m-5 text-white bg-blue-500 rounded-md"
+        onClick={() => setShowModal(true)}
+      >
+        Show modal
+      </button>
+      <div className="relative z-30">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium
+        fuga accusamus alias sunt. Maiores dolorum incidunt voluptate repellat
+        libero? Minus nobis blanditiis distinctio a laborum quos corrupti omnis
+        culpa eos?
+      </div>
+      <div className="overflow-hidden">
+        <DropdownPortal2></DropdownPortal2>
+      </div>
+      <div className="p-10">
+        <Tooltip2
+          children={"This is a very cool tooltip!"}
+          text={"Hello you <3"}
+        ></Tooltip2>
+      </div>
     </>
   );
 }

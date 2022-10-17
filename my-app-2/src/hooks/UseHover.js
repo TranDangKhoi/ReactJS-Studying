@@ -23,6 +23,7 @@ export default function useHover() {
     };
   }, []);
   return {
+    setHovered,
     hovered,
     nodeRef,
   };
