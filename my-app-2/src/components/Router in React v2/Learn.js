@@ -18,7 +18,7 @@ const Learn = () => {
           </Link>
         </li>
       </ul>
-      <Outlet></Outlet>
+      <Outlet context={{ hello: "World" }}></Outlet>
     </div>
   );
 };

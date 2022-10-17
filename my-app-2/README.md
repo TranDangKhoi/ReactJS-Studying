@@ -355,6 +355,28 @@ export default Learn;
 - Trang web sẽ được như sau ^^:
   ![Outlet learning](https://discloud-storage.herokuapp.com/file/cf53ea0b867ea5dd563ce16a4c80f634/route.png)
 
+- Ngoài ra `Outlet` còn có 1 prop bạn có thể truyền vào đó chính là context, ví dụ như sau:
+
+```jsx
+<Outlet context={{ hello: "World" }}></Outlet>
+```
+
+- Sau đó bất kì component nào nằm trong phạm vi của Outlet này sẽ có key and value `hello: "World"` này, và muốn lấy ra thì cũng đơn giản thôi, ta sẽ sử dụng một cái `hook` của react router 6 đó chính là:
+
+- useOutletContext: Lấy ra context bạn truyền vào từ component cha, như sau:
+
+```jsx
+function Learn.js(){
+  const obj = useOutletContext();
+  return (
+    <div>
+    {obj.hello}
+    </div>
+  )
+
+}
+```
+
 - useParams :
 
   - Trong useParam có 1 thứ gọi là slug, vậy nó là gì ?
@@ -378,6 +400,8 @@ const Homepage = () => {
 ```
 
 - useLocation: Gồm rất nhiều thuộc tính (pathName, hash, search, state, key), dùng để truyền state, lấy ra pathName, ...
+
+-
 
 ## 20. Higher Order Components
 
