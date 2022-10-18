@@ -1,5 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 // createPortal
 
 const Modal = ({ open = false, handleClose = () => {} }) => {
@@ -53,4 +54,8 @@ const Modal = ({ open = false, handleClose = () => {} }) => {
   );
 };
 
+Modal.propTypes = {
+  open: PropTypes.bool,
+  handleClose: PropTypes.func.isRequired,
+};
 export default Modal;

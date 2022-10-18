@@ -5,9 +5,9 @@ import axios from "axios";
 const initialState = {
   hits: [],
   query: "",
-  loading: false,
+  loading: true,
   errorMsg: "",
-  url: `https://hn.algolia.com/api/v1/search?query='random'`,
+  url: `https://hn.algolia.com/api/v1/search?query=react`,
 };
 const hackerNewsReducer = (state, action) => {
   switch (action.type) {
@@ -33,8 +33,8 @@ const hackerNewsReducer = (state, action) => {
       break;
   }
 };
-const HackerNews = () => {
-  const [state, dispatch] = useReducer(hackerNewsReducer, initialState);
+const HackerNewsReducer = () => {
+  const [state, dispatch] = useReducer(HackerNewsReducer, initialState);
   const handleFetchData = useRef({});
   const isMounted = useRef(true);
   useEffect(() => {
@@ -81,7 +81,7 @@ const HackerNews = () => {
   return (
     <div className="bg-white w-[600px] mx-auto mt-5 p-7 rounded-lg shadow-md">
       <div className="flex gap-x-5">
-        <div className="flex items-center gap-5 w-full border border-gray-200 rounded-lg py-3 px-5 focus:border-blue-300">
+        <div className="flex items-center w-full gap-5 px-5 py-3 border border-gray-200 rounded-lg focus:border-blue-300">
           <span className="flex-shrink-0 text-gray-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +100,7 @@ const HackerNews = () => {
           </span>
           <input
             type="text"
-            className="w-full outline-none bg-transparent"
+            className="w-full bg-transparent outline-none"
             placeholder="Enter your content"
             onChange={(e) =>
               dispatch({
@@ -111,7 +111,7 @@ const HackerNews = () => {
           />
         </div>
         <button
-          className="bg-blue-500 text-white rounded-md p-5"
+          className="p-5 text-white bg-blue-500 rounded-md"
           style={{
             opacity: state.loading ? "0.4" : "1",
             cursor: state.loading ? "not-allowed" : "pointer",
@@ -128,13 +128,13 @@ const HackerNews = () => {
       </div>
 
       {state.loading && (
-        <div className="loading w-8 h-8 rounded-full border-4 border-r-4 border-blue-400 border-r-transparent animate-spin mx-auto my-10"></div>
+        <div className="w-8 h-8 mx-auto my-10 border-4 border-r-4 border-blue-400 rounded-full loading border-r-transparent animate-spin"></div>
       )}
       {!state.loading && state.errorMsg && (
         <p className="text-red-500">{state.errorMsg}</p>
       )}
 
-      <div className="mt-5 mb-5 flex flex-wrap gap-5">
+      <div className="flex flex-wrap gap-5 mt-5 mb-5">
         {!state.loading &&
           state.hits.length > 0 &&
           state.hits.map((item, index) => (
@@ -147,4 +147,4 @@ const HackerNews = () => {
   );
 };
 
-export default HackerNews;
+export default HackerNewsReducer;

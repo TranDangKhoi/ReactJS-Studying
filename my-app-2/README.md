@@ -887,7 +887,7 @@ const Decrement = () => {
 
 ## Bây giờ, ta sẽ cùng tìm hiểu cách làm thế nào để các devs khác có thể chèn logic code của họ vào code cùa mình mà không cần mở file CounterControlProps.js ra nhé
 
-- Giờ giả dụ mình là dev khác và mình sẽ chèn 1 đoạn code có logic như sau: set cho giá trị khởi tạo là 5 và khi tăng giá trị count > 10 thì tự động set giá trị count về 0
+- Giờ giả dụ mình là dev khác và muốn chèn 1 đoạn code có logic như sau: Set cho giá trị khởi tạo của state count là 5 và khi tăng giá trị count > 10 thì tự động set giá trị count về 0
 
 ```js
 function App() {
@@ -911,3 +911,73 @@ function App() {
 ```
 
 - Đó thì đây là ví dụ đơn giản thui, sau này đi làm tới level cao hơn thì còn kha khá nhiều vấn đề cần phải viết thêm ^^
+
+# React Error Boundary
+
+- React Error Boundary là 1 thư viện của React giúp bắt các lỗi trong component và các components con của nó, ví dụ trong **trang đọc báo**, bạn sẽ có 3 thành phần chính đó chính là **các bài báo**, **thanh điều hướng** hay nói cách khác là navigation bar, **Phần footer**
+
+- Giả dụ khi 1 trong 3 thành phần này bị dính lỗi ngoài ý muốn, thì theo lẽ thường -> ngay lập tức trang web sẽ bị **trắng tinh**, **mất hết nội dung** và **hiển thị lỗi đỏ trong bảng console**. Điều này sẽ làm ảnh hưởng tới trải nghiệm người dùng!!!
+
+- Vì vậy, ta đã có **REACT-ERROR-BOUNDARY** để khắc phục tình trạng này, nó sẽ giúp ta bằng cách thay vì trang web bị **trắng tinh và mất hết nội dung**, nó sẽ chỉ hiển thị lỗi của 1 trong 3 thành phần đó và 2 thành phần còn lại vẫn hoạt động như thường, và ngoài ra nó còn giúp ta reset lại trạng thái ban đầu của thành phần web bị lỗi, **THẬT TUYỆT VỜI PHẢI KHÔNG NÀO**. Giờ mình sẽ làm 1 ví dụ ngắn:
+
+```jsx
+import React from "react";
+import "./App.css";
+import { ErrorBoundary } from "react-error-boundary";
+
+// Nội dung để hiển thị khi component nào đó bị lỗi
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div role="text-red-500 p-4">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        {/* Ví dụ đây là component bị lỗi */}
+        <ErrorComponent></ErrorComponent>
+      </ErrorBoundary>
+    </>
+  );
+}
+
+export default App;
+```
+
+- Bên ErrorComponent.js, ta sẽ cố tình tạo ra lỗi như sau:
+
+```jsx
+import React from "react";
+import { useState } from "react";
+
+const ErrorComponent = () => {
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(true);
+  };
+  {
+    /*
+  Lỗi nằm ở function truyền vào onClick, đáng lí ra phải truyền vào là handleClick, nhưng mình sẽ cố tình viết thiếu chữ "k" xem sao
+  */
+  }
+  return <div onClick={handleClic}>Aaaa, tôi bị lỗi</div>;
+};
+
+export default ErrorComponent;
+```
+
+- Và đây là kết quả khi mình xem ở trình duyệt:
+
+![Ảnh](https://discloud-storage.herokuapp.com/file/0b22739c36f8f1bb4299b0a51a623b35/error.png)
+
+- Như các bạn thấy, nó đã báo lỗi thành công rồi, giờ mình sẽ thử đặt 1 **component** không bị lỗi bên dưới **component bị lỗi** nhé, và đương nhiên ta sẽ không bọc nó trong component ErrorBoundary rồi:
+
+![Ảnh](https://discloud-storage.herokuapp.com/file/3ed8780ff4554748a323b5cb0638331d/error.png)
+
+- Như bạn thấy, component dưới vẫn hiển thị như thường và chỉ có component nào lỗi thì nó mới hiện lỗi

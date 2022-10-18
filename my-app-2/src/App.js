@@ -1,41 +1,29 @@
 import React from "react";
-import { useState } from "react";
 import "./App.css";
-import DropdownPortal2 from "./components/Portal in React/DropdownPortal2";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "./components/error-boundary/ErrorComponent";
 import Modal from "./components/Portal in React/Modal";
-import Modal2 from "./components/Portal in React/Modal2";
-import Portal from "./components/Portal in React/Portal";
-import Tooltip from "./components/Portal in React/Tooltip";
 import Tooltip2 from "./components/Portal in React/Tooltip2";
-// Props Collection
+
+// Nội dung để hiển thị khi component nào đó bị lỗi
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert" className="p-4 text-red-500 bg-red-200">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+}
+
 function App() {
-  const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <div>
-        <Modal open={showModal} handleClose={() => setShowModal(false)}></Modal>
-      </div>
-      <button
-        className="p-4 m-5 text-white bg-blue-500 rounded-md"
-        onClick={() => setShowModal(true)}
-      >
-        Show modal
-      </button>
-      <div className="relative z-30">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium
-        fuga accusamus alias sunt. Maiores dolorum incidunt voluptate repellat
-        libero? Minus nobis blanditiis distinctio a laborum quos corrupti omnis
-        culpa eos?
-      </div>
-      <div className="overflow-hidden">
-        <DropdownPortal2></DropdownPortal2>
-      </div>
-      <div className="p-10">
-        <Tooltip2
-          children={"This is a very cool tooltip!"}
-          text={"Hello you <3"}
-        ></Tooltip2>
-      </div>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        {/* Ví dụ đây là component bị lỗi */}
+        <ErrorComponent></ErrorComponent>
+      </ErrorBoundary>
+      <Tooltip2 text={"Tôi không bị lỗi"}>Yay</Tooltip2>
     </>
   );
 }

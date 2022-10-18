@@ -22,10 +22,10 @@ const Tooltip2 = ({ children, text }) => {
 function TooltipContent({ children, coords }) {
   return createPortal(
     <p
-      className="absolute inline-block max-w-[200px] p-3 text-white -translate-y-full text-center bg-black rounded-x"
+      className="absolute inline-block max-w-[200px] p-3 rounded-lg text-white -translate-y-full text-center bg-black rounded-x"
       style={{
         top: coords.top - coords.height / 2 + window.scrollY,
-        left: coords.left,
+        left: coords.left - coords.width / 2,
       }}
     >
       {children}
