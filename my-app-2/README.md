@@ -918,7 +918,7 @@ function App() {
 
 - Giả dụ khi 1 trong 3 thành phần này bị dính lỗi ngoài ý muốn, thì theo lẽ thường -> ngay lập tức trang web sẽ bị **trắng tinh**, **mất hết nội dung** và **hiển thị lỗi đỏ trong bảng console**. Điều này sẽ làm ảnh hưởng tới trải nghiệm người dùng!!!
 
-- Vì vậy, ta đã có **REACT-ERROR-BOUNDARY** để khắc phục tình trạng này, nó sẽ giúp ta bằng cách thay vì trang web bị **trắng tinh và mất hết nội dung**, nó sẽ chỉ hiển thị lỗi của 1 trong 3 thành phần đó và 2 thành phần còn lại vẫn hoạt động như thường, và ngoài ra nó còn giúp ta reset lại trạng thái ban đầu của thành phần web bị lỗi, **THẬT TUYỆT VỜI PHẢI KHÔNG NÀO**. Giờ mình sẽ làm 1 ví dụ ngắn:
+- Vì vậy, ta đã có **REACT-ERROR-BOUNDARY** để khắc phục tình trạng này, nó sẽ giúp ta bằng cách thay vì trang web bị **trắng tinh và mất hết nội dung**, nó sẽ chỉ hiển thị lỗi của 1 trong 3 thành phần đó và 2 thành phần còn lại vẫn hoạt động như thường, và ngoài ra nó còn giúp ta reset lại trạng thái ban đầu của thành phần web bị lỗi, **TUYỆT CMN VỜI**. Giờ mình sẽ làm 1 ví dụ ngắn:
 
 ```jsx
 import React from "react";
