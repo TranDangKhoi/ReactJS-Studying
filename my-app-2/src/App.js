@@ -1,29 +1,30 @@
 import React from "react";
+import { useState } from "react";
 import "./App.css";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorComponent from "./components/error-boundary/ErrorComponent";
-import Modal from "./components/Portal in React/Modal";
-import Tooltip2 from "./components/Portal in React/Tooltip2";
-
-// Nội dung để hiển thị khi component nào đó bị lỗi
-function ErrorFallback({ error, resetErrorBoundary }) {
-  return (
-    <div role="alert" className="p-4 text-red-500 bg-red-200">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
-  );
-}
+import ModalBase from "./components/Advanced Portal/ModalBase";
+import Portal from "./components/Advanced Portal/Portal";
 
 function App() {
+  const [openModalBase, setOpenModalBase] = useState(false);
   return (
     <>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {/* Ví dụ đây là component bị lỗi */}
-        <ErrorComponent></ErrorComponent>
-      </ErrorBoundary>
-      <Tooltip2 text={"Tôi không bị lỗi"}>Yay</Tooltip2>
+      <button
+        className="p-5 text-center text-white bg-blue-500 rounded-lg"
+        onClick={() => setOpenModalBase(true)}
+      >
+        Open modal base
+      </button>
+      <ModalBase
+        visible={openModalBase}
+        onClose={() => setOpenModalBase(false)}
+      >
+        <div className="p-10 bg-white rounded-lg w-full max-w-[320px]">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam vero
+          iste eaque eos repellendus corporis ipsa quas alias aperiam dolore,
+          consequatur quibusdam, maxime ipsum dolorem expedita? Repudiandae
+          nihil perspiciatis saepe.
+        </div>
+      </ModalBase>
     </>
   );
 }
