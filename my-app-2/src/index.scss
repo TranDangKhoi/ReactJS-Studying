@@ -60,3 +60,21 @@
   opacity: 0;
   transform: scale(0.4);
 }
+
+// Fade
+
+.fade-enter .tooltip {
+  opacity: 0;
+}
+// Khi đã enter vào
+.fade-enter-active .tooltip {
+  opacity: 1;
+}
+// Trong quá trình thu nhỏ khi exit
+.fade-exit .tooltip {
+  opacity: 1;
+}
+// Sau khi đã exit
+.fade-exit-active .tooltip {
+  opacity: 0;
+}
