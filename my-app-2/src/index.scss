@@ -41,3 +41,22 @@
     background-position-x: -200%;
   }
 }
+// Khi bắt đầu nhấn vào
+.zoom-enter .content {
+  opacity: 0;
+  transform: scale(0.4);
+}
+// Khi đã enter vào
+.zoom-enter-active .content {
+  opacity: 1;
+  transform: scale(1);
+}
+// Trong quá trình thu nhỏ khi exit
+.zoom-exit .content {
+  opacity: 1;
+}
+// Sau khi đã exit
+.zoom-exit-active .content {
+  opacity: 0;
+  transform: scale(0.4);
+}

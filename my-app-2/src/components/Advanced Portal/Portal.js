@@ -22,9 +22,7 @@ const Portal = ({
   }, []);
   const renderContent = (
     <div
-      className={`fixed inset-0 z-50 ${
-        visible ? "" : "opacity-0 invisible"
-      } ${containerClassName}`}
+      className={`fixed inset-0 z-50 ${containerClassName}`}
       style={containerStyle}
     >
       <div

@@ -1,7 +1,8 @@
 import React from "react";
+import ModalBase from "./ModalBase";
 
-const ModalAdvanced = () => {
-  return <div></div>;
+const ModalAdvanced = ({ children, ...props }) => {
+  return <ModalBase {...props}>{children}</ModalBase>;
 };
 
 export default ModalAdvanced;
