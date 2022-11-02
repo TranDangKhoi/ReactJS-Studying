@@ -7,6 +7,7 @@ import {
   onSnapshot,
   serverTimestamp,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
@@ -20,6 +21,7 @@ const FirebaseApp = () => {
   const [author, setAuthor] = useState("");
   const [postId, setPostId] = useState("");
   const [posts, setPosts] = useState([]);
+  const [singlePost, setSinglePost] = useState("");
   useEffect(() => {
     // Truyền vào function collection: db và collection
     // 1. Get Collection Data (posts)
@@ -45,6 +47,13 @@ const FirebaseApp = () => {
         });
       });
       setPosts(posts);
+    });
+    const singleDocRef = doc(db, "posts", "jsNhECuN9Odnry7XGR4q");
+    // getDoc(singleDocRef).then((doc) => {
+    //   console.log(doc.id, doc.data());
+    // });
+    onSnapshot(singleDocRef, (doc) => {
+      console.log(doc.id, doc.data());
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
