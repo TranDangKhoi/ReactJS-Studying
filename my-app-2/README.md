@@ -986,14 +986,14 @@ export default ErrorComponent;
 
 - Firebase là một realtime-database, một giải pháp hoàn hảo nếu ta chưa biết hoặc không biết code BE!
 
-- collection: Dùng để lấy ra thông tin của collection, cần truyền vào database và tên collection
-- getDocs: Lấy ra tất cả dữ liệu của documents nhưng không real-time
+- collection: `Dùng để lấy ra thông tin của collection`, cần truyền vào database và tên collection
+- getDocs: `Dùng để lấy ra tất cả dữ liệu của documents nhưng không real-time`
 
-- getDoc: Có getDocs đương nhiên cũng phải có getDoc, getDoc thường được sử dụng để hiển thị chi tiết của một document:
+- getDoc: Có getDocs đương nhiên cũng phải có getDoc, getDoc thường được `sử dụng để hiển thị chi tiết của một document`:
 
-  - _VÍ DỤ:_ Khi bạn mua hàng trên shoppee, mỗi sản phẩm đều có chi tiết sản phẩm của riêng nó, vậy nên khi click vào sản phẩm nào thì ta phải getDoc sản phẩm đó để lấy ra thông tin sản phẩm.
+  - _VÍ DỤ:_ Khi bạn mua hàng trên Shoppee,` mỗi sản phẩm` đều có `chi tiết sản phẩm của riêng nó`, vậy nên khi `click vào sản phẩm nào` thì ta phải `getDoc sản phẩm đó` để `lấy ra thông tin sản phẩm`.
 
-- addDoc:` Dùng để thêm document`, cần truyền vào collection reference và 1 object chứa các field và value của doc đó
+- addDoc: `Dùng để thêm document`, cần truyền vào collection reference và 1 object chứa các field và value của doc đó
 
 - deleteDoc: `Dùng để xóa document`, cần truyền vào thông tin của doc mà bạn muốn xóa (bao gồm: `database exported từ firebase-config.js`, `tên collection`, `và id của document mà mình muốn xóa`)
 
