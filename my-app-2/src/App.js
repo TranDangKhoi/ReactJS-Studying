@@ -1,12 +1,11 @@
 import React from "react";
-import { useState } from "react";
 import "./App.css";
-import FirebaseApp from "./firebase/FirebaseApp";
+import FireBaseAuth from "./firebase/FireBaseAuth";
 
 function App() {
   return (
     <>
-      <FirebaseApp></FirebaseApp>
+      <FireBaseAuth></FireBaseAuth>
     </>
   );
 }

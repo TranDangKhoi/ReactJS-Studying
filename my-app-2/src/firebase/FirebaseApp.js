@@ -60,6 +60,32 @@ const FirebaseApp = () => {
   }, []);
   useEffect(() => {
     // Firestore queries
+    const q = query(
+      colRef,
+      orderBy("title", "asc"),
+      where("author", "==", "Tran Dang Khoi"),
+      limit(5)
+    );
+    // getDocs(q).then((snapshot) => {
+    //   let posts = [];
+    //   snapshot.docs.forEach((doc) => {
+    //     posts.push({
+    //       id: doc.id,
+    //       ...doc.data(),
+    //     });
+    //   });
+    //   console.log(posts);
+    // });
+    onSnapshot(q, (snapshot) => {
+      let posts = [];
+      snapshot.docs.forEach((doc) => {
+        posts.push({
+          ...doc.data(),
+        });
+      });
+      console.log(posts);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleAddPost = async (e) => {
     e.preventDefault();

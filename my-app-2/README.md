@@ -1013,4 +1013,52 @@ onSnapshot(singleDocRef, (doc) => {
 });
 ```
 
-- Như bạn thấy thì ở **getDoc** sẽ trả về 1 Promise nên ta **sử dụng then để GET dữ liệu** của doc. Còn với onSnapshot ta sẽ truyền vào 2 arguments là singleDocRef (reference tới doc trong collection posts) và 1 argument nữa là callback function, chứ không sử dụng then hay async await
+- Như bạn thấy thì ở **getDoc** sẽ trả về 1 Promise nên ta **sử dụng then để GET dữ liệu** của doc. Còn với **onSnapshot** ta sẽ **truyền vào 2 arguments** là **singleDocRef (reference tới doc trong collection posts)** và **1 argument nữa là callback function**, chứ không sử dụng then hay async await
+
+# Truy vấn dữ liệu nâng cao với Firestore Queries
+
+- Các kiến thức về truy vấn này, nếu bạn đã được học trước về SQL cơ bản thì sẽ khá dễ tiếp cận với các syntax này, bởi vì SQL thực chất còn khó hơn thế này rất nhiều
+
+- limit: Giới hạn số lượng kết quả truy vấn được (ví dụ mình có 25 bài viết nhưng mình có thể limit lại chỉ hiển thị 5 bài viết thôi), mình sẽ ví dụ với limit là 5:
+
+```js
+const colRef = collection(db, "post");
+useEffect(() => {
+  const q = query(colRef, limit(5));
+  // Log ra các documents
+  onSnapshot(q, (snapshot) => {
+    let posts = [];
+    snapshot.docs.forEach((doc) => {
+      posts.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    console.log(posts);
+  });
+}, [colRef]);
+```
+
+- orderBy: Sắp xếp kết quả truy vấn được theo thứ tự tăng dần hoặc giảm dần theo một cột nào đó, ví dụ nếu ta muốn sắp xếp theo tên của bài viết, và giới hạn số lượng hiển thị xuống còn 5 thì ta sẽ viết như sau:
+
+```js
+const colRef = collection(db, "post");
+// Log ra các documents
+useEffect(() => {
+  // Firestore queries
+  const q = query(colRef, orderBy("title"), limit(5));
+  onSnapshot(q, (snapshot) => {
+    let posts = [];
+    snapshot.docs.forEach((doc) => {
+      posts.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    console.log(posts);
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+```
+
+- where():
