@@ -4,6 +4,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  onSnapshot,
 } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
@@ -20,18 +21,29 @@ const FirebaseApp = () => {
   useEffect(() => {
     // Truyền vào function collection: db và collection
     // 1. Get Collection Data (posts)
-    getDocs(colRef)
-      .then((snapshot) => {
-        let posts = [];
-        snapshot.docs.forEach((doc) => {
-          posts.push({
-            id: doc.id,
-            ...doc.data(),
-          });
+    // getDocs(colRef)
+    //   .then((snapshot) => {
+    //     let posts = [];
+    //     snapshot.docs.forEach((doc) => {
+    //       posts.push({
+    //         id: doc.id,
+    //         ...doc.data(),
+    //       });
+    //     });
+    //     setPosts(posts);
+    //   })
+    //   .catch((err) => console.log(err));
+    // 2. Get document in realtime
+    onSnapshot(colRef, (snapshot) => {
+      let posts = [];
+      snapshot.docs.forEach((doc) => {
+        posts.push({
+          id: doc.id,
+          ...doc.data(),
         });
-        setPosts(posts);
-      })
-      .catch((err) => console.log(err));
+      });
+      setPosts(posts);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleAddPost = async (e) => {

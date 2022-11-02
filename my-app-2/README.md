@@ -985,3 +985,7 @@ export default ErrorComponent;
 # Firebase
 
 - Firebase là một realtime-database, một giải pháp hoàn hảo nếu ta không biết làm BE bởi nó sẽ giúp ta tạo ra 1 api giả để xử lí data
+
+- getDocs: Không real-time
+
+- onSnapShot: Cập nhật real-time, CRUD là hiển thị ra ngay trong browser, không cần F5
