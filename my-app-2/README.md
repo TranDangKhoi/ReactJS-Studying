@@ -981,3 +981,7 @@ export default ErrorComponent;
 ![Ảnh](https://discloud-storage.herokuapp.com/file/3ed8780ff4554748a323b5cb0638331d/error.png)
 
 - Như bạn thấy, component dưới vẫn hiển thị như thường và chỉ có component nào lỗi thì nó mới hiện lỗi
+
+# Firebase
+
+- Firebase là một realtime-database, một giải pháp hoàn hảo nếu ta không biết làm BE bởi nó sẽ giúp ta tạo ra 1 api giả để xử lí data
