@@ -5,6 +5,8 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
+  serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
@@ -51,6 +53,7 @@ const FirebaseApp = () => {
     await addDoc(colRef, {
       title,
       author,
+      createdAt: serverTimestamp(),
     });
     console.log("Successfully added a doc");
   };
@@ -60,6 +63,15 @@ const FirebaseApp = () => {
     const docToBeDeleted = doc(db, "posts", postId);
     await deleteDoc(docToBeDeleted);
     console.log("Successfully deleted the doc");
+  };
+
+  const handleUpdatePost = async (e) => {
+    e.preventDefault();
+    const docToBeUpdate = doc(db, "posts", postId);
+    await updateDoc(docToBeUpdate, {
+      title: "Updated title",
+    });
+    console.log("Successfully updated the doc");
   };
   return (
     <div>
@@ -104,6 +116,25 @@ const FirebaseApp = () => {
             className="w-full p-3 text-sm font-medium text-white bg-red-500 rounded-lg"
           >
             Delete post
+          </button>
+        </form>
+        <form onSubmit={handleUpdatePost}>
+          <h2 className="text-center mt-20 font-[30px] font-medium">
+            Update Document
+          </h2>
+          <input
+            type="text"
+            className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+            placeholder="Enter your post's ID"
+            name="postId"
+            onChange={(e) => setPostId(e.target.value)}
+          />
+
+          <button
+            type="submit"
+            className="w-full p-3 text-sm font-medium text-white bg-blue-500 rounded-lg"
+          >
+            Update post
           </button>
         </form>
       </div>
