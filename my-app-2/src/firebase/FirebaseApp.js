@@ -8,6 +8,10 @@ import {
   serverTimestamp,
   updateDoc,
   getDoc,
+  where,
+  orderBy,
+  limit,
+  query,
 } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
@@ -49,13 +53,13 @@ const FirebaseApp = () => {
       setPosts(posts);
     });
     const singleDocRef = doc(db, "posts", "jsNhECuN9Odnry7XGR4q");
-    // getDoc(singleDocRef).then((doc) => {
-    //   console.log(doc.id, doc.data());
-    // });
     onSnapshot(singleDocRef, (doc) => {
       console.log(doc.id, doc.data());
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    // Firestore queries
   }, []);
   const handleAddPost = async (e) => {
     e.preventDefault();

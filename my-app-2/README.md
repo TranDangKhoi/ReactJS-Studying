@@ -997,4 +997,20 @@ export default ErrorComponent;
 
 - deleteDoc: `Dùng để xóa document`, cần truyền vào thông tin của doc mà bạn muốn xóa (bao gồm: `database exported từ firebase-config.js`, `tên collection`, `và id của document mà mình muốn xóa`)
 
-- onSnapShot: Lấy ra tất cả dữ liệu của documents, cập nhật real-time, CRUD là hiển thị ra ngay trong browser, không cần F5
+- onSnapShot: Lấy ra tất cả dữ liệu của documents, cập nhật real-time, CRUD là hiển thị ra ngay trong browser, không cần F5, cách truyền dữ liệu của thằng này thì cũng khá lạ, nếu ở getDocs hay getDocs bạn sử dụng .then hoặc async await thì sẽ khác một chút so với thằng này:
+
+```js
+// Lấy ra thông tin của bài post có ID là jsNhECuN9Odnry7XGR4q
+const singleDocRef = doc(db, "posts", "jsNhECuN9Odnry7XGR4q");
+// sử dụng getDoc để lấy ra thông tin của bài post (cách này không real-time)
+getDoc(singleDocRef).then((doc) => {
+  console.log(doc.id, doc.data());
+});
+
+// sử dụng onSnapShot để lấy ra thông tin của bài post (cách này có cập nhật real-time)
+onSnapshot(singleDocRef, (doc) => {
+  console.log(doc.id, doc.data());
+});
+```
+
+- Như bạn thấy thì ở **getDoc** sẽ trả về 1 Promise nên ta **sử dụng then để GET dữ liệu** của doc. Còn với onSnapshot ta sẽ truyền vào 2 arguments là singleDocRef (reference tới doc trong collection posts) và 1 argument nữa là callback function, chứ không sử dụng then hay async await
