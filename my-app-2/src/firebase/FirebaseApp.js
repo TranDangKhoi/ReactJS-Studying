@@ -16,6 +16,7 @@ const FirebaseApp = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [postId, setPostId] = useState("");
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     // Truyền vào function collection: db và collection
     // 1. Get Collection Data (posts)
@@ -28,20 +29,18 @@ const FirebaseApp = () => {
             ...doc.data(),
           });
         });
+        setPosts(posts);
       })
       .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handleAddPost = (e) => {
+  const handleAddPost = async (e) => {
     e.preventDefault();
-    addDoc(colRef, {
+    await addDoc(colRef, {
       title,
       author,
-    })
-      .then(() => {
-        console.log("Success");
-      })
-      .catch((err) => console.log(err));
+    });
+    console.log("Successfully added a doc");
   };
 
   const handleDeletePost = async (e) => {
@@ -95,6 +94,16 @@ const FirebaseApp = () => {
             Delete post
           </button>
         </form>
+      </div>
+      <div className="w-full mt-5 max-w-[500px] mx-auto bg-white shadow-lg p-5">
+        {posts.length > 0 &&
+          posts.map((item) => (
+            <div key={item.title}>
+              <div>
+                {item.title} - {item.author}
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );
