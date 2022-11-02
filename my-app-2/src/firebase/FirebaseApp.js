@@ -1,30 +1,69 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { db } from "./firebase-config";
 
 const FirebaseApp = () => {
   // colRef: collection reference -> reference tới collection trong firebase
+  const colRef = collection(db, "posts");
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
   useEffect(() => {
     // Truyền vào function collection: db và collection
-    const colRef = collection(db, "posts");
     // 1. Get Collection Data (posts)
     getDocs(colRef)
       .then((snapshot) => {
-        console.log(snapshot);
         let posts = [];
         snapshot.docs.forEach((doc) => {
           posts.push({
             id: doc.id,
             ...doc.data(),
           });
-          console.log(doc.data());
         });
-        console.log(posts);
       })
       .catch((err) => console.log(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return <div></div>;
+  const handleAddPost = (e) => {
+    e.preventDefault();
+    addDoc(colRef, {
+      title,
+      author,
+    })
+      .then(() => {
+        console.log("Success");
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
+    <div>
+      <div className="w-full max-w-[500px] mx-auto bg-white shadow-lg p-5">
+        <form onSubmit={handleAddPost}>
+          <input
+            type="text"
+            className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+            placeholder="Enter your title"
+            name="title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+            placeholder="Enter your author"
+            name="author"
+            onChange={(e) => setAuthor(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="p-3 text-sm font-medium text-white bg-blue-500 rounded-lg"
+          >
+            Add post
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default FirebaseApp;
