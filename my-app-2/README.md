@@ -984,8 +984,10 @@ export default ErrorComponent;
 
 # Firebase
 
-- Firebase là một realtime-database, một giải pháp hoàn hảo nếu ta không biết làm BE bởi nó sẽ giúp ta tạo ra 1 api giả để xử lí data
+- Firebase là một realtime-database, một giải pháp hoàn hảo nếu ta chưa biết hoặc không biết code BE!
 
-- getDocs: Không real-time
-
-- onSnapShot: Cập nhật real-time, CRUD là hiển thị ra ngay trong browser, không cần F5
+- collection: Dùng để lấy ra thông tin của collection, cần truyền vào database và tên collection
+- getDocs: Lấy ra tất cả dữ liệu của documents nhưng không real-time
+- addDoc:` Dùng để thêm document`, cần truyền vào collection reference và 1 object chứa các field và value của doc đó
+- deleteDoc: `Dùng để xóa document`, cần truyền vào thông tin của doc mà bạn muốn xóa (bao gồm: database exported từ `firebase-config.js`, `tên collection`, `và id của document mà mình muốn xóa`)
+- onSnapShot: Lấy ra tất cả dữ liệu của documents, cập nhật real-time, CRUD là hiển thị ra ngay trong browser, không cần F5
