@@ -1236,3 +1236,15 @@ const q = query(colRef, where("author", "==", "Tran Dang Khoi"));
     signOut(auth);
   };
   ```
+
+  - B3: Để nhận biết được khi người dùng đăng xuất thì ta phải sử dụng thêm onAuthStateChanged như mình viết ở trên không thì chương trình sẽ lỗi ngay lập tức
+
+  ```js
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUserInfo(currentUser);
+    });
+  }, []);
+  ```
+
+  - **Bình thường thì khi đăng kí/đăng nhập xong nó sẽ không cập nhật ngay nên trong function đăng kí/dăng nhập bạn phải setUserInfo 1 lần nữa để nó hiển thị đầy đủ thông tin**
