@@ -6,9 +6,10 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "./firebase-config";
+import { auth, db } from "./firebase-config";
 import { useState } from "react";
 import { useEffect } from "react";
+import { addDoc, collection } from "firebase/firestore";
 const FireBaseAuth = () => {
   //   const auth = getAuth();
   const [values, setValues] = useState({
@@ -25,13 +26,28 @@ const FireBaseAuth = () => {
   }, []);
   const handleSignUp = async (e) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(auth, values.email, values.password);
-    await updateProfile(auth.currentUser, {
-      displayName: values.username,
-      photoURL:
-        "https://images.unsplash.com/photo-1667202819845-44ecd08552b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-    });
-    console.log("Registered user successfully");
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      await updateProfile(auth.currentUser, {
+        displayName: values.username,
+        photoURL:
+          "https://images.unsplash.com/photo-1667202819845-44ecd08552b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+      });
+      console.log("Registered user successfully");
+      const userRef = collection(db, "users");
+      addDoc(userRef, {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        id: user.user.uid,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleInputChange = (e) => {
     setValues({
@@ -44,7 +60,9 @@ const FireBaseAuth = () => {
   };
   return (
     <div className="w-full max-w-[500px] mx-auto bg-white shadow-lg p-5">
-      <h2 className="text-center font-[30px] font-medium">Add Document</h2>
+      <h2 className="text-center font-[30px] font-medium">
+        Please fill in the form
+      </h2>
       <form onSubmit={handleSignUp}>
         <input
           type="text"

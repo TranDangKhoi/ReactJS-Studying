@@ -1075,4 +1075,164 @@ const q = query(colRef, where("author", "==", "Tran Dang Khoi"));
 
 - Firebase rất khỏe, nó còn hỗ trợ cho ta về authentication như các chức năng đăng ký, đăng nhập, đăng xuất rất ổn áp.
 
-- onAuthStateChange: Check khi nào ta đăng nhập hay đăng xuất trong thời gian thực (real-time), khi đăng nhập thì hiển thị thông tin ngay lập tức, khi sign out thì ngược lại
+- onAuthStateChange: Check khi nào ta đăng nhập hay đăng xuất trong thời gian thực (real-time), khi đăng nhập thì hiển thị thông tin ngay lập tức, khi sign out thì ngược lại. Nó sẽ nhận vào 2 giá trị là `auth` và `user`
+
+<hr/>
+
+- Cách thức code chức năng đăng kí **(LƯU Ý: Mình sẽ code thôi còn công đoạn setup authentication, firestore thì mình sẽ không bàn tới ở đây)**:
+
+  - B1: Nếu muốn đăng kí bằng Firebase thì trước hết ta phải sử dụng getAuth trong thư viện firebase/auth,chúng ta sẽ truyền auth vào trong app hiện tại của chúng ta bằng cách nhét app vào getAuth sau đó biến nó thành 1 biến rồi export nó ra để sử dụng ở các file khác
+
+  ```js
+  const app = initializeApp(firebaseConfig);
+  export const auth = getAuth(app);
+  ```
+
+  - B2: Nếu muốn đăng kí = Firebase Authentication thì đương nhiên rồi, ta phải import chức năng đăng kí của nó vào (nó có tên là `createUserWithEmailAndPassword` và nằm trong thư viện `firebase/auth`)
+
+  - B3: Ta tạo 1 form đơn giản có trường email, password và đương nhiên 1 button để khi click vào thì sẽ đăng nhập
+
+  ```jsx
+  /* Truyền vào form 1 function obSubmit là handleSignUp */
+  const FirebaseForm = () => {
+    return (
+      <form onSubmit="{handleSignUp}">
+        <input
+          type="email"
+          className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+          placeholder="Enter your email address"
+          name="email"
+          onChange="{handleInputChange}"
+        />
+        <input
+          type="password"
+          className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+          placeholder="Enter your password"
+          name="password"
+          onChange="{handleInputChange}"
+        />
+        <button
+          type="submit"
+          className="w-full p-3 text-sm font-medium text-white bg-blue-500 rounded-lg"
+        >
+          Sign up
+        </button>
+      </form>
+    );
+  };
+  ```
+
+  B4: Sử dụng thư viện hoặc tự tạo một state để lưu giữ giá trị của form, ở đây mình ví dụ bằng cách sử dụng state `values` làm state lưu trữ giá trị form
+
+  B5: Ok, giờ ta đã import thư viện, viết xong code JSX và sử dụng tailwindCSS để style rồi. Giờ cuối cùng chỉ còn là viết function handleSignUp để thực hiện chức năng đăng ký thôi:
+
+  ```js
+  // values: object chứa các dữ liệu của form gồm email và password (bật mí là tí nữa mình sẽ làm thêm có cả username và ảnh avatar)
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      // Khi tạo xong tài khoản = email và password thì lưu dữ liệu tài khoản vào biến user này
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      // Thực hiện xong câu lệnh trên thì log ra dòng này để dev biết
+      console.log("Registered user successfully");
+    } catch (error) {
+      // Nếu có lỗi thì log ra
+      console.log(error);
+    }
+  };
+  ```
+
+  - B6: Tận hưởng thành quả thôi, ta hãy cùng mở Firebase lên và F5 lại, sau đó check trong phần Authentication xem tài khoản đã tồn tại chưa.
+
+<hr/>
+
+- Cách thức code hiển thị thông tin người dùng sua khi đăng kí/đăng nhập **(LƯU Ý: Mình sẽ code thôi còn công đoạn setup authentication, firestore thì mình sẽ không bàn tới ở đây)**:
+
+  - B1: Đầu tiên ta tạo ra 1 state có chức năng lưu giữ thông tin của người dùng sau khi đăng kí/đăng nhập
+
+  ```js
+  const [userInfo, setUserInfo] = useState({});
+  ```
+
+  - B2: Ở function handleSignUp và handleSignIn ta thêm các dòng sau và các dòng này phải nằm ở dưới câu lệnh await đăng kí/đăng nhập, mình sẽ ví dụ = code đăng kí nha!
+
+  ```js
+  // values: object chứa các dữ liệu của form gồm email và password (bật mí là tí nữa mình sẽ làm thêm có cả username và ảnh avatar)
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      // Khi tạo xong tài khoản = email và password thì lưu dữ liệu tài khoản vào biến user này
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      // Sử dụng function updateProfile có sẵn của firebase auth, giá trị thứ nhất truyền vào auth.currentUser, giá trị thứ hai truyền vào 1 object có displayName (username người dùng) và photoURL (avatar người dùng)
+      await updateProfile(auth.currentUser, {
+        displayName: values.username,
+        photoURL:
+          "https://images.unsplash.com/photo-1667202819845-44ecd08552b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+      });
+      console.log("Registered user successfully");
+      // Sau khi đăng kí và updateProfile thành công thì add người dùng này vào collection users trong firestore database
+      const userRef = collection(db, "users");
+      addDoc(userRef, {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        id: user.user.uid,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  ```
+
+  - B3: Muốn hiển thị ra thì đơn giản thôi, vì ta đã lưu giữ toàn bộ thông tin của người dùng trong một state là userInfo nên ta chỉ việc lấy thông tin từ đó ra
+
+  ```jsx
+  <div className="flex flex-col items-center mt-10 gap-x-5">
+    {userInfo?.email && <div>{userInfo.email}</div>}
+    {userInfo?.photoURL && (
+      <img
+        src={userInfo.photoURL}
+        alt="Your avatar"
+        className="w-20 h-20 rounded-full"
+      />
+    )}
+    {userInfo?.displayName && <div>{userInfo.displayName}</div>}
+    <button
+      className="p-3 text-sm font-medium text-white bg-purple-500 rounded-lg"
+      onClick={handleSignOut}
+    >
+      Sign out
+    </button>
+  </div>
+  ```
+
+  <hr/>
+
+- Cách thức code chức năng đăng xuất **(LƯU Ý: Mình sẽ code thôi còn công đoạn setup authentication, firestore thì mình sẽ không bàn tới ở đây)**:
+
+  - B1: Tạo 1 button có event onClick được truyền vào 1 function handleSignOut:
+
+  ```js
+  <button
+    className="p-3 text-sm font-medium text-white bg-purple-500 rounded-lg"
+    onClick={handleSignOut}
+  >
+    Sign out
+  </button>
+  ```
+
+  - B2: Code function handleSignOut thui và mình nói thật mình chưa thấy chức năng sign out nào mà dễ như này:
+
+  ```js
+  const handleSignOut = () => {
+    signOut(auth);
+  };
+  ```
