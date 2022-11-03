@@ -155,11 +155,9 @@ console.log(count); // Ouput: 10
 
 - Prop drilling là điều xảy ra khi bạn cần truyền dữ liệu từ một component cha xuống một component thấp hơn trong cây component, drilling - khoan vào các component khác mà các component đấy có thể không cần giá trị props, trong khi chỉ một vài component là cần thôi
 
-## 17. Lazy Initialize State
-
 ## 18. useLocalStorage
 
-- Là 1 hook được viết sẵn trên useHook
+- Là 1 hook được viết sẵn trên useHook, có tác dụng dùng để lưu trữ giá trị của state vào trong local storage cực kì dễ dàng
 
 ## 19. Ý nghĩa của các component trong React-Router-Dom v6
 
@@ -1079,6 +1077,22 @@ const q = query(colRef, where("author", "==", "Tran Dang Khoi"));
 
 <hr/>
 
+- Trước khi làm theo thì hãy copy đoạn code này vào component của bạn (hãy sắp xếp lại sao cho hợp lí để tiện code và không bị lỗi nhé):
+
+```js
+const [values, setValues] = useState({
+  email: "",
+  password: "",
+});
+const [userInfo, setUserInfo] = useState({});
+const handleInputChange = (e) => {
+  setValues({
+    ...values,
+    [e.target.name]: e.target.value,
+  });
+};
+```
+
 - Cách thức code chức năng đăng kí **(LƯU Ý: Mình sẽ code thôi còn công đoạn setup authentication, firestore thì mình sẽ không bàn tới ở đây)**:
 
   - B1: Nếu muốn đăng kí bằng Firebase thì trước hết ta phải sử dụng getAuth trong thư viện firebase/auth,chúng ta sẽ truyền auth vào trong app hiện tại của chúng ta bằng cách nhét app vào getAuth sau đó biến nó thành 1 biến rồi export nó ra để sử dụng ở các file khác
@@ -1248,3 +1262,54 @@ const q = query(colRef, where("author", "==", "Tran Dang Khoi"));
   ```
 
   - **Bình thường thì khi đăng kí/đăng nhập xong nó sẽ không cập nhật ngay nên trong function đăng kí/dăng nhập bạn phải setUserInfo 1 lần nữa để nó hiển thị đầy đủ thông tin**
+
+<hr/>
+
+- Cách thức code chức năng đăng nhập **(LƯU Ý: Mình sẽ code thôi còn công đoạn setup authentication, firestore thì mình sẽ không bàn tới ở đây)**:
+
+  - B1: Để đăng nhập thì ta phải import `signInWithEmailAndPassword` từ `firebase/auth`.
+
+  - B2: Tạo một form để đăng nhập, truyền vào 1 event onSubmit là handleSignIn và viết chức năng trong function đó
+
+  ```jsx
+  <div className="w-full mt-20 max-w-[500px] mx-auto bg-white shadow-lg p-5">
+    <h2 className="text-center font-[30px] font-medium">Sign in form</h2>
+    <form onSubmit={handleSignIn}>
+      <input
+        type="email"
+        className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+        placeholder="Enter your email address"
+        name="email"
+        onChange={handleInputChange}
+      />
+      <input
+        type="password"
+        className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"
+        placeholder="Enter your password"
+        name="password"
+        onChange={handleInputChange}
+      />
+      <button
+        type="submit"
+        className="w-full p-3 text-sm font-medium text-white bg-blue-500 rounded-lg"
+      >
+        Sign in
+      </button>
+    </form>
+  </div>
+  ```
+
+  - B3: Code chức năng đăng nhập **(handleSignIn)**:
+
+  ```js
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const user = await signInWithEmailAndPassword(
+      auth,
+      values.email,
+      values.password
+    );
+    setUserInfo(user);
+    console.log("Login successfully");
+  };
+  ```
