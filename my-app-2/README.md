@@ -1022,7 +1022,7 @@ onSnapshot(singleDocRef, (doc) => {
 - limit: Giới hạn số lượng kết quả truy vấn được (ví dụ mình có 25 bài viết nhưng mình có thể limit lại chỉ hiển thị 5 bài viết thôi), mình sẽ ví dụ với limit là 5:
 
 ```js
-const colRef = collection(db, "post");
+const colRef = collection(db, "posts");
 useEffect(() => {
   const q = query(colRef, limit(5));
   // Log ra các documents
@@ -1042,7 +1042,7 @@ useEffect(() => {
 - orderBy: Sắp xếp kết quả truy vấn được theo thứ tự tăng dần hoặc giảm dần theo một cột nào đó, ví dụ nếu ta muốn sắp xếp theo tên của bài viết, và giới hạn số lượng hiển thị xuống còn 5 thì ta sẽ viết như sau:
 
 ```js
-const colRef = collection(db, "post");
+const colRef = collection(db, "posts");
 // Log ra các documents
 useEffect(() => {
   // Firestore queries
@@ -1061,4 +1061,18 @@ useEffect(() => {
 }, []);
 ```
 
-- where():
+- where(): Nhận vào 3 arguments là `("tên field","toán sử so sánh/điều kiện", "giá trị")`. Ví dụ mình muốn tìm các bài viết mà trong tiêu đề có chữ React thì mình sẽ viết như sau:
+
+```js
+const colRef = collection(db, "posts");
+
+const q = query(colRef, where("author", "==", "Tran Dang Khoi"));
+```
+
+- Cập nhật tiếp sau...
+
+# Firebase Authentication
+
+- Firebase rất khỏe, nó còn hỗ trợ cho ta về authentication như các chức năng đăng ký, đăng nhập, đăng xuất rất ổn áp.
+
+- onAuthStateChange: Check khi nào ta đăng nhập hay đăng xuất trong thời gian thực (real-time), khi đăng nhập thì hiển thị thông tin ngay lập tức, khi sign out thì ngược lại
