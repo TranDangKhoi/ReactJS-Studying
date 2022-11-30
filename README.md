@@ -1,11 +1,18 @@
-## **1. Props là gì? ( cơ bản )** <br>
+## 1. Component và Props là gì? ( cơ bản ) <br>
 
-- Props là một object, và là từ viết tắt của Properties.
+- Component là những thành phần giao diện (UI) được định nghĩa độc lập, có thể tái sử dụng ở nhiều nơi và hoàn toàn tách biệt nhau.
+
+- Props là viết tắt của Properties, là một `object` chứa các thuộc tính của một `Component`.
   _ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
   _ Ví dụ về đoạn mã HTML như sau: <br>
-  **img src="img_girl.jpg" width="500" height="600"**
-  -> Hầu hết các attribute như width, src, height cũng có thể được coi là Props của các thẻ img,<br>
-  Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con.<br>
+
+  ```html
+  <img src="img_girl.jpg" width="500" height="600" />
+  ```
+
+  -> Bạn có thể tưởng tượng rằng các attribute như `width`, `src`, `height` ở trên cũng có thể được coi là Props của các thẻ img
+
+  - Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con
 
 ## 2. JSX là gì?
 
@@ -71,9 +78,9 @@ const [on, setOn] = useState(false);
 // initialStateValue : false (giá trị ban đầu của state ý ở đây là khi mở trang web lên thì công tắc sẽ ở trạng thái tắt)
 ```
 
-## 7. Những nguyên tắc khi sử dụng hook
+## 7. Những nguyên tắc khi sử dụng hooks
 
-- Phải sử dụng ở phía trên cùng
+- Phải sử dụng ở phía trên đoạn code return
 - Không được viết ở bên trong vòng lặp
 - Không được viết ở bên trong câu điều kiện
 - Không được viết ở bên trong function
@@ -171,7 +178,7 @@ console.log(count); // Ouput: 10
 - isDirty: Khi giá trị default value được thay đổi và quay trở lại thì component sẽ re-render
 - dirtyField: Trả về giá trị boolean khi các field bị thay đổi so với default values (true khi thay đổi, false khi giống default values)
 - Nếu không set default value thì default value sẽ là ""
-- Muốn sử dụng được inValid ta cần thêm mode vào hook useForm
+- Muốn sử dụng được isValid ta cần thêm mode vào hook useForm
 
 ## 14. createPortal
 

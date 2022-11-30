@@ -1353,3 +1353,11 @@ const handleInputChange = (e) => {
     console.log("Login successfully");
   };
   ```
+
+# Redux
+
+#### Redux là gì ?
+
+#### Tại sao phải dùng Redux ?
+
+#### Redux hoạt động như thế nào ?
