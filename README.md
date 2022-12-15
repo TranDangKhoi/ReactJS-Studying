@@ -1,27 +1,27 @@
 ## 1. Component và Props là gì? ( cơ bản ) <br>
 
-- Component là những thành phần giao diện (UI) được định nghĩa độc lập, có thể tái sử dụng ở nhiều nơi và hoàn toàn tách biệt nhau.
+Component là những thành phần giao diện (UI) được định nghĩa độc lập, có thể tái sử dụng ở nhiều nơi và hoàn toàn tách biệt nhau.
 
-- Props là viết tắt của Properties, là một `object` chứa các thuộc tính của một `Component`.
-  _ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
-  _ Ví dụ về đoạn mã HTML như sau: <br>
+Props là viết tắt của Properties, là một `object` chứa các thuộc tính của một `Component`.
+_ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
+_ Ví dụ về đoạn mã HTML như sau: <br>
 
-  ```html
-  <img src="img_girl.jpg" width="500" height="600" />
-  ```
+```html
+<img src="img_girl.jpg" width="500" height="600" />
+```
 
-  -> Bạn có thể tưởng tượng rằng các attribute như `width`, `src`, `height` ở trên cũng có thể được coi là Props của các thẻ img
+-> Bạn có thể tưởng tượng rằng các attribute như `width`, `src`, `height` ở trên cũng có thể được coi là Props của các thẻ img
 
-  - Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con
+- Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con
 
 ## 2. JSX là gì?
 
-- JSX là `một cú pháp mở rộng cho JavaScript`.
-  -> JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement. Khi sử dụng hook phải sử dụng ở trong functional component**
+JSX là `một cú pháp mở rộng cho JavaScript`.
+-> JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement.**
 
 ## 3. Children Props là gì?
 
-- Đầu tiên, children prop là 1 prop chứa nội dung con được bọc bên trong 1 component, và prop này không phải truyền vào bằng cách ghi vào bên cạnh tên component mà nó sẽ nằm giữa thẻ đóng và thẻ mở của 1 component như sau:
+Đầu tiên, children prop là 1 prop chứa nội dung con được bọc bên trong 1 component, và prop này không phải truyền vào bằng cách ghi vào bên cạnh tên component mà nó sẽ nằm giữa thẻ đóng và thẻ mở của 1 component như sau:
 
 ```js
 // Bên file MyComponent.js
@@ -39,11 +39,11 @@ const MyComponent = ({children}) => {
 
 ## 4. State là gì?
 
-- State **là thông tin được lưu bên trong Component** và **Component đó có thể tùy chỉnh cái state đó**, ví dụ:
+State **là thông tin được lưu bên trong Component** và **Component đó có thể tùy chỉnh cái state đó**, ví dụ:
 
-- Khi bạn code **một trang đăng kí**, thì trong **trang đó sẽ có gì** ? **Trong trang đăng kí sẽ có username, password, email,** ... đây **là những thông tin thuộc component của trang đăng kí**
+Khi bạn code **một trang đăng kí**, thì trong **trang đó sẽ có gì** ? **Trong trang đăng kí sẽ có username, password, email,** ... đây **là những thông tin thuộc component của trang đăng kí**
 
-- Để dùng state thì sẽ sử dụng một cái hook gọi là useState:
+Để dùng state thì sẽ sử dụng một cái hook gọi là useState:
 
 ```js
 // username, email, password là các state
@@ -87,8 +87,7 @@ const [on, setOn] = useState(false);
 
 ## 7. useEffect là gì?
 
-- Thường được dùng khi làm việc liên quan tới những side effects
-- Side effects là những thứ khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
+Thường được dùng khi làm việc liên quan tới những side effects - là những thứ khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
 
 VD:
 
@@ -98,9 +97,9 @@ function demo() {
 }
 ```
 
-- Đây là 1 ví dụ về side effect. Function trên không return lại giá trị gì cả, nhưng lại thực hiện 1 chức năng nhất định gây ra tác động ở bên ngoài
+Đây là 1 ví dụ về side effect. Function trên không return lại giá trị gì cả, nhưng lại thực hiện 1 chức năng nhất định gây ra tác động ở bên ngoài
 
-- Vậy useEffect viết như nào? Mình sẽ viết nó ra và giải thích từng thứ một nhé:
+Vậy useEffect viết như nào? Mình sẽ viết nó ra và giải thích từng thứ một nhé:
 
 ```js
 useEffect(() => {
@@ -109,7 +108,7 @@ useEffect(() => {
 // deps: Khi deps thay đổi thì useEffect sẽ được chạy lại
 ```
 
-- Vậy để convert function trên sang dạng useEffect ta sẽ viết như sau:
+Vậy để convert function trên sang dạng useEffect ta sẽ viết như sau:
 
 ```js
 useEffect(() => {
@@ -119,9 +118,9 @@ useEffect(() => {
 
 ## 8. Cleanup function là gì
 
-- Nói dễ hiểu thì:
-  Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng gì đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
-  -> sử dụng clean up function để làm việc đó như sau
+Nói dễ hiểu thì:
+Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng side-effect nào đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
+-> sử dụng clean up function để làm việc đó như sau
 
 ```js
 useEffect(
@@ -212,7 +211,7 @@ console.log(count); // Ouput: 10
 
 - Link: giống như thẻ a, dùng đẻ điều hướng tới các trang khác mà không bị reload
 
-- NavLink: Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive, NavLink isActive được sử dụng như sau:
+- NavLink (1 lưu ý là NavLink chỉ thích hợp để làm navigation bar, bởi vì một số ràng buộc về prop `to`, khi thực sự không cần thiết thì nên sử dụng `Link`): Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive, NavLink isActive được sử dụng như sau:
 
 ```jsx
 <>

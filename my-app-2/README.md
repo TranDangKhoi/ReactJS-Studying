@@ -1,20 +1,27 @@
-## **1. Props là gì? ( cơ bản )** <br>
+## 1. Component và Props là gì? ( cơ bản ) <br>
 
-- Props là một object, và là từ viết tắt của Properties.
-  _ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
-  _ Ví dụ về đoạn mã HTML như sau: <br>
-  **img src="img_girl.jpg" width="500" height="600"**
-  -> Hầu hết các attribute như width, src, height cũng có thể được coi là Props của các thẻ img,<br>
-  Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con.<br>
+Component là những thành phần giao diện (UI) được định nghĩa độc lập, có thể tái sử dụng ở nhiều nơi và hoàn toàn tách biệt nhau.
+
+Props là viết tắt của Properties, là một `object` chứa các thuộc tính của một `Component`.
+_ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
+_ Ví dụ về đoạn mã HTML như sau: <br>
+
+```html
+<img src="img_girl.jpg" width="500" height="600" />
+```
+
+-> Bạn có thể tưởng tượng rằng các attribute như `width`, `src`, `height` ở trên cũng có thể được coi là Props của các thẻ img
+
+- Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con
 
 ## 2. JSX là gì?
 
-- JSX là `một cú pháp mở rộng cho JavaScript`.
-  -> JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement. Khi sử dụng hook phải sử dụng ở trong functional component**
+JSX là `một cú pháp mở rộng cho JavaScript`.
+-> JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement.**
 
 ## 3. Children Props là gì?
 
-- Đầu tiên, children prop là 1 prop chứa nội dung con được bọc bên trong 1 component, và prop này không phải truyền vào bằng cách ghi vào bên cạnh tên component mà nó sẽ nằm giữa thẻ đóng và thẻ mở của 1 component như sau:
+Đầu tiên, children prop là 1 prop chứa nội dung con được bọc bên trong 1 component, và prop này không phải truyền vào bằng cách ghi vào bên cạnh tên component mà nó sẽ nằm giữa thẻ đóng và thẻ mở của 1 component như sau:
 
 ```js
 // Bên file MyComponent.js
@@ -32,11 +39,11 @@ const MyComponent = ({children}) => {
 
 ## 4. State là gì?
 
-- State **là thông tin được lưu bên trong Component** và **Component đó có thể tùy chỉnh cái state đó**, ví dụ:
+State **là thông tin được lưu bên trong Component** và **Component đó có thể tùy chỉnh cái state đó**, ví dụ:
 
-- Khi bạn code **một trang đăng kí**, thì trong **trang đó sẽ có gì** ? **Trong trang đăng kí sẽ có username, password, email,** ... đây **là những thông tin thuộc component của trang đăng kí**
+Khi bạn code **một trang đăng kí**, thì trong **trang đó sẽ có gì** ? **Trong trang đăng kí sẽ có username, password, email,** ... đây **là những thông tin thuộc component của trang đăng kí**
 
-- Để dùng state thì sẽ sử dụng một cái hook gọi là useState:
+Để dùng state thì sẽ sử dụng một cái hook gọi là useState:
 
 ```js
 // username, email, password là các state
@@ -45,7 +52,7 @@ const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 ```
 
-## 6. useState là gì?
+## 5. useState là gì?
 
 - useState cho phép chúng ta khai báo local state trong Function Component cách mà trước để chỉ dùng cho Class Component
 
@@ -71,17 +78,16 @@ const [on, setOn] = useState(false);
 // initialStateValue : false (giá trị ban đầu của state ý ở đây là khi mở trang web lên thì công tắc sẽ ở trạng thái tắt)
 ```
 
-## 7. Những nguyên tắc khi sử dụng hook
+## 6. Những nguyên tắc khi sử dụng hooks
 
-- Phải sử dụng ở phía trên cùng
+- Phải sử dụng ở phía trên đoạn code return
 - Không được viết ở bên trong vòng lặp
 - Không được viết ở bên trong câu điều kiện
 - Không được viết ở bên trong function
 
-## 9. useEffect là gì?
+## 7. useEffect là gì?
 
-- Thường được dùng khi làm việc liên quan tới những side effects
-- Side effects là những thứ khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
+Thường được dùng khi làm việc liên quan tới những side effects - là những thứ khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
 
 VD:
 
@@ -91,9 +97,9 @@ function demo() {
 }
 ```
 
-- Đây là 1 ví dụ về side effect. Function trên không return lại giá trị gì cả, nhưng lại thực hiện 1 chức năng nhất định gây ra tác động ở bên ngoài
+Đây là 1 ví dụ về side effect. Function trên không return lại giá trị gì cả, nhưng lại thực hiện 1 chức năng nhất định gây ra tác động ở bên ngoài
 
-- Vậy useEffect viết như nào? Mình sẽ viết nó ra và giải thích từng thứ một nhé:
+Vậy useEffect viết như nào? Mình sẽ viết nó ra và giải thích từng thứ một nhé:
 
 ```js
 useEffect(() => {
@@ -102,7 +108,7 @@ useEffect(() => {
 // deps: Khi deps thay đổi thì useEffect sẽ được chạy lại
 ```
 
-- Vậy để convert function trên sang dạng useEffect ta sẽ viết như sau:
+Vậy để convert function trên sang dạng useEffect ta sẽ viết như sau:
 
 ```js
 useEffect(() => {
@@ -110,11 +116,11 @@ useEffect(() => {
 }, []);
 ```
 
-## 10. Cleanup function là gì
+## 8. Cleanup function là gì
 
-- Nói dễ hiểu thì:
-  Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng gì đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
-  -> sử dụng clean up function để làm việc đó như sau
+Nói dễ hiểu thì:
+Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng side-effect nào đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
+-> sử dụng clean up function để làm việc đó như sau
 
 ```js
 useEffect(
@@ -131,7 +137,7 @@ useEffect(
 - Dưới đây là ảnh sơ đồ useEffect hook để giúp bạn hiểu hơn về cleanup
   ![useEffect lifecycle](https://user-images.githubusercontent.com/88824627/181787967-13243cae-fa00-4f98-80d2-6d4c542763cf.svg)
 
-## 12. useRef và useState giống và khác nhau thế nào ?
+## 9. useRef và useState giống và khác nhau thế nào ?
 
 - Cả hai đều chứa dữ liệu của chúng trong khi render và update UI, nhưng chỉ có useState là gây ra tình trạng re-render
 - useRef trả về 1 object có một property bên trong object là current nắm giữ giá trị của useRef
@@ -163,7 +169,7 @@ console.log(count); // Ouput: 10
   <br>
   -> Về cơ bản, thì useRef không gây re-render còn useState thì có và useRef thường sử dụng để truy cập vào DOM hoặc vào components. Vậy nên sử dụng useState khi bạn muốn update dữ liệu và muốn update UI, còn nếu bạn chỉ muốn lấy ra data trong quá trình mount tới khi unmount thì useRef là sự lựa chọn dành cho bạn
 
-## 13. React Hook Form
+## 10. React Hook Form
 
 - reset: Reset toàn bộ form hoặc chỉ các trường nhất định
 - watch : Theo dõi xem checkbox checked thì thực hiện chức năng gì và ngược lại
@@ -171,9 +177,9 @@ console.log(count); // Ouput: 10
 - isDirty: Khi giá trị default value được thay đổi và quay trở lại thì component sẽ re-render
 - dirtyField: Trả về giá trị boolean khi các field bị thay đổi so với default values (true khi thay đổi, false khi giống default values)
 - Nếu không set default value thì default value sẽ là ""
-- Muốn sử dụng được inValid ta cần thêm mode vào hook useForm
+- Muốn sử dụng được isValid ta cần thêm mode vào hook useForm
 
-## 14. createPortal
+## 11. createPortal
 
 - Lôi một component hoặc 1 đoạn code đang nằm trong một element nào đó ra ngoài cùng và nằm cùng cấp với div root
 - Công dụng:
@@ -187,19 +193,15 @@ console.log(count); // Ouput: 10
 
 ```
 
-## 15. Context
+## 12. Context
 
 - Context sẽ cung cấp cho ta 1 phương pháp để chia sẻ những giá trị giữa các component với nhau
 
-## 16. Props Drilling là gì
+## 13. Props Drilling là gì
 
 - Prop drilling là điều xảy ra khi bạn cần truyền dữ liệu từ một component cha xuống một component thấp hơn trong cây component, drilling - khoan vào các component khác mà các component đấy có thể không cần giá trị props, trong khi chỉ một vài component là cần thôi
 
-## 18. useLocalStorage
-
-- Là 1 hook được viết sẵn trên useHook, có tác dụng dùng để lưu trữ giá trị của state vào trong local storage cực kì dễ dàng
-
-## 19. Ý nghĩa của các component trong React-Router-Dom v6
+## 14. Ý nghĩa của các component trong React-Router-Dom v6
 
 - BrowserRoutes : Dùng để bọc thằng <App/> -> enable chức năng router cho website
 
@@ -209,7 +211,7 @@ console.log(count); // Ouput: 10
 
 - Link: giống như thẻ a, dùng đẻ điều hướng tới các trang khác mà không bị reload
 
-- NavLink: Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive, NavLink isActive được sử dụng như sau:
+- NavLink (1 lưu ý là NavLink chỉ thích hợp để làm navigation bar, bởi vì một số ràng buộc về prop `to`, khi thực sự không cần thiết thì nên sử dụng `Link`): Cũng giống link nhưng thường sử dụng để làm navigation bar hoặc các link cần thuộc tính isActive, NavLink isActive được sử dụng như sau:
 
 ```jsx
 <>
@@ -447,7 +449,7 @@ const Homepage = () => {
 
 -
 
-## 20. Higher Order Components
+## 15. Higher Order Components
 
 - Khi ta phát triển một component, và nó sử dụng đi, sử dụng lại một logic nào đó và chúng ta muốn sử dụng cái logic đó từ component này qua component kia mà không cần phải viết lại -> THÌ ta sẽ phải sử dụng HOCS
 - Kỹ thuật này cùng với render props thường được sử dụng trước khi hình thành ra khái niệm custom hooks
@@ -457,7 +459,7 @@ const Homepage = () => {
   - Ở component B và component C, ta cũng sẽ sử dụng axios để fetch data về, nhưng ta lại không muốn viết lại logic của hiệu ứng loading, mà muốn sử dụng lại nó
     -> Ta sẽ phải áp dụng HOCS để làm việc này
 
-## 21. Vấn đề khi sử dụng HOCS
+## 16. Vấn đề khi sử dụng HOCS
 
 1. Giả dụ giờ ta có 1 props data được truyền vào bên trong Component ở file withLoading
 
@@ -515,7 +517,7 @@ export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
 // Giờ mà lỗi thì ối dồi ôi luôn, không biết đang conflict với cái nào
 ```
 
-## 22. Lifting State
+## 17. Lifting State
 
 - Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
 
@@ -1353,11 +1355,3 @@ const handleInputChange = (e) => {
     console.log("Login successfully");
   };
   ```
-
-# Redux
-
-#### Redux là gì ?
-
-#### Tại sao phải dùng Redux ?
-
-#### Redux hoạt động như thế nào ?
