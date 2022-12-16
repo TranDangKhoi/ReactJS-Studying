@@ -1,12 +1,28 @@
 import React from "react";
 import "./App.css";
-import ReactHookForm from "./components/Form,Formik,Yup, RHF/react-hook-form/ReactHookForm";
-import FireBaseAuth from "./firebase/FireBaseAuth";
-
+import Dropdown from "./components/advanced-react/inversion-of-control/Dropdown";
+const options = [
+  {
+    title: "Front-End Developer",
+    onClick: () => {},
+  },
+  {
+    title: "Back-End Developer",
+    onClick: () => {},
+  },
+  {
+    title: "Fullstack Developer",
+    onClick: () => {},
+  },
+];
 function App() {
   return (
     <>
-      <ReactHookForm></ReactHookForm>
+      <Dropdown
+        options={options}
+        placeholder="Please select your job"
+        inputPlaceholder="Search for a job..."
+      ></Dropdown>
     </>
   );
 }

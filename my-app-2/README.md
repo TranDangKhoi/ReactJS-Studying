@@ -952,6 +952,16 @@ function App() {
 
 - Đó thì đây là ví dụ đơn giản thui, sau này đi làm tới level cao hơn thì còn kha khá nhiều vấn đề cần phải viết thêm ^^
 
+# Inversion Of Control
+
+Là mức độ kiểm soát và độ linh hoạt của component đó khi ta hoặc các lập trình viên khác sử dụng chúng
+
+Độ phức tạp của việc kiểm soát component được sắp xếp theo thứ tự tăng dần:
+
+```ts
+Compound Component -> Control Props -> Custom Hook -> Props Getter -> State Reducer
+```
+
 # React Error Boundary
 
 - React Error Boundary là 1 thư viện của React giúp bắt các lỗi trong component và các components con của nó, ví dụ trong **trang đọc báo**, bạn sẽ có 3 thành phần chính đó chính là **các bài báo**, **thanh điều hướng** hay nói cách khác là navigation bar, **Phần footer**

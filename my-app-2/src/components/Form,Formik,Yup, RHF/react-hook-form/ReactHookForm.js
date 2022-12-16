@@ -59,7 +59,7 @@ const ReactHookForm = () => {
         <input
           type="text"
           id="firstName"
-          className="p-4 rounded-lg border-2 border-gray-200"
+          className="p-4 border-2 border-gray-200 rounded-lg"
           placeholder="Enter your first name"
           {...register("firstName")}
         />
@@ -75,7 +75,7 @@ const ReactHookForm = () => {
         <input
           type="text"
           id="lastName"
-          className="p-4 rounded-lg border-2 border-gray-200"
+          className="p-4 border-2 border-gray-200 rounded-lg"
           placeholder="Enter your last name"
           {...register("lastName")}
         />
@@ -94,23 +94,23 @@ const ReactHookForm = () => {
         {watchShowAge && (
           <input
             type="number"
-            className="p-4 rounded-lg border-2 border-gray-200"
+            className="p-4 border-2 border-gray-200 rounded-lg"
             placeholder="Enter your age"
           />
         )}
       </div>
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white text-lg rounded-lg p-5"
+        className="w-full p-5 text-lg text-white bg-blue-500 rounded-lg"
       >
         {isSubmitting ? (
-          <div className="mx-auto w-6 h-6 border-2 border-white border-t-2 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-6 h-6 mx-auto border-2 border-t-2 border-white rounded-full border-t-transparent animate-spin"></div>
         ) : (
           "Submit"
         )}
       </button>
       <button
-        className="my-3 p-4 rounded-md bg-green-400 text-white text-sm w-full"
+        className="w-full p-4 my-3 text-sm text-white bg-green-400 rounded-md"
         onClick={handleSetDemoData}
       >
         Demo Data
@@ -127,7 +127,7 @@ const MyInput = ({ control, ...props }) => {
   });
   return (
     <input
-      className="p-4 rounded-lg border-2 border-gray-200"
+      className="p-4 border-2 border-gray-200 rounded-lg"
       {...field}
       {...props}
     />
@@ -141,7 +141,7 @@ const MyInput = ({ control, ...props }) => {
 //       defaultValue=""
 //       render={({ field }) => (
 //         <input
-//           className="p-4 rounded-lg border-2 border-gray-200"
+//           className="p-4 border-2 border-gray-200 rounded-lg"
 //           {...field}
 //           {...props}
 //         />
