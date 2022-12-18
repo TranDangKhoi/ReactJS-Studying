@@ -1,28 +1,21 @@
 import React from "react";
+import { useState } from "react";
 import "./App.css";
-import Dropdown from "./components/advanced-react/inversion-of-control/Dropdown";
-const options = [
-  {
-    title: "Front-End Developer",
-    onClick: () => {},
-  },
-  {
-    title: "Back-End Developer",
-    onClick: () => {},
-  },
-  {
-    title: "Fullstack Developer",
-    onClick: () => {},
-  },
-];
+import Count from "./components/useMemo, useCallback/Count";
+
 function App() {
+  const [filter, setFilter] = useState("");
+  const calculate = () => {
+    setFilter("");
+  };
   return (
     <>
-      <Dropdown
-        options={options}
-        placeholder="Please select your job"
-        inputPlaceholder="Search for a job..."
-      ></Dropdown>
+      <input
+        type="text"
+        className="p-3 border border-gray-300 rounded-lg"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      <Count calculate={calculate}></Count>
     </>
   );
 }

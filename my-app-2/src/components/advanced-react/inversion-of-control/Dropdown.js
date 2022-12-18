@@ -5,6 +5,8 @@ const Dropdown = ({
   options,
   placeholder = "Please select an option",
   inputPlaceholder = "Search for an option",
+  visibleIconCheck = false,
+  visibleSearch = false,
   onChange = () => {},
 }) => {
   const [show, setShow] = useState(false);
@@ -22,21 +24,39 @@ const Dropdown = ({
       {show && (
         <div className="border border-gray-300 rounded-lg option-list">
           <div className="p-3">
-            <input
-              type="text"
-              placeholder={inputPlaceholder}
-              className="w-full p-4 border border-gray-300 outline-none"
-              onChange={onChange}
-            />
+            {visibleSearch && (
+              <input
+                type="text"
+                placeholder={inputPlaceholder}
+                className="w-full p-4 border border-gray-300 outline-none"
+                onChange={onChange}
+              />
+            )}
           </div>
           {options.length > 0 &&
             options.map((option) => (
               <div
                 key={option.title}
-                className="p-4 cursor-pointer option-item"
+                className="flex items-center justify-between p-4 cursor-pointer option-item"
                 onClick={option.onClick}
               >
-                {option.title}
+                <span>{option.title}</span>
+                {visibleIconCheck && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
+                    />
+                  </svg>
+                )}
               </div>
             ))}
         </div>

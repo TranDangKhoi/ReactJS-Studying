@@ -962,6 +962,97 @@ Là mức độ kiểm soát và độ linh hoạt của component đó khi ta h
 Compound Component -> Control Props -> Custom Hook -> Props Getter -> State Reducer
 ```
 
+Các bạn có thể hiểu rằng khi đi làm sẽ có rất nhiều trường hợp có thể xảy ra, khách hàng sẽ sáng nắng chiều mưa và họ đòi ta phải thay đổi rất nhiều nên việc ta code ra một component dễ thay đổi và tiện để bảo trì là một điều nên làm
+
+Chứ không phải là mỗi lần được giao thêm một cái gì mới ta lại lục lại và hí hoáy sửa sửa thêm thêm. Lúc bắt đầu có thể có rất ít props, nhưng càng về sau ta cứ thêm dần như vậy thì nó sẽ rất là bự (>8 props).
+
+Vậy nên ta phải code làm sao cho tiện nhất có thể, và cái mình muốn nói ở đây là Inversion Of Control
+
+# useMemo, useCallback và React.memo
+
+Khi code ra 1 website lớn, ta rất cần chú trọng vào hiệu năng của trang web nhằm nâng cao trải nghiệm của người dùng, chứ không phải là một giao diện bắt mắt nhưng trải nghiệm thì rất tệ, lag. Vì vậy khi code React ta sẽ phải tìm ra cách làm sao để các component `không re-render khi không cần thiết`. Ta hãy cùng làm 1 ví dụ sau để hiểu tại sao cần phải học về useMemo và useCallback:
+
+- Đầu tiên, mình sẽ tạo ra một component `Count`, các bạn hãy chú ý vào giá trị của `renderRef` trong component này nhé, giá trị này dùng để nhận biết khi component bị re-render bằng cách tăng 1 đơn vị mỗi khi re-render:
+
+```jsx
+const Count = () => {
+  const [count, setCount] = useState(0);
+  const renderRef = useRef(0);
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <div>Renders: {renderRef.current++}</div>
+      <button
+        className="p-3 font-medium text-white bg-blue-400 rounded"
+        onClick={() => setCount((c) => c + 1)}
+      >
+        Increase
+      </button>
+    </div>
+  );
+};
+```
+
+- Ok, bây giờ ta nhét nó vào App.js để hiển thị ở website:
+
+```jsx
+function App() {
+  return (
+    <>
+      <Count></Count>
+    </>
+  );
+}
+```
+
+- Mọi thứ vẫn rất là bình thường và các bạn có thể nhận thấy khi nhấn vào button `Increase` thì cả `giá trị của state count` và `renderRef.current` đều `tăng lên 1` mỗi lần nhấn
+
+![Ảnh](https://i.ibb.co/HqqnDJk/image.png)
+
+- Bây giờ, mình sẽ thử tạo một cái input nhỏ nhỏ xinh xinh nằm trên `<Count></Count>`, đồng thời tạo một state là `filter` để test thêm xem khi input re-render thì các component khác nằm cùng file có bị re-render không:
+
+```jsx
+function App() {
+  const [filter, setFilter] = useState("");
+  return (
+    <>
+      <input
+        type="text"
+        className="p-3 border border-gray-300 rounded-lg"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      <Count></Count>
+    </>
+  );
+}
+```
+
+- Và whoa la, khi bạn nhập vào input thì `renderRef.current` cũng sẽ `tăng lên 1`. Điều đó chứng tỏ điều gì? Chứng tỏ là component Counter đã re-render khi input bắt sự kiện onChange mỗi lần bạn nhập một từ vào mặc dù hai thằng trông có vẻ không hề liên quan tới nhau
+
+Vậy nên, bây giờ ta sẽ phải sử dụng tới `React.memo`, nó là gì thì mình sẽ giải thích ở bên dưới sau:
+
+```jsx
+// Wrap component lại = React.memo và thử F5 và nhập vào input
+const Count = React.memo(() => {
+  const [count, setCount] = useState(0);
+  const renderRef = useRef(0);
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <div>Renders: {renderRef.current++}</div>
+      <button
+        className="p-3 font-medium text-white bg-blue-400 rounded"
+        onClick={() => setCount((c) => c + 1)}
+      >
+        Increase
+      </button>
+    </div>
+  );
+});
+```
+
+Khi React.memo() bao quanh một component, React sẽ `ghi nhớ kết quả render` và `bỏ qua các quá trình render không cần thiết`, nhằm tối ưu hóa việc hiệu năng của quá trình render các functional component.
+
 # React Error Boundary
 
 - React Error Boundary là 1 thư viện của React giúp bắt các lỗi trong component và các components con của nó, ví dụ trong **trang đọc báo**, bạn sẽ có 3 thành phần chính đó chính là **các bài báo**, **thanh điều hướng** hay nói cách khác là navigation bar, **Phần footer**
