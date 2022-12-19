@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import "./App.css";
 import Count from "./components/useMemo, useCallback/Count";
 
 function App() {
   const [filter, setFilter] = useState("");
-  const calculate = () => {
+  // useCallback(() => callback, [deps]);
+  const calculate = useCallback(() => {
     setFilter("");
-  };
+  }, [setFilter]);
+  // useMemo(() => value, [deps]);
+  const data = useMemo(() => ({ success: false }), []);
   return (
     <>
       <input
@@ -15,7 +19,7 @@ function App() {
         className="p-3 border border-gray-300 rounded-lg"
         onChange={(e) => setFilter(e.target.value)}
       />
-      <Count calculate={calculate}></Count>
+      <Count calculate={calculate} data={data}></Count>
     </>
   );
 }
