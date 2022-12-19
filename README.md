@@ -952,6 +952,209 @@ function App() {
 
 - Đó thì đây là ví dụ đơn giản thui, sau này đi làm tới level cao hơn thì còn kha khá nhiều vấn đề cần phải viết thêm ^^
 
+# Inversion Of Control
+
+Là mức độ kiểm soát và độ linh hoạt của component đó khi ta hoặc các lập trình viên khác sử dụng chúng
+
+Độ phức tạp của việc kiểm soát component được sắp xếp theo thứ tự tăng dần:
+
+```ts
+Compound Component -> Control Props -> Custom Hook -> Props Getter -> State Reducer
+```
+
+Các bạn có thể hiểu rằng khi đi làm sẽ có rất nhiều trường hợp có thể xảy ra, khách hàng sẽ sáng nắng chiều mưa và họ đòi ta phải thay đổi rất nhiều nên việc ta code ra một component dễ thay đổi và tiện để bảo trì là một điều nên làm
+
+Chứ không phải là mỗi lần được giao thêm một cái gì mới ta lại lục lại và hí hoáy sửa sửa thêm thêm. Lúc bắt đầu có thể có rất ít props, nhưng càng về sau ta cứ thêm dần như vậy thì nó sẽ rất là bự (>8 props).
+
+Vậy nên ta phải code làm sao cho tiện nhất có thể, và cái mình muốn nói ở đây là Inversion Of Control
+
+# useMemo, useCallback và React.memo
+
+Khi code ra 1 website lớn, ta rất cần chú trọng vào hiệu năng của trang web nhằm nâng cao trải nghiệm của người dùng, chứ không phải là một giao diện bắt mắt nhưng trải nghiệm thì rất tệ, lag. Vì vậy khi code React ta sẽ phải tìm ra cách làm sao để các component `không re-render khi không cần thiết`. Ta hãy cùng làm 1 ví dụ sau để hiểu tại sao cần phải học về useMemo và useCallback:
+
+- Đầu tiên, mình sẽ tạo ra một component `Count`, các bạn hãy chú ý vào giá trị của `renderRef` trong component này nhé, giá trị này dùng để nhận biết khi component bị re-render bằng cách tăng 1 đơn vị mỗi khi re-render:
+
+```jsx
+const Count = () => {
+  const [count, setCount] = useState(0);
+  const renderRef = useRef(0);
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <div>Renders: {renderRef.current++}</div>
+      <button
+        className="p-3 font-medium text-white bg-blue-400 rounded"
+        onClick={() => setCount((c) => c + 1)}
+      >
+        Increase
+      </button>
+    </div>
+  );
+};
+```
+
+- Ok, bây giờ ta nhét nó vào App.js để hiển thị ở website:
+
+```jsx
+function App() {
+  return (
+    <>
+      <Count></Count>
+    </>
+  );
+}
+```
+
+- Mọi thứ vẫn rất là bình thường và các bạn có thể nhận thấy khi nhấn vào button `Increase` thì cả `giá trị của state count` và `renderRef.current` đều `tăng lên 1` mỗi lần nhấn
+
+![Ảnh](https://i.ibb.co/HqqnDJk/image.png)
+
+- Bây giờ, mình sẽ thử tạo một cái input nhỏ nhỏ xinh xinh nằm trên `<Count></Count>`, đồng thời tạo một state là `filter` để test thêm xem khi input re-render thì các component khác nằm cùng file có bị re-render không:
+
+```jsx
+function App() {
+  const [filter, setFilter] = useState("");
+  return (
+    <>
+      <input
+        type="text"
+        className="p-3 border border-gray-300 rounded-lg"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      <Count></Count>
+    </>
+  );
+}
+```
+
+- Và whoa la, khi bạn nhập vào input thì `renderRef.current` cũng sẽ `tăng lên 1`. Điều đó chứng tỏ điều gì? Chứng tỏ là component Counter đã re-render khi input bắt sự kiện onChange mỗi lần bạn nhập một từ vào mặc dù hai thằng trông có vẻ không hề liên quan tới nhau
+
+Vậy nên, bây giờ ta sẽ phải sử dụng tới `React.memo`, nó là gì thì mình sẽ giải thích ở bên dưới sau:
+
+```jsx
+// Wrap component lại = React.memo và thử F5 và nhập vào input
+const Count = React.memo(() => {
+  const [count, setCount] = useState(0);
+  const renderRef = useRef(0);
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <div>Renders: {renderRef.current++}</div>
+      <button
+        className="p-3 font-medium text-white bg-blue-400 rounded"
+        onClick={() => setCount((c) => c + 1)}
+      >
+        Increase
+      </button>
+    </div>
+  );
+});
+```
+
+Khi React.memo() bao quanh một component, React sẽ `ghi nhớ kết quả render` và `bỏ qua các quá trình render không cần thiết`, nhằm tối ưu hóa việc hiệu năng của quá trình render các functional component.
+
+Bây giờ, mình sẽ truyền 1 prop là `calculate` vào component Count, để xem component đó có re-render không nha:
+
+```js
+function App() {
+  const [filter, setFilter] = useState("");
+
+  // Đoạn code mới
+  const calculate = () => {
+    setFilter("");
+  };
+
+  return (
+    <>
+      <input
+        type="text"
+        className="p-3 border border-gray-300 rounded-lg"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      {/* Thêm prop calculate */}
+      <Count calculate={calculate}></Count>
+    </>
+  );
+}
+```
+
+Như các bạn thấy, component Count lại một lần nữa re-render mỗi lần bạn nhập, ở đây prop `calculate` chỉ là một function nhưng khi các bạn thay đổi giá trị của state filter -> component sẽ re-render và giá trị của `calculate` cũng sẽ thay đổi mỗi lần re-render. Cái này mình cũng không bít nói rõ hơn sao nữa nhưng mà mỗi lần re-render là `calculate` nó như thay đổi giá trị nào đó của mình vậy
+
+Vậy thì, đối với trường hợp này ta phải sử dụng useCallback để có thể tối ưu re-render, cú pháp của nó sẽ như sau:
+
+```jsx
+useCallback(() => callback, [deps]);
+```
+
+Áp dụng vào trong bài toán hiện tại ta được:
+
+```jsx
+// Chỉ re-render khi setFilter thay đổi
+const calculate = useCallback(() => {
+  setFilter("");
+}, [setFilter]);
+```
+
+Ok, vậy là chúng ta đã xong trường hợp tối ưu re-render khi prop truyền vào là một function, giờ ta sẽ tới object,array,...
+
+```jsx
+function App() {
+  const [filter, setFilter] = useState("");
+  const calculate = useCallback(() => {
+    setFilter("");
+  }, [setFilter]);
+
+  // Đoạn code mới
+  const data = { success: false };
+
+  return (
+    <>
+      <input
+        type="text"
+        className="p-3 border border-gray-300 rounded-lg"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      {/* Prop mới */}
+      <Count calculate={calculate} data={data}></Count>
+    </>
+  );
+}
+```
+
+Nếu ta để im như hiện tại, thì chắc chắn component sẽ lại liên tục re-render khi ta nhập vào input, vậy nên bây giờ ta sẽ phải sử dụng tới useMemo
+
+Cú pháp của useMemo sẽ như sau:
+
+```jsx
+useMemo(() => value, [deps]);
+```
+
+Áp dụng vào bài toán hiện tại ta sẽ có như sau:
+
+```jsx
+function App() {
+  const [filter, setFilter] = useState("");
+  // useCallback(() => callback, [deps]);
+  const calculate = useCallback(() => {
+    setFilter("");
+  }, [setFilter]);
+  // useMemo(() => value, [deps]);
+  const data = useMemo(() => ({ success: false }), []);
+  return (
+    <>
+      <input
+        type="text"
+        className="p-3 border border-gray-300 rounded-lg"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      <Count calculate={calculate} data={data}></Count>
+    </>
+  );
+}
+```
+
+Dẫu nghe có vẻ hay, nhưng khi các bạn lạm dụng quá nhiều, code cho component nào cũng sử dụng `useCallback` và `useMemo` thì dung lượng mọi thứ được lưu sẵn trong `memory/cache` sẽ càng ngày càng nhiều và đồng thời cũng làm giảm hiệu năng của trang web. Vậy nên, chỉ nên sử dụng khi thứ đó thực sự làm cho web re-render quá nhiều lần và mỗi lần re-render thường thay đổi rất nhiều thứ trên UI, vì bản chất React cũng nhanh sẵn rồi, ta không cần phải optimize quá vấn đề đó khi chưa cần thiết
+
 # React Error Boundary
 
 - React Error Boundary là 1 thư viện của React giúp bắt các lỗi trong component và các components con của nó, ví dụ trong **trang đọc báo**, bạn sẽ có 3 thành phần chính đó chính là **các bài báo**, **thanh điều hướng** hay nói cách khác là navigation bar, **Phần footer**
