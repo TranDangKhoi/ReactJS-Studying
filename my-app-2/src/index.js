@@ -5,8 +5,11 @@ import "./index.scss";
 import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-);
+const element = <h1>Hello World</h1>;
+// root.render(
+//   <BrowserRouter>
+//     <App />
+//   </BrowserRouter>
+// );
+
+root.render(element);

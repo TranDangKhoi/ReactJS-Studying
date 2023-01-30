@@ -1,26 +1,10 @@
-## 1. Component và Props là gì? ( cơ bản ) <br>
-
-Component là những thành phần giao diện (UI) được định nghĩa độc lập, có thể tái sử dụng ở nhiều nơi và hoàn toàn tách biệt nhau.
-
-Props là viết tắt của Properties, là một `object` chứa các thuộc tính của một `Component`.
-_ Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy ! <br>
-_ Ví dụ về đoạn mã HTML như sau: <br>
-
-```html
-<img src="img_girl.jpg" width="500" height="600" />
-```
-
--> Bạn có thể tưởng tượng rằng các attribute như `width`, `src`, `height` ở trên cũng có thể được coi là Props của các thẻ img
-
-- Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con
-
-## 2. JSX là gì?
+## JSX là gì?
 
 JSX là `một cú pháp mở rộng cho JavaScript`, cách viết nó cũng rất giống với HTML nên khá dễ để hiểu.
 
 JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement.**
 
-### 2.1. Nhúng biến vào JSX
+### Nhúng biến vào JSX
 
 Bạn có thể nhúng bất cứ thứ gì từ biến đến function
 
@@ -42,7 +26,7 @@ const user = {
 const element = <h1>Hello, {formatName(user)}!</h1>;
 ```
 
-### 2.2. Truyền thuộc tính với JSX
+### Truyền thuộc tính với JSX
 
 - Truyền giá trị cố định:
 
@@ -61,7 +45,7 @@ const element = <img src={user.avatarUrl}></img>;
 > Ví dụ, `class` sẽ trở thành `className` trong JSX, và `tabindex` sẽ trở thành `tabIndex`
 > Tương tự với các thẻ và thuộc tính bên trong svg (stroke-line, line-cap, ...v.v)
 
-### 2.3. Chỉ định Children với JSX
+### Chỉ định Children với JSX
 
 - Nếu tag trống hoặc không có thẻ đóng thì bạn có thể kết thúc ngay với `/>`.
 
@@ -80,7 +64,7 @@ const element = (
 );
 ```
 
-### 2.4. JSX giúp bạn chống tấn công Injection
+### JSX giúp bạn chống tấn công Injection
 
 ```jsx
 const title = `<script>sendToken(localstorage.getItem("access_token"))</script>`;
@@ -92,7 +76,7 @@ Mặc định thì React Dom sẽ **escapes** (nghĩa là thay đổi) bất c�
 
 Ví dụ `<script>` thì nó sẽ bị chuyển đổi thành `&lt;script&gt;` => Khi render ra html thì browser sẽ không chạy `<script>` nữa
 
-### 2.5. JSX là đại diện của object
+### JSX là đại diện của object
 
 Babel biên dịch JSX thành `React.createElement()`
 
@@ -125,7 +109,150 @@ const element = {
 
 Những object này được gọi là React Element. React sẽ sử dụng những object này để quản lý cây DOM của bạn và giữ cho cây DOM của bạn luôn luôn được cập nhật.
 
-## 3. Children Props là gì?
+## Render Element là gì?
+
+Element là khối nhỏ nhất trong ứng dụng React, một element mô tả những gì mà bạn thấy trên màn hình
+
+```jsx
+const element = <h1>Hello, world</h1>;
+```
+
+Không như DOM Element của trình duyệt (DOM thật), React element là object đơn giản và dễ dàng tạo. React DOM sẽ đảm nhận việc update DOM thật để khớp với React element
+
+## Render element vào trong DOM thật
+
+Giả sử chúng ta có một thẻ `div` trong file HTML.
+
+```html
+<div id="root"></div>
+```
+
+Chúng ta gọi đây là DOM node gốc bởi vì mọi thứ bên trong nó sẽ được quản lý bởi React DOM.
+
+Những ứng dụng được xây dựng bằng React thường sẽ có một DOM node gốc.
+
+Để render một React element thì chúng ta cần
+
+1. Truyền DOM element (DOM thật) vào `ReactDOM.createRoot()`
+2. Truyền React element vào `root.render()`
+
+```jsx
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const element = <h1>Hello, world</h1>;
+root.render(element);
+```
+
+### Cập nhật element đã render
+
+React element thì bất biến. Một khi bạn đã tạo nó thì bạn không thể thay đổi children hay thuộc tính của nó.
+
+Với những kiến thức chúng ta đã đọc từ trên xuống thì tạm thời chúng ta chỉ có thể cập nhật lại UI bằng cách tạo một element mới và truyền nó vào `root.render()`
+
+```jsx
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  root.render(element);
+}
+
+setInterval(tick, 1000);
+```
+
+Ví dụ trên gọi `root.render()` mỗi giây từ `setInterval()` callback
+
+> Note:
+> Trong thực tế thì hầu hết các React app chỉ gọi `root.render()` một lần duy nhất khi bắt đầu truy cập vào trang, chứ không phải sử dụng `setInterval()` để cứ chu kì 1s cập nhật 1 lần, để cập nhật UI thì ta sẽ cập nhật lại bằng state hoặc props (sẽ được học ở những bài tiếp theo)
+
+### React chỉ cập nhật những gì cần thiết
+
+React DOM so sánh các element và thành phần children của nó với phiên bản trước. Nó chỉ cập nhật DOM khi cảm thấy cần thiết.
+
+Có thể test bằng ví dụ phía trên.
+
+## Component và Props là gì? ( cơ bản ) <br>
+
+Component là những thành phần giao diện (UI) được định nghĩa độc lập, có thể tái sử dụng ở nhiều nơi và hoàn toàn tách biệt nhau.
+
+Component có 2 loại là Function và Class:
+
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
+
+```jsx
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```
+
+Cách đây khoảng 3 năm thì người ta dùng class component vì lúc đó chưa có hook. Bây giờ thì hook đã phát triển mạnh mẽ nên class component dần dần không còn ai dùng nữa.
+
+> Lưu ý: Luôn luôn bắt đầu tên component bằng chữ in hoa Nếu bắt đầu bằng chữ thường thì React sẽ coi component đó là một HTML tag.
+
+Props là viết tắt của Properties, là một `object` chứa các thuộc tính của một `Component`.
+
+Bạn có thể hình dung Props khá giống với các Attribute của các thẻ HTML vậy
+
+Ví dụ về đoạn mã HTML như sau: <br>
+
+```html
+<img src="img_girl.jpg" width="500" height="600" />
+```
+
+Bạn có thể tưởng tượng rằng các attribute như `width`, `src`, `height` ở trên cũng có thể được coi là các props của thẻ img, còn đây là ví dụ về props trong React:
+
+```jsx
+// Class Component
+class Welcome extends React.Component {
+  render() {
+    console.log(this.props) // object
+    return (
+      <h1>Hello, {this.props.name}</h1>
+      <h2>You are {this.props.age}</h2>
+      )
+  }
+}
+
+function App() {
+  return (
+    <div>
+      <Welcome name='Sara' age={22}/>
+    </div>
+  )
+}
+
+// Functional Component
+function Welcome(props){
+  return (
+    <div>
+      <h1>Hello, {props.name}</h1>
+      <h2>You are {props.age}</h2>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <div>
+      <Welcome name='Sara' age={22}/>
+    </div>
+  )
+}
+```
+
+- Props được xem là một trong những cách giúp truyền dữ liệu từ các component cha xuống với các component con, điển hình là ở ví dụ trên, component cha chính là `App`, vì nó chứa component `Welcome` bên trong
+
+## Children Props là gì?
 
 Đầu tiên, children prop là 1 prop chứa nội dung con được bọc bên trong 1 component, và prop này không phải truyền vào bằng cách ghi vào bên cạnh tên component mà nó sẽ nằm giữa thẻ đóng và thẻ mở của 1 component như sau:
 
@@ -143,7 +270,7 @@ const MyComponent = ({children}) => {
 <MyComponent>Hello my friend</MyComponent>
 ```
 
-## 4. State là gì?
+## State là gì?
 
 State **là thông tin được lưu bên trong Component** và **Component đó có thể tùy chỉnh cái state đó**, ví dụ:
 
@@ -158,7 +285,7 @@ const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 ```
 
-## 5. useState là gì?
+## useState là gì?
 
 - useState cho phép chúng ta khai báo local state trong Function Component cách mà trước để chỉ dùng cho Class Component
 
@@ -184,14 +311,7 @@ const [on, setOn] = useState(false);
 // initialStateValue : false (giá trị ban đầu của state ý ở đây là khi mở trang web lên thì công tắc sẽ ở trạng thái tắt)
 ```
 
-## 6. Những nguyên tắc khi sử dụng hooks
-
-- Phải sử dụng ở phía trên đoạn code return
-- Không được viết ở bên trong vòng lặp
-- Không được viết ở bên trong câu điều kiện
-- Không được viết ở bên trong function
-
-## 7. useEffect là gì?
+## useEffect là gì?
 
 Thường được dùng khi làm việc liên quan tới những side effects - là những thứ khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
 
@@ -222,7 +342,7 @@ useEffect(() => {
 }, []);
 ```
 
-## 8. Cleanup function là gì
+## Cleanup function là gì
 
 Nói dễ hiểu thì:
 Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng side-effect nào đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
@@ -243,7 +363,7 @@ useEffect(
 - Dưới đây là ảnh sơ đồ useEffect hook để giúp bạn hiểu hơn về cleanup
   ![useEffect lifecycle](https://user-images.githubusercontent.com/88824627/181787967-13243cae-fa00-4f98-80d2-6d4c542763cf.svg)
 
-## 9. useRef và useState giống và khác nhau thế nào ?
+## useRef và useState giống và khác nhau thế nào ?
 
 - Cả hai đều chứa dữ liệu của chúng trong khi render và update UI, nhưng chỉ có useState là gây ra tình trạng re-render
 - useRef trả về 1 object có một property bên trong object là current nắm giữ giá trị của useRef
@@ -275,7 +395,14 @@ console.log(count); // Ouput: 10
   <br>
   -> Về cơ bản, thì useRef không gây re-render còn useState thì có và useRef thường sử dụng để truy cập vào DOM hoặc vào components. Vậy nên sử dụng useState khi bạn muốn update dữ liệu và muốn update UI, còn nếu bạn chỉ muốn lấy ra data trong quá trình mount tới khi unmount thì useRef là sự lựa chọn dành cho bạn
 
-## 10. React Hook Form
+## Những nguyên tắc khi sử dụng hooks
+
+- Phải sử dụng ở phía trên đoạn code return
+- Không được viết ở bên trong vòng lặp
+- Không được viết ở bên trong câu điều kiện
+- Không được viết ở bên trong function
+
+## React Hook Form
 
 - reset: Reset toàn bộ form hoặc chỉ các trường nhất định
 - watch : Theo dõi xem checkbox checked thì thực hiện chức năng gì và ngược lại
@@ -285,7 +412,7 @@ console.log(count); // Ouput: 10
 - Nếu không set default value thì default value sẽ là ""
 - Muốn sử dụng được isValid ta cần thêm mode vào hook useForm
 
-## 11. createPortal
+## createPortal
 
 - Lôi một component hoặc 1 đoạn code đang nằm trong một element nào đó ra ngoài cùng và nằm cùng cấp với div root
 - Công dụng:
@@ -299,15 +426,15 @@ console.log(count); // Ouput: 10
 
 ```
 
-## 12. Context
+## Context
 
 - Context sẽ cung cấp cho ta 1 phương pháp để chia sẻ những giá trị giữa các component với nhau
 
-## 13. Props Drilling là gì
+## Props Drilling là gì
 
 - Prop drilling là điều xảy ra khi bạn cần truyền dữ liệu từ một component cha xuống một component thấp hơn trong cây component, drilling - khoan vào các component khác mà các component đấy có thể không cần giá trị props, trong khi chỉ một vài component là cần thôi
 
-## 14. Ý nghĩa của các component trong React-Router-Dom v6
+## Ý nghĩa của các component trong React-Router-Dom v6
 
 - BrowserRoutes : Dùng để bọc thằng <App/> -> enable chức năng router cho website
 
@@ -555,7 +682,7 @@ const Homepage = () => {
 
 -
 
-## 15. Higher Order Components
+## Higher Order Components
 
 - Khi ta phát triển một component, và nó sử dụng đi, sử dụng lại một logic nào đó và chúng ta muốn sử dụng cái logic đó từ component này qua component kia mà không cần phải viết lại -> THÌ ta sẽ phải sử dụng HOCS
 - Kỹ thuật này cùng với render props thường được sử dụng trước khi hình thành ra khái niệm custom hooks
@@ -565,7 +692,7 @@ const Homepage = () => {
   - Ở component B và component C, ta cũng sẽ sử dụng axios để fetch data về, nhưng ta lại không muốn viết lại logic của hiệu ứng loading, mà muốn sử dụng lại nó
     -> Ta sẽ phải áp dụng HOCS để làm việc này
 
-## 16. Vấn đề khi sử dụng HOCS
+## Vấn đề khi sử dụng HOCS
 
 1. Giả dụ giờ ta có 1 props data được truyền vào bên trong Component ở file withLoading
 
@@ -623,7 +750,7 @@ export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
 // Giờ mà lỗi thì ối dồi ôi luôn, không biết đang conflict với cái nào
 ```
 
-## 17. Lifting State
+## Lifting State
 
 - Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
 
