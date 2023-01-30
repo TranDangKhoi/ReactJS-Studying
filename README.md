@@ -92,6 +92,39 @@ Mặc định thì React Dom sẽ **escapes** (nghĩa là thay đổi) bất c�
 
 Ví dụ `<script>` thì nó sẽ bị chuyển đổi thành `&lt;script&gt;` => Khi render ra html thì browser sẽ không chạy `<script>` nữa
 
+### 2.5. JSX là đại diện của object
+
+Babel biên dịch JSX thành `React.createElement()`
+
+2 ví dụ dưới đây thì tương đương
+
+```jsx
+const element = <h1 className="greeting">Hello, world!</h1>;
+```
+
+```jsx
+const element = React.createElement(
+  "h1",
+  { className: "greeting" },
+  "Hello, world!"
+);
+```
+
+`React.createElement()` sẽ thực hiện một số thứ như kiểm tra lỗi và cuối cùng nó sẽ tạo ra một object kiểu như thế này
+
+```jsx
+// Note: this structure is simplified
+const element = {
+  type: "h1",
+  props: {
+    className: "greeting",
+    children: "Hello, world!",
+  },
+};
+```
+
+Những object này được gọi là React Element. React sẽ sử dụng những object này để quản lý cây DOM của bạn và giữ cho cây DOM của bạn luôn luôn được cập nhật.
+
 ## 3. Children Props là gì?
 
 Đầu tiên, children prop là 1 prop chứa nội dung con được bọc bên trong 1 component, và prop này không phải truyền vào bằng cách ghi vào bên cạnh tên component mà nó sẽ nằm giữa thẻ đóng và thẻ mở của 1 component như sau:
