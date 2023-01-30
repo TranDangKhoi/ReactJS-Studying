@@ -16,8 +16,81 @@ _ Ví dụ về đoạn mã HTML như sau: <br>
 
 ## 2. JSX là gì?
 
-JSX là `một cú pháp mở rộng cho JavaScript`.
--> JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement.**
+JSX là `một cú pháp mở rộng cho JavaScript`, cách viết nó cũng rất giống với HTML nên khá dễ để hiểu.
+
+JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement.**
+
+### 2.1. Nhúng biến vào JSX
+
+Bạn có thể nhúng bất cứ thứ gì từ biến đến function
+
+```jsx
+const name = "Josh Perez";
+const element = <h1>Hello, {name}</h1>;
+```
+
+```jsx
+function formatName(user) {
+  return user.firstName + " " + user.lastName;
+}
+
+const user = {
+  firstName: "Harper",
+  lastName: "Perez",
+};
+
+const element = <h1>Hello, {formatName(user)}!</h1>;
+```
+
+### 2.2. Truyền thuộc tính với JSX
+
+- Truyền giá trị cố định:
+
+```jsx
+const element = <a href="https://www.reactjs.org"> link </a>;
+```
+
+- Hoặc một biến:
+
+```jsx
+const element = <img src={user.avatarUrl}></img>;
+```
+
+> **Lưu ý:**
+> JSX gần với Javascript hơn là HTML, React DOM sử dụng `camelCase` cho các thuộc tính của HTML.
+> Ví dụ, `class` sẽ trở thành `className` trong JSX, và `tabindex` sẽ trở thành `tabIndex`
+> Tương tự với các thẻ và thuộc tính bên trong svg (stroke-line, line-cap, ...v.v)
+
+### 2.3. Chỉ định Children với JSX
+
+- Nếu tag trống hoặc không có thẻ đóng thì bạn có thể kết thúc ngay với `/>`.
+
+```jsx
+const element = <img src={user.avatarUrl} />;
+```
+
+- JSX tag cũng có thể chứa children
+
+```jsx
+const element = (
+  <div>
+    <h1>Hello!</h1>
+    <h2>Good to see you here.</h2>
+  </div>
+);
+```
+
+### 2.4. JSX giúp bạn chống tấn công Injection
+
+```jsx
+const title = `<script>sendToken(localstorage.getItem("access_token"))</script>`;
+// This is safe:
+const element = <h1>{title}</h1>;
+```
+
+Mặc định thì React Dom sẽ **escapes** (nghĩa là thay đổi) bất cứ giá trị nào được nhúng vào trong JSX trước khi nó render ra html. Điều này đảm bảo ngăn chặn việc tấn công XSS.
+
+Ví dụ `<script>` thì nó sẽ bị chuyển đổi thành `&lt;script&gt;` => Khi render ra html thì browser sẽ không chạy `<script>` nữa
 
 ## 3. Children Props là gì?
 
