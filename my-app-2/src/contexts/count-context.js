@@ -1,19 +1,22 @@
-import { useContext } from "react";
-import { createContext } from "react";
+import { useContext } from 'react'
+import { createContext } from 'react'
 
-const CountContext = createContext(undefined);
+const CountContext = createContext(undefined)
 function CountProvider({ value, ...props }) {
   return (
-    <CountContext.Provider value={value} {...props}></CountContext.Provider>
-  );
+    <CountContext.Provider
+      value={value}
+      {...props}
+    ></CountContext.Provider>
+  )
 }
 
 function useCount() {
-  const context = useContext(CountContext);
-  if (typeof context === "undefined") {
-    throw new Error("useCount must be used within CountProvider");
+  const context = useContext(CountContext)
+  if (typeof context === 'undefined') {
+    throw new Error('useCount must be used within CountProvider')
   }
-  return context;
+  return context
 }
 
-export { useCount, CountProvider };
+export { useCount, CountProvider }

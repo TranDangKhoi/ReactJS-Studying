@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 export default function useToggle() {
-  const [value, setValue] = useState(false);
+  const [value, setValue] = useState(false)
   const handleToggleValue = () => {
-    setValue((edit) => !edit);
-  };
+    setValue((edit) => !edit)
+  }
   return {
     value,
-    handleToggleValue,
-  };
+    handleToggleValue
+  }
 }

@@ -1,21 +1,20 @@
 import {
-  collection,
-  getDocs,
   addDoc,
+  collection,
   deleteDoc,
   doc,
+  limit,
   onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
   updateDoc,
-  getDoc,
-  where,
-  orderBy,
-  limit,
-  query,
+  where
 } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+
 import { db } from "./firebase-config";
 
 const FirebaseApp = () => {
@@ -25,7 +24,6 @@ const FirebaseApp = () => {
   const [author, setAuthor] = useState("");
   const [postId, setPostId] = useState("");
   const [posts, setPosts] = useState([]);
-  const [singlePost, setSinglePost] = useState("");
   useEffect(() => {
     // Truyền vào function collection: db và collection
     // 1. Get Collection Data (posts)
@@ -47,7 +45,7 @@ const FirebaseApp = () => {
       snapshot.docs.forEach((doc) => {
         posts.push({
           id: doc.id,
-          ...doc.data(),
+          ...doc.data()
         });
       });
       setPosts(posts);
@@ -60,12 +58,7 @@ const FirebaseApp = () => {
   }, []);
   useEffect(() => {
     // Firestore queries
-    const q = query(
-      colRef,
-      orderBy("title", "asc"),
-      where("author", "==", "Tran Dang Khoi"),
-      limit(5)
-    );
+    const q = query(colRef, orderBy("title", "asc"), where("author", "==", "Tran Dang Khoi"), limit(5));
     // getDocs(q).then((snapshot) => {
     //   let posts = [];
     //   snapshot.docs.forEach((doc) => {
@@ -80,7 +73,7 @@ const FirebaseApp = () => {
       let posts = [];
       snapshot.docs.forEach((doc) => {
         posts.push({
-          ...doc.data(),
+          ...doc.data()
         });
       });
       console.log(posts);
@@ -92,7 +85,7 @@ const FirebaseApp = () => {
     await addDoc(colRef, {
       title,
       author,
-      createdAt: serverTimestamp(),
+      createdAt: serverTimestamp()
     });
     console.log("Successfully added a doc");
   };
@@ -108,7 +101,7 @@ const FirebaseApp = () => {
     e.preventDefault();
     const docToBeUpdate = doc(db, "posts", postId);
     await updateDoc(docToBeUpdate, {
-      title: "Updated title",
+      title: "Updated title"
     });
     console.log("Successfully updated the doc");
   };
@@ -138,9 +131,7 @@ const FirebaseApp = () => {
             Add post
           </button>
         </form>
-        <h2 className="text-center mt-20 font-[30px] font-medium">
-          Delete Document
-        </h2>
+        <h2 className="text-center mt-20 font-[30px] font-medium">Delete Document</h2>
         <form onSubmit={handleDeletePost}>
           <input
             type="text"
@@ -158,9 +149,7 @@ const FirebaseApp = () => {
           </button>
         </form>
         <form onSubmit={handleUpdatePost}>
-          <h2 className="text-center mt-20 font-[30px] font-medium">
-            Update Document
-          </h2>
+          <h2 className="text-center mt-20 font-[30px] font-medium">Update Document</h2>
           <input
             type="text"
             className="w-full p-3 mb-5 border-2 border-gray-200 rounded outline-none focus:border-blue-400"

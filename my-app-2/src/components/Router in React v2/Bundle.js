@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const Bundle = () => {
-  return <div></div>;
-};
+  return <div></div>
+}
 
-export default Bundle;
+export default Bundle

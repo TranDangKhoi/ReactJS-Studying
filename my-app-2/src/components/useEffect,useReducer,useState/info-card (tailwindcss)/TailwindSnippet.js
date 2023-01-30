@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const TailwindSnippet = () => {
-  return <div></div>;
-};
+  return <div></div>
+}
 
-export default TailwindSnippet;
+export default TailwindSnippet

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 // Object destructuring
 // const student = {
@@ -9,10 +9,13 @@ import React from "react";
 
 const Cell = ({ value, onClick, className }) => {
   return (
-    <div className={`game-cell ${className}`} onClick={onClick}>
+    <div
+      className={`game-cell ${className}`}
+      onClick={onClick}
+    >
       {value}
     </div>
-  );
-};
+  )
+}
 
-export default Cell;
+export default Cell

@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 function withValue(Component) {
   return (props) => {
-    const [value, setValue] = useState("");
-    return <Component value={value} setValue={setValue} {...props}></Component>;
-  };
+    const [value, setValue] = useState('')
+    return (
+      <Component
+        value={value}
+        setValue={setValue}
+        {...props}
+      ></Component>
+    )
+  }
 }
 
-export default withValue;
+export default withValue

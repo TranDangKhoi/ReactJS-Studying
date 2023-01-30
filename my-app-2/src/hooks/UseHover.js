@@ -1,30 +1,30 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react'
 
 export default function useHover() {
   // mouseover
   // mouseleave/mouseout
-  const [hovered, setHovered] = useState(false);
-  const nodeRef = useRef(null);
+  const [hovered, setHovered] = useState(false)
+  const nodeRef = useRef(null)
   useEffect(() => {
     function handleMouseOver() {
-      setHovered(true);
+      setHovered(true)
     }
     function handleMouseOut() {
-      setHovered(false);
+      setHovered(false)
     }
-    const dom = nodeRef.current;
+    const dom = nodeRef.current
     if (dom) {
-      dom.addEventListener("mouseover", handleMouseOver);
-      dom.addEventListener("mouseout", handleMouseOut);
+      dom.addEventListener('mouseover', handleMouseOver)
+      dom.addEventListener('mouseout', handleMouseOut)
     }
     return () => {
-      dom.removeEventListener("mouseover", handleMouseOver);
-      dom.removeEventListener("mouseout", handleMouseOut);
-    };
-  }, []);
+      dom.removeEventListener('mouseover', handleMouseOver)
+      dom.removeEventListener('mouseout', handleMouseOut)
+    }
+  }, [])
   return {
     setHovered,
     hovered,
-    nodeRef,
-  };
+    nodeRef
+  }
 }

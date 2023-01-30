@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./ToggleStyle.css";
+import React, { useState } from 'react'
+import './ToggleStyle.css'
 // stateless functional component
 // -> là component nhưng không sử dụng state
 // statefull functional component
@@ -14,7 +14,7 @@ function Toggle() {
   //   console.log(array); // [false, function]
   // -> Ta có thể hiểu nôm na là useState là mảng gồm 2 thành phần, một là boolean, hai là function
   //2. initialize value: boolean, number, string, undefined, null, [1,2,3,4], {title: "Frontend Developer"}
-  const [on, setOn] = useState(false); // destructuring
+  const [on, setOn] = useState(false) // destructuring
   // setOn(true);
   //   console.log(on);
   // * Làm như này sẽ bị lặp vô tận
@@ -26,12 +26,15 @@ function Toggle() {
   // <div className="toggle" onclick="toggle"></div>
   const handleToggle = () => {
     // setOn(callback) -> setOn(prevState => !prevState)
-    setOn((on) => !on); // truyền vào giá trị boolean on (hiện tại đang là false khi click vào thì sẽ thành true, và khi on đang là true click vào lại thành false, và tiếp diễn đến hết)
-  };
+    setOn((on) => !on) // truyền vào giá trị boolean on (hiện tại đang là false khi click vào thì sẽ thành true, và khi on đang là true click vào lại thành false, và tiếp diễn đến hết)
+  }
   return (
     <div>
-      <div className={`toggle ${on ? "active" : ""}`} onClick={handleToggle}>
-        <div className={`spinner ${on ? "active" : ""}`}></div>
+      <div
+        className={`toggle ${on ? 'active' : ''}`}
+        onClick={handleToggle}
+      >
+        <div className={`spinner ${on ? 'active' : ''}`}></div>
       </div>
       {/* <div className="toggle-control">
         <div className="toggle-on" onClick={() => setOn(true)}>
@@ -43,7 +46,7 @@ function Toggle() {
       </div> */}
     </div>
     // state changes -> re-render -> Khi click vào Toggle thì sẽ setOn (on = true)
-  );
+  )
 }
 
-export default Toggle;
+export default Toggle

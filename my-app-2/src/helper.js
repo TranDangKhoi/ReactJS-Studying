@@ -6,12 +6,12 @@ const winningLineUp = [
   [3, 5, 7],
   [1, 4, 7],
   [2, 5, 8],
-  [3, 6, 9],
-];
+  [3, 6, 9]
+]
 
 export const winnerCalculate = (cells) => {
   for (let i = 0; i < winningLineUp.length; i++) {
-    const [a, b, c] = winningLineUp[i];
-    console.log(cells[a]);
+    const [a, b, c] = winningLineUp[i]
+    console.log(cells[a])
   }
-};
+}
