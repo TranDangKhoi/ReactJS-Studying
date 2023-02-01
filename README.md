@@ -1791,3 +1791,191 @@ const handleInputChange = (e) => {
     console.log("Login successfully");
   };
   ```
+
+# Class Component
+
+Sở dĩ vì giờ ai cũng đã sử dụng Functional Component khi code React nên mình mới để cái Class Component ở tít bên dưới như này
+
+Để tạo một class component trong React thì chúng ta thực hiện theo các bước dưới đây
+
+1. Tạo một ES6 class cùng với tên file (khuyên dùng), kế thừa `React.Component`
+2. Thêm một method là `render()` và return về một jsx
+3. Nếu muốn dùng state trong component thì phải tạo `constructor(props){...}`. Nhớ gọi `super(props)` để hoàn tất việc gọi contructor của class `React.Component`. **Nếu đã dùng constructor thì phải dùng super**. **Bạn không cần tạo constructor nếu bạn không khởi tạo state**.
+4. Gán object cho `this.state`. Lưu ý là `this.state` chỉ có thể là object hoặc null !
+
+`**Clock.jsx**`
+
+```jsx
+import React from "react";
+
+export default class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: new Date().toLocaleTimeString(),
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.time}.</h2>
+      </div>
+    );
+  }
+}
+```
+
+## setState
+
+Để cập nhật lại UI thì ta chỉ cần gọi `this.setState()` lại là UI sẽ được cập nhật.
+
+> Lưu ý là gọi `this.setState()` chứ không phải thay đổi `this.state={...}` đâu nha!
+
+```jsx
+import React from "react";
+
+export default class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: new Date().toLocaleTimeString(),
+    };
+  }
+
+  getTime = () => {
+    this.setState({
+      time: new Date().toLocaleTimeString(),
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.time}.</h2>
+        <button onClick={this.getTime}>Get Time</button>
+      </div>
+    );
+  }
+}
+```
+
+Lưu ý khi gọi `setState()` là chúng ta phải truyền vào một **state mới**, nếu object bạn nested nhiều level thì state mới đó cũng nên có các object nested mới, như vậy UI có thể được cập nhật đúng.
+
+Ví dụ
+
+```jsx
+import React from "react";
+
+export default class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: {
+        created: new Date().toLocaleTimeString(),
+      },
+      seconds: {
+        created: new Date().getSeconds(),
+      },
+    };
+  }
+
+  getTime = () => {
+    const newState = {
+      ...this.state,
+      time: {
+        created: new Date().toLocaleTimeString(),
+      },
+    };
+    this.setState(newState);
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.time.created}.</h2>
+        <h3>Seconds: {this.state.seconds.created}</h3>
+        <button onClick={this.getTime}>Get Time</button>
+      </div>
+    );
+  }
+}
+```
+
+Ví dụ trên, mình chỉ muốn khi click button và chạy `getTime()` thì chỉ cập nhật lại `this.state.time.created` thôi, vậy nên
+
+1. `newState !== this.state`
+1. `newState.time !== this.state.time`, tức là cái `time mới` và `time cũ` khác nhau về mặt tham chiếu.
+
+Giá trị `this.state.seconds` mình không cần cập nhật nên mình sẽ không cần làm mới cái `seconds` này, vì thế `newState.seconds === this.state.seconds`
+
+## Lifecycle
+
+Vòng đời của một component React sẽ được biểu diễn như hình dưới
+
+![](./react-lifecycle.png)
+
+Nhìn chung chúng ta sẽ có 3 giai đoạn của 1 vòng đời component
+
+1. Giai đoạn khởi tạo: Mounting
+
+2. Giai đoạn cập nhật: Updating
+
+   - Giai đoạn này khi chúng ta thực hiện thay đổi `props`, gọi `setState()`, `forceUpdate()`
+   - Hoặc đôi khi là component cha re-render làm component con re-render.
+
+3. Giai đoạn huỷ: Unmounting
+
+   - Giai đoạn này xảy ra ngay trước khi component bị huỷ
+
+# Constructor trong class component
+
+Cùng nhìn lại lifecycle trong React
+
+![](./react-lifecycle.png)
+
+**Nếu bạn không khởi tạo state hoặc không `bind` các method thì bạn không cần dùng constructor**
+
+`constructor` là phương thức chạy đầu tiên khi component của chúng ta khởi tạo. Nó sẽ chạy trước khi component của chúng ta được mount.
+
+> Mount ở đây nghĩa là đã render hết UI của React component lên DOM thật.
+
+Để tạo một class component đúng chuẩn React thì chúng ta cần phải `extends React.Component`, vì ES6 class của bạn thôi là chưa đủ, bạn cần kế thừa từ `React.Component` React có thể hiểu được class của bạn là React class component.
+
+Khi tạo constructor cho class component thì bạn phải gọi `super(props)` trước bất cứ câu lệnh nào. Nếu không thì `this.props` sẽ undefined trong contructor và gây nên bug.
+
+Thường thì trong React constructor sẽ làm 2 nhiệm vụ chính
+
+- Khởi tạo local state bằng cách gán object cho `this.state`
+- Bind một method event handler với một instance (thường là this)
+
+Bạn không nên gọi `setState()` trong `constructor()` để cập nhật lại UI.
+
+```jsx
+constructor(props) {
+  super(props);
+  // Don't call this.setState() here!
+  this.state = { counter: 0 };
+  this.handleClick = this.handleClick.bind(this);
+}
+```
+
+> Lưu ý:
+> Tránh việc copy props vào state! Đây là lỗi khá phổ biến
+
+```jsx
+constructor(props) {
+ super(props);
+ // Don't do this!
+ this.state = { color: props.color };
+}
+```
+
+Điều này thực sự không cần thiết, bạn có thể sử dụng trực tiếp `this.props.color` luôn. Chưa hết, nếu làm như trên thì sẽ dẫn đến bug không mong muốn như là props `color` update nhưng state sẽ không update theo được.
+
+Chỉ sử dụng pattern này khi mà bạn muốn bỏ qua việc props update thì color sẽ không update theo. Như vậy thì bạn nên đổi lại tên `color` thành `defaultColor` hoặc `initialColor`. Trong trường hợp muốn ép component reset initial state thì có thể thay đổi key của nó.
+
+> **Những trường hợp mà không cần tạo state thì đừng tạo state làm gì, nó sẽ làm flow component của bạn bị rối**
