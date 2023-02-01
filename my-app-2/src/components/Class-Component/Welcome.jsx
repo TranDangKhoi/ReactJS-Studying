@@ -8,16 +8,17 @@
 // }
 
 // export default Welcome;
-import React from 'react'
+import React from "react";
 class Welcome extends React.Component {
   render() {
     return (
       <>
-        <h1>Hello, {this.props.name}</h1>
-        <h2>Hello, {this.props.age}</h2>
+        <h1>
+          Hello, {this.props.name} - {this.props.age} years old
+        </h1>
       </>
-    )
+    );
   }
 }
 
-export default Welcome
+export default Welcome;

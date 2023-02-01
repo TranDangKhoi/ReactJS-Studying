@@ -1,16 +1,13 @@
-import React from 'react'
-import './App.css'
-import Welcome from './components/Class-Component/Welcome'
+import React from "react";
+import "./App.css";
+import Clock from "./components/Class-Component/Clock";
 
 function App() {
   return (
     <>
-      <Welcome
-        name={'Khoi'}
-        age={20}
-      ></Welcome>
+      <Clock></Clock>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
