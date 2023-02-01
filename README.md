@@ -155,7 +155,7 @@ function tick() {
   const element = (
     <div>
       <h1>Hello, world!</h1>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+      <h2>Current time: {new Date().toLocaleTimeString()}.</h2>
     </div>
   );
   root.render(element);
@@ -1799,8 +1799,8 @@ Sở dĩ vì giờ ai cũng đã sử dụng Functional Component khi code React
 Để tạo một class component trong React thì chúng ta thực hiện theo các bước dưới đây
 
 1. Tạo một ES6 class cùng với tên file (khuyên dùng), kế thừa `React.Component`
-2. Thêm một method là `render()` và return về một jsx
-3. Nếu muốn dùng state trong component thì phải tạo `constructor(props){...}`. Nhớ gọi `super(props)` để hoàn tất việc gọi contructor của class `React.Component`. **Nếu đã dùng constructor thì phải dùng super**. **Bạn không cần tạo constructor nếu bạn không khởi tạo state**.
+2. Thêm một method là `render()` và return về một JSX
+3. Nếu muốn dùng state trong Component thì phải tạo `constructor(props){...}`. Nhớ gọi `super(props)` để hoàn tất việc gọi contructor của class `React.Component`. **Nếu đã dùng constructor thì phải dùng super**. **Bạn không cần tạo constructor nếu bạn không khởi tạo state**.
 4. Gán object cho `this.state`. Lưu ý là `this.state` chỉ có thể là object hoặc null !
 
 `**Clock.jsx**`
@@ -1820,7 +1820,7 @@ export default class Clock extends React.Component {
     return (
       <div>
         <h1>Hello, world!</h1>
-        <h2>It is {this.state.time}.</h2>
+        <h2>Current time: {this.state.time}.</h2>
       </div>
     );
   }
@@ -1854,7 +1854,7 @@ export default class Clock extends React.Component {
     return (
       <div>
         <h1>Hello, world!</h1>
-        <h2>It is {this.state.time}.</h2>
+        <h2>Current time: {this.state.time}.</h2>
         <button onClick={this.getTime}>Get Time</button>
       </div>
     );
@@ -1896,7 +1896,7 @@ export default class Clock extends React.Component {
     return (
       <div>
         <h1>Hello, world!</h1>
-        <h2>It is {this.state.time.created}.</h2>
+        <h2>Current time: {this.state.time.created}.</h2>
         <h3>Seconds: {this.state.seconds.created}</h3>
         <button onClick={this.getTime}>Get Time</button>
       </div>
@@ -1979,3 +1979,11 @@ constructor(props) {
 Chỉ sử dụng pattern này khi mà bạn muốn bỏ qua việc props update thì color sẽ không update theo. Như vậy thì bạn nên đổi lại tên `color` thành `defaultColor` hoặc `initialColor`. Trong trường hợp muốn ép component reset initial state thì có thể thay đổi key của nó.
 
 > **Những trường hợp mà không cần tạo state thì đừng tạo state làm gì, nó sẽ làm flow component của bạn bị rối**
+
+# ComponentdidMount
+
+`componentDidMount()` được chạy ngay khi component mounted. `componentDidMount()` thường được dùng để
+
+- Truy cập đến DOM node, vì lúc này UI đã được render ra rồi
+- Gọi API
+- `setState()`
