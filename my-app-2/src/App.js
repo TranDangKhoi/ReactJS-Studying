@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
-import Form from "./components/Class-Component/Form";
+import Inheritance from "./components/Class-Component/Inheritance";
+import UncontrolledComponent from "./components/Class-Component/UncontrolledComponent";
 
 function App() {
   return (
     <>
-      <Form></Form>
+      <Inheritance></Inheritance>
     </>
   );
 }
