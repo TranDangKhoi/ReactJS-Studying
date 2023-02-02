@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 // Object destructuring
 // const student = {
@@ -15,7 +15,7 @@ const Cell = ({ value, onClick, className }) => {
     >
       {value}
     </div>
-  )
-}
+  );
+};
 
-export default Cell
+export default Cell;

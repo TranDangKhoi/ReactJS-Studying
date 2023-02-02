@@ -1,11 +1,11 @@
-import React from 'react'
-import { YoutubeData } from '../../data'
-import YoutubeItem from './YoutubeItem'
+import React from "react";
+import { YoutubeData } from "../../data";
+import YoutubeItem from "./YoutubeItem";
 
 const YoutubeList = (props) => {
-  const defaultAvt = 'https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png'
+  const defaultAvt = "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png";
   return (
-    <div className='youtube-list'>
+    <div className="youtube-list">
       {props.children}
       {YoutubeData.map((item, index) => {
         return (
@@ -15,12 +15,12 @@ const YoutubeList = (props) => {
             avatar={item.avatar || defaultAvt}
             author={item.title}
             img={item.image}
-            className={index === 1 ? 'youtube-list--small' : ''}
+            className={index === 1 ? "youtube-list--small" : ""}
           ></YoutubeItem>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default YoutubeList
+export default YoutubeList;

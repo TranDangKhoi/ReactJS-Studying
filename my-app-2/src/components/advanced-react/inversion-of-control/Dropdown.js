@@ -1,34 +1,34 @@
-import React from 'react'
-import { useState } from 'react'
+import React from "react";
+import { useState } from "react";
 
 const Dropdown = ({
   options,
-  placeholder = 'Please select an option',
-  inputPlaceholder = 'Search for an option',
+  placeholder = "Please select an option",
+  inputPlaceholder = "Search for an option",
   visibleIconCheck = false,
   visibleSearch = false,
-  onChange = () => {}
+  onChange = () => {},
 }) => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const handleToggleDropdown = () => {
-    setShow(!show)
-  }
+    setShow(!show);
+  };
   return (
-    <div className='relative inline-block w-full max-w-[300px]'>
+    <div className="relative inline-block w-full max-w-[300px]">
       <div
-        className='flex items-center justify-between p-4 border border-gray-300 rounded-lg cursor-pointer placeholder'
+        className="flex items-center justify-between p-4 border border-gray-300 rounded-lg cursor-pointer placeholder"
         onClick={handleToggleDropdown}
       >
         {placeholder}
       </div>
       {show && (
-        <div className='border border-gray-300 rounded-lg option-list'>
-          <div className='p-3'>
+        <div className="border border-gray-300 rounded-lg option-list">
+          <div className="p-3">
             {visibleSearch && (
               <input
-                type='text'
+                type="text"
                 placeholder={inputPlaceholder}
-                className='w-full p-4 border border-gray-300 outline-none'
+                className="w-full p-4 border border-gray-300 outline-none"
                 onChange={onChange}
               />
             )}
@@ -37,23 +37,23 @@ const Dropdown = ({
             options.map((option) => (
               <div
                 key={option.title}
-                className='flex items-center justify-between p-4 cursor-pointer option-item'
+                className="flex items-center justify-between p-4 cursor-pointer option-item"
                 onClick={option.onClick}
               >
                 <span>{option.title}</span>
                 {visibleIconCheck && (
                   <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='w-6 h-6'
+                    stroke="currentColor"
+                    className="w-6 h-6"
                   >
                     <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M4.5 12.75l6 6 9-13.5'
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
                     />
                   </svg>
                 )}
@@ -62,7 +62,7 @@ const Dropdown = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

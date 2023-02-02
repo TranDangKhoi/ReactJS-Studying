@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-export default function useDebounce(initialValue = 'iron man', delay = 1000) {
-  const [debounceValue, setDebounceValue] = useState(initialValue)
+export default function useDebounce(initialValue = "iron man", delay = 1000) {
+  const [debounceValue, setDebounceValue] = useState(initialValue);
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebounceValue(initialValue)
-    }, delay)
+      setDebounceValue(initialValue);
+    }, delay);
     return () => {
-      clearTimeout(timer)
-    }
-  }, [delay, initialValue])
+      clearTimeout(timer);
+    };
+  }, [delay, initialValue]);
   return {
-    debounceValue
-  }
+    debounceValue,
+  };
 }

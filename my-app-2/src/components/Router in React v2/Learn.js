@@ -1,32 +1,32 @@
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import React from "react";
+import { Link, Outlet } from "react-router-dom";
 
 const Learn = () => {
   return (
-    <div className='learn'>
+    <div className="learn">
       <h3>This is a learnpage</h3>
       <h4>All courses are listed here</h4>
       <ul>
         <li>
           <Link
-            className='font-bold text-green-400'
-            to={'/learn/courses'}
+            className="font-bold text-green-400"
+            to={"/learn/courses"}
           >
             Courses
           </Link>
         </li>
         <li>
           <Link
-            className='font-bold text-green-400'
-            to={'/learn/bundle'}
+            className="font-bold text-green-400"
+            to={"/learn/bundle"}
           >
             Bundle
           </Link>
         </li>
       </ul>
-      <Outlet context={{ hello: 'World' }}></Outlet>
+      <Outlet context={{ hello: "World" }}></Outlet>
     </div>
-  )
-}
+  );
+};
 
-export default Learn
+export default Learn;

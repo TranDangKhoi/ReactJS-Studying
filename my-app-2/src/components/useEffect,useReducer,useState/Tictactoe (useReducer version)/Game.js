@@ -1,17 +1,17 @@
-import React, { useReducer } from 'react'
-import { winnerCalculate } from '../helper'
-import Board from './Board'
-import './GameStyle.css'
+import React, { useReducer } from "react";
+import { winnerCalculate } from "../helper";
+import Board from "./Board";
+import "./GameStyle.css";
 
 const initialState = {
   board: Array(9).fill(null),
-  xIsNext: true
-}
+  xIsNext: true,
+};
 // immutable state (không thể chỉnh sửa state)
 // muốn sửa thì tạo ra một bản clone
 const gameReducer = (state, action) => {
   switch (action.type) {
-    case 'Click': {
+    case "Click": {
       // const { board, xIsNext } = state; // destructuring
       // const { index, winner } = action.payload;
       // if (winner || board[index]) return state; // return lại cái state hiện tại còn cái nextState mới là cái dùng để update từ state lên nextState
@@ -19,55 +19,55 @@ const gameReducer = (state, action) => {
       // nextState.xIsNext = !xIsNext;
       // nextState.board[index] = xIsNext ? "X" : "O";
       // return nextState;
-      console.log("It's working")
-      break
+      console.log("It's working");
+      break;
     }
     // console.log(state, action.payload);
-    case 'Reset': {
-      const nextState = JSON.parse(JSON.stringify(state))
-      nextState.xIsNext = true
-      nextState.board = Array(9).fill(null)
-      return nextState
+    case "Reset": {
+      const nextState = JSON.parse(JSON.stringify(state));
+      nextState.xIsNext = true;
+      nextState.board = Array(9).fill(null);
+      return nextState;
     }
     default:
-      break
+      break;
   }
-  return state
-}
+  return state;
+};
 
 const Game = () => {
-  const [state, dispatch] = useReducer(gameReducer, initialState)
-  const winner = winnerCalculate(state.board)
+  const [state, dispatch] = useReducer(gameReducer, initialState);
+  const winner = winnerCalculate(state.board);
   const handleClick = (index) => {
     dispatch({
-      type: 'Click',
+      type: "Click",
       payload: {
         index, // index : index
-        winner
-      }
-    })
-  }
+        winner,
+      },
+    });
+  };
 
   const handleReset = () => {
     dispatch({
-      type: 'Reset'
-    })
-  }
+      type: "Reset",
+    });
+  };
   return (
     <div>
       <Board
         cells={state.board}
         onMouseEnter={handleClick}
       ></Board>
-      <div className='game-winner'>{winner ? `Winner is ${winner}` : ''}</div>
+      <div className="game-winner">{winner ? `Winner is ${winner}` : ""}</div>
       <button
-        className='game-reset'
+        className="game-reset"
         onClick={handleReset}
       >
         Restart game
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Game
+export default Game;

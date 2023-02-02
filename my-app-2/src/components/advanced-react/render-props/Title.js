@@ -1,5 +1,5 @@
-import React from 'react'
+import React from "react";
 
-const Title = (props) => props.children()
+const Title = (props) => props.children();
 
-export default Title
+export default Title;

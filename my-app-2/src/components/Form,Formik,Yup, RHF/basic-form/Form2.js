@@ -1,48 +1,48 @@
-import React, { useState } from 'react'
-import useHandleChange from '../../../hooks/useHandleChange'
+import React, { useState } from "react";
+import useHandleChange from "../../../hooks/useHandleChange";
 const Form2 = () => {
   const { values, handleChange } = useHandleChange({
-    fullName: '',
-    email: '',
-    hobby: false
-  })
-  const [nameError, setNameError] = useState('')
+    fullName: "",
+    email: "",
+    hobby: false,
+  });
+  const [nameError, setNameError] = useState("");
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (values.fullName.trim().length === 0) {
-      setNameError('Please enter your name')
+      setNameError("Please enter your name");
     } else {
-      setNameError('')
+      setNameError("");
     }
-  }
+  };
   return (
-    <div className='p-5'>
+    <div className="p-5">
       <form
-        className='flex gap-x-3'
+        className="flex gap-x-3"
         onSubmit={handleSubmit}
-        autoComplete='off'
+        autoComplete="off"
       >
-        <div className='flex flex-col gap-y-3'>
+        <div className="flex flex-col gap-y-3">
           <input
-            type='text'
-            name='fullName'
-            className='w-full max-w-[300px] p-3 border-2 border-gray-300 rounded-lg'
-            placeholder='Enter your name'
+            type="text"
+            name="fullName"
+            className="w-full max-w-[300px] p-3 border-2 border-gray-300 rounded-lg"
+            placeholder="Enter your name"
             onChange={handleChange}
           />
           {nameError}
         </div>
         <input
-          type='email'
-          name='email'
-          className='w-full max-w-[300px] p-3 border-2 border-gray-300 rounded-lg'
-          placeholder='Enter your email address'
+          type="email"
+          name="email"
+          className="w-full max-w-[300px] p-3 border-2 border-gray-300 rounded-lg"
+          placeholder="Enter your email address"
           onChange={handleChange}
         />
         {/* <input type="checkbox" name="hobby" onChange={handleChange} /> */}
         <button
-          type='submit'
-          className='p-3 rounded-lg text-white bg-blue-500'
+          type="submit"
+          className="p-3 rounded-lg text-white bg-blue-500"
         >
           Submit
         </button>
@@ -61,7 +61,7 @@ const Form2 = () => {
         <option value="singapore">Singapore</option>
       </select>*/}
     </div>
-  )
-}
+  );
+};
 
-export default Form2
+export default Form2;

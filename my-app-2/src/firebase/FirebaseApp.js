@@ -9,7 +9,7 @@ import {
   query,
   serverTimestamp,
   updateDoc,
-  where
+  where,
 } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
@@ -45,7 +45,7 @@ const FirebaseApp = () => {
       snapshot.docs.forEach((doc) => {
         posts.push({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         });
       });
       setPosts(posts);
@@ -73,7 +73,7 @@ const FirebaseApp = () => {
       let posts = [];
       snapshot.docs.forEach((doc) => {
         posts.push({
-          ...doc.data()
+          ...doc.data(),
         });
       });
       console.log(posts);
@@ -85,7 +85,7 @@ const FirebaseApp = () => {
     await addDoc(colRef, {
       title,
       author,
-      createdAt: serverTimestamp()
+      createdAt: serverTimestamp(),
     });
     console.log("Successfully added a doc");
   };
@@ -101,7 +101,7 @@ const FirebaseApp = () => {
     e.preventDefault();
     const docToBeUpdate = doc(db, "posts", postId);
     await updateDoc(docToBeUpdate, {
-      title: "Updated title"
+      title: "Updated title",
     });
     console.log("Successfully updated the doc");
   };

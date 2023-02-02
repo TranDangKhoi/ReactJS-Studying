@@ -1,5 +1,5 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React from "react";
+import styled, { css } from "styled-components";
 
 /*
  * const StyledCard = styled.tag(h1,h2,div,span,...)``
@@ -77,7 +77,7 @@ const StyledCard = styled.div`
 
   .card-psl {
     font-weight: 700;
-    font-size: ${(props) => props.fontSize || '22px'};
+    font-size: ${(props) => props.fontSize || "22px"};
 
     ${(props) =>
       props.secondary &&
@@ -93,44 +93,44 @@ const StyledCard = styled.div`
     -webkit-background-clip: text;
     background-clip: text;
   }
-`
+`;
 
 const Card2 = (props) => {
-  console.log('log ~ Card ~ props', props)
+  console.log("log ~ Card ~ props", props);
   return (
     <StyledCard secondary={props.secondary}>
-      <div className='card-image-wrapper'>
+      <div className="card-image-wrapper">
         <img
-          src='https://cdn.dribbble.com/users/2400293/screenshots/15883991/media/c5a6d6098f4ec6a0ce1b38909d82a494.png?compress=1&resize=1000x750&vertical=top'
-          alt=''
-          className='card-image'
+          src="https://cdn.dribbble.com/users/2400293/screenshots/15883991/media/c5a6d6098f4ec6a0ce1b38909d82a494.png?compress=1&resize=1000x750&vertical=top"
+          alt=""
+          className="card-image"
         />
       </div>
-      <div className='card-content'>
-        <div className='card-top'>
-          <div className='card-user'>
+      <div className="card-content">
+        <div className="card-top">
+          <div className="card-user">
             <img
-              src='https://cdn.dribbble.com/users/2400293/screenshots/14988700/media/5fd7eb67da21caa45eb864fbc27f24a2.jpg?compress=1&resize=1000x750&vertical=top'
-              alt=''
-              className='user-avatar'
+              src="https://cdn.dribbble.com/users/2400293/screenshots/14988700/media/5fd7eb67da21caa45eb864fbc27f24a2.jpg?compress=1&resize=1000x750&vertical=top"
+              alt=""
+              className="user-avatar"
             />
             <span>@toilatofu</span>
           </div>
-          <div className='card-react'>
+          <div className="card-react">
             <img
-              src='/coolicon.svg'
-              alt='Hey'
+              src="/coolicon.svg"
+              alt="Hey"
             />
-            <span className='card-likes-amount'>256</span>
+            <span className="card-likes-amount">256</span>
           </div>
         </div>
-        <div className='card-footer'>
-          <span className='card-title'>Cosmic Perspective</span>
-          <span className='card-psl'>12,000 PSL</span>
+        <div className="card-footer">
+          <span className="card-title">Cosmic Perspective</span>
+          <span className="card-psl">12,000 PSL</span>
         </div>
       </div>
     </StyledCard>
-  )
-}
+  );
+};
 
-export default Card2
+export default Card2;

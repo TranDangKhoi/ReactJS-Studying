@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 // const StyledCardList = styled.div`
 //   display: grid;
@@ -16,10 +16,10 @@ const StyledCardList = styled.div`
   align-items: center;
   margin-top: 6rem;
   column-gap: 12px;
-`
+`;
 
 const CardList = (props) => {
-  return <StyledCardList>{props.children}</StyledCardList>
-}
+  return <StyledCardList>{props.children}</StyledCardList>;
+};
 
-export default CardList
+export default CardList;

@@ -15,20 +15,20 @@ class Clock extends Component {
     super(props);
     this.state = {
       time: {
-        created: new Date().toLocaleTimeString()
+        created: new Date().toLocaleTimeString(),
       },
       seconds: {
-        created: new Date().getSeconds()
+        created: new Date().getSeconds(),
       },
-      cars: []
+      cars: [],
     };
   }
   getTime = () => {
     const newState = {
       ...this.state,
       time: {
-        created: new Date().toLocaleTimeString()
-      }
+        created: new Date().toLocaleTimeString(),
+      },
     };
     this.setState(newState);
   };
@@ -37,7 +37,7 @@ class Clock extends Component {
     fetchAPI().then((res) => {
       this.setState((prevState) => ({
         ...prevState,
-        cars: res
+        cars: res,
       }));
     });
   }
