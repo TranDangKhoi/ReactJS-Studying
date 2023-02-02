@@ -119,7 +119,7 @@ const element = <h1>Hello, world</h1>;
 
 Không như DOM Element của trình duyệt (DOM thật), React element là object đơn giản và dễ dàng tạo. React DOM sẽ đảm nhận việc update DOM thật để khớp với React element
 
-## Render element vào trong DOM thật
+### Render element vào trong DOM thật
 
 Giả sử chúng ta có một thẻ `div` trong file HTML.
 
@@ -401,6 +401,312 @@ console.log(count); // Ouput: 10
 - Không được viết ở bên trong vòng lặp
 - Không được viết ở bên trong câu điều kiện
 - Không được viết ở bên trong function
+
+## Form trong React
+
+Trước tiên các bạn cần phải hiểu là HTML form hoạt động khác một chút với DOM element React, bởi vì các element form html nó giữ state của chính nó. Ví dụ
+
+```jsx
+<form>
+  <label>
+    Name:
+    <input type="text" name="name" />
+  </label>
+  <input type="submit" value="Submit" />
+</form>
+```
+
+Khi bạn chạy đoạn code trên thì bạn nhập giá trị vào ô input, trình duyệt sẽ lưu giữ giá trị này. Nhưng sẽ thật tuyệt hơn nếu Javascript cũng lưu trữ và quản lý value này, và đây là cách React quản lý form. Kỹ thuật này gọi là "controlled components"
+
+### Controlled components
+
+Trong HTML, form element như `<input>`, `<textarea>`, `<select>` nó sẽ tự quản lý state của nó và cập nhật dựa vào người dụng nhập. Trong React, state component sẽ quản lý state của các element trên và cập nhật chúng bằng `setState`.
+
+Một input form element mà giá trị của nó đựa điều khiển bởi React theo cách này thì được gọi là "controlled component"
+
+```jsx
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event) {
+    alert("A name was submitted: " + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+
+Mỗi khi người dùng nhập vào input, `handleChange` sẽ chạy và cập nhật lại `this.state.value` => thuộc tính `value` của input sẽ luôn luôn đồng bộ với `this.state.value`
+
+### Textarea
+
+Trong HTML, `textarea` quy định text của nó trong children
+
+```html
+<textarea>
+  Hello there, this is some text in a text area
+</textarea>
+```
+
+Trong React, `<textarea>` sử dụng thuộc tính `value`
+
+```jsx
+<textarea value={this.state.value} onChange={this.handleChange} />
+```
+
+### Select tag
+
+Trong HTML, `<select>` thì kiểu như thế này
+
+```html
+<select>
+  <option value="grapefruit">Grapefruit</option>
+  <option value="lime">Lime</option>
+  <option selected value="coconut">Coconut</option>
+  <option value="mango">Mango</option>
+</select>
+```
+
+Trong React, giá trị `selected` sẽ được truyền vào bằng thuộc tính `value` trong thẻ `<select>`
+
+```jsx
+<select value={this.state.value} onChange={this.handleChange}>
+  <option value="grapefruit">Grapefruit</option>
+  <option value="lime">Lime</option>
+  <option value="coconut">Coconut</option>
+  <option value="mango">Mango</option>
+</select>
+```
+
+### File input tag
+
+Trong HTML, `<input type="file">` cho phép người dùng chọn một hay nhiều file từ thiết bị của họ để upload lên server hoặc xử lý bằng javascript thông qua File API.
+
+```jsx
+<input type="file" />
+```
+
+Bởi vì giá trị của nó là read-only, vậy nên nó là uncontrolled component trong React.
+
+### Xử lý nhiều inputs
+
+Chúng ta có thể dựa vào thuộc tính `name` của mỗi element để xác định cập nhật state nào.
+
+```jsx
+class Reservation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isGoing: true,
+      numberOfGuests: 2,
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  render() {
+    return (
+      <form>
+        <label>
+          Is going:
+          <input
+            name="isGoing"
+            type="checkbox"
+            checked={this.state.isGoing}
+            onChange={this.handleInputChange}
+          />
+        </label>
+        <br />
+        <label>
+          Number of guests:
+          <input
+            name="numberOfGuests"
+            type="number"
+            value={this.state.numberOfGuests}
+            onChange={this.handleInputChange}
+          />
+        </label>
+      </form>
+    );
+  }
+}
+```
+
+Chúng ta dùng cú pháp ES6 computed property name để dễ dàng cập nhật state đúng key
+
+```jsx
+this.setState({
+  [name]: value,
+});
+```
+
+## Uncontrolled Components
+
+Trong hầu hết các trường hợp thì React khuyên chúng ta dùng "controlled components" để implement form. Trong controlled component thì form data được xử lý bởi React component. Còn uncontrolled component thì form data sẽ được xử lý bởi DOM của chính nó.
+
+Để viết một uncontrolled component, thay vì viết một event handler cho mỗi state update, bạn có thể sử dụng một ref để lấy value của DOM
+
+Ví dụ dưới đây
+
+```jsx
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.input = React.createRef();
+  }
+
+  handleSubmit(event) {
+    alert("A name was submitted: " + this.input.current.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" ref={this.input} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+
+Chúng ta sử dụng ref để truy cập đến React element, và từ đó chúng ta lấy value của element đó. Có thể xem cách này gần giống với việc chúng ta sử dụng `document.getElementById` bên Javascript.
+
+Khi sử dụng uncontrolled component, chúng ta vừa sử dụng React và cả non-React.
+
+### Default value
+
+Nếu bên HTML thì muốn set giá trị mặc định cho `<input type="text">` thì chúng ta dùng thuộc tính `value`. Riêng bên React thì chúng ta sẽ dùng thuộc tính `defaultValue`, việc thay đổi giá trị `defaultValue` sẽ không làm thay đổi giá trị trên DOM.
+
+Quay trở lại với uncontrolled component thì `defaultValue` sẽ giúp uncontrolled component có được giá trị khởi tạo cho input, bởi vì nếu dùng thuộc tính `value` thì nó sẽ overidde giá trị trên DOM.
+
+```jsx
+render() {
+  return (
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Name:
+        <input
+          defaultValue="Bob"
+          type="text"
+          ref={this.input} />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+```
+
+Tương tự, `<input type="checkbox">` và `<input type="radio">` hỗ trợ `defaultChecked`, và `<select>` và `<textarea>` hỗ trợ `defaultValue`
+
+### File input tag
+
+Trong React, một `<input type="file" />` thì luôn luôn là một uncontrolled component bởi vì giá trị của nó chỉ có thể được set bởi người dùng, không thể lập trình.
+
+Bạn có thể sử dụng File API để tương tác với file. Theo ví dụ bên dưới sẽ cho bạn thấy sử dụng ref đến DOM node để truy cập đến file
+
+```jsx
+class FileInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fileInput = React.createRef();
+    this.state = {
+      // Initially, no file is selected
+      selectedFile: null,
+    };
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData();
+
+    // Update the formData object
+    formData.append(
+      "myFile",
+      this.state.selectedFile,
+      this.state.selectedFile.name
+    );
+
+    // Details of the uploaded file
+    console.log(this.state.selectedFile);
+
+    // Request made to the backend api
+    // Send formData object
+    axios.post("api/uploadfile", formData);
+  }
+
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Upload file:
+          <input
+            type="file"
+            ref={this.fileInput}
+            onChange={this.onFileChange}
+          />
+        </label>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<FileInput />);
+```
+
+### Fix những lỗi phổ biến liên quan đến từ khoá uncontrolled
+
+Hầu hết những lỗi này đa số là do các bạn vô tình truyền value là `null` hoặc `undefined` vào `value` của input dẫn đến React sẽ warning bạn rằng `A component is changing a controlled input to be uncontrolled.` tức là chuyển từ controlled sang uncontrolled
+
+Hiếm gặp hơn là `A component is changing an uncontrolled input to be controlled` tức là chuyển từ uncontrolled sang controlled. Lỗi này là do ban đầu value là `undefined`, sau đó nó có lại giá trị `string` hoặc `number`. Ngược lại của cái trên
 
 ## React Hook Form
 
@@ -1997,3 +2303,14 @@ Chúng ta dùng `componentDidUpdate` khi
 - Muốn track sự thay đổi trên state thì sẽ thực hiện 1 hành động gì đó, ví dụ truy cập đến DOM thật
 - Track sự thay đổi url
 - Bạn cũng có thể gọi API và setState trong này nhưng hãy cẩn thận đặt điều kiện vào trong, còn không thì sẽ dễ dấn đến vòng lặp vô hạn.
+
+# componentWillUnmount
+
+`componentWillUnmount` sẽ được chạy ngay trước khi component bị unmount và huỷ. Ví dụ API của bạn chưa trả về dữ liệu nhưng bạn đã chuyển sang trang khác thì lúc đó React sẽ phải thực hiện unmount component
+
+Chúng ta dùng `componentWillUnmount` khi muốn
+
+- clean một thứ gì đó như `setTimeout` hay `setInterval`
+- Huỷ gọi api, huỷ subscription nào đó đã được tạo ở `componentDidMount`
+
+Bạn không nên `setState` trong `componentWillUnmount` vì component sẽ không bao giờ re-render lại.

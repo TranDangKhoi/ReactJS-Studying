@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import Clock from "./components/Class-Component/Clock";
+import Form from "./components/Class-Component/Form";
 
 function App() {
   return (
     <>
-      <Clock></Clock>
+      <Form></Form>
     </>
   );
 }
