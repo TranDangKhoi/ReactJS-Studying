@@ -311,34 +311,58 @@ const [on, setOn] = useState(false);
 // initialStateValue : false (giá trị ban đầu của state ý ở đây là khi mở trang web lên thì công tắc sẽ ở trạng thái tắt)
 ```
 
-## useEffect là gì?
+## useEffect
 
-Thường được dùng khi làm việc liên quan tới những side effects - là những thứ khi mà ta xử lý bên trong function nhưng mà lại ảnh hưởng ở bên ngoài
+`useEffect` được sử dụng trong functional component đóng vai trò như những life cycle bên class component.
 
-VD:
+`useEffect` nhận vào 2 tham số là effect function và deps array
 
-```js
-function demo() {
-  document.title = "Demo";
-}
+effect function sẽ chạy sau khi compoponent render và mounted
+
+Chúng ta sẽ có 3 trường hợp là
+
+### Không truyền depedency
+
+```jsx
+useEffect(() => {
+  //...handle something
+});
 ```
 
-Đây là 1 ví dụ về side effect. Function trên không return lại giá trị gì cả, nhưng lại thực hiện 1 chức năng nhất định gây ra tác động ở bên ngoài
+Trường hợp này nó đóng vai trò như một `componentDidUpdate`. Effect function sẽ chạy lại mỗi khi component re-render
 
-Vậy useEffect viết như nào? Mình sẽ viết nó ra và giải thích từng thứ một nhé:
+### Depedency là array rỗng `[]`
 
-```js
+```jsx
 useEffect(() => {
-  // side-effects
-}, [deps]);
-// deps: Khi deps thay đổi thì useEffect sẽ được chạy lại
+  //...handle something
+}, []);
 ```
 
-Vậy để convert function trên sang dạng useEffect ta sẽ viết như sau:
+Trường hợp này nó đóng vai trò như một `componentDidMount`. Effect function chạy duy nhất 1 lần sau khi component render lần đầu.
 
-```js
+### Depedency có các item `[a,b]`
+
+```jsx
 useEffect(() => {
-  document.title = "Demo";
+  //...handle something
+}, [a, b]);
+```
+
+Trường hợp này nó đóng vai trò như một `componentDidMount` nhưng thêm 1 cái nữa là khi giá trị `a` hoặc `b` bị thay đổi tham chiếu (vùng nhớ) thì cái effect function nó sẽ được chạy lại
+
+### Trong trường hợp setState trong useEffect mà cần dùng state trước đó, nhưng không muốn khai báo thêm item trong depedency thì hãy dùng `prevState = () => {}`
+
+### useEffect còn có một clean up function dùng để chạy trước khi effect function chạy lại lần tiếp theo
+
+Áp dụng điều này, chúng ta có thể sử dụng clean up function để huỷ đăng ký, huỷ gọi api trước khi component của chúng ta bị destroy. Giống `componentWillUnmount` bên class.
+
+```jsx
+useEffect(() => {
+  //...handle something
+
+  // clean up function
+  return () => {};
 }, []);
 ```
 
