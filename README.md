@@ -370,7 +370,6 @@ useEffect(() => {
 
 Nói dễ hiểu thì:
 Khi các bạn đang ở trang chủ (homepage) chẳng hạn mà các bạn muốn chuyển sang một trang khác bất kì như trang Contact, About, ... thì khi ở trang chủ có một tính năng side-effect nào đó mà sang trang khác bạn lại không cần nó nữa thì bạn cần phải cleanup nó đi
--> sử dụng clean up function để làm việc đó như sau
 
 ```js
 useEffect(
@@ -386,6 +385,8 @@ useEffect(
 
 - Dưới đây là ảnh sơ đồ useEffect hook để giúp bạn hiểu hơn về cleanup
   ![useEffect lifecycle](https://user-images.githubusercontent.com/88824627/181787967-13243cae-fa00-4f98-80d2-6d4c542763cf.svg)
+
+> Lưu ý: Cleanup function được chạy trước side-effects
 
 ## useRef và useState giống và khác nhau thế nào ?
 
@@ -784,6 +785,56 @@ Việc làm trên sẽ đem lại một flow mượt mà, thay vì mỗi compone
 Đưa state lên trên có thể làm bạn viết nhiều code hơn nhưng nó đem lại nhiều lợi ích to lớn, đó là giúp bạn tốn ít thời gian để tìm và phân tích bug.
 
 Nếu một giá trị nào đó có thể dùng prop hoặc state để lưu trữ thì đa số các trường hợp chúng ta nên chọn prop! Ví dụ, thay vì tạo 2 state là `celsiusValue` và `fahrenheitValue` trong component `TemperatureInput`, chúng ta chỉ cần tạo state `temperature` và `scale` trong component cha, các giá trị `celsiusValue` và `fahrenheitValue` có thể được tính toán và truyền xuống dưới dạng prop.
+
+# useContext
+
+Chúng ta dùng useContext để hạn chế việc truyền prop qua nhiều component
+
+Chúng ta đặt những component nào muốn dùng context vào trong provider
+
+```jsx
+const themes = {
+  light: {
+    foreground: "#000000",
+    background: "#eeeeee",
+  },
+  dark: {
+    foreground: "#ffffff",
+    background: "#222222",
+  },
+};
+
+const ThemeContext = React.createContext(themes.light);
+
+function App() {
+  return (
+    <ThemeContext.Provider value={themes.dark}>
+      <Toolbar />
+    </ThemeContext.Provider>
+  );
+}
+
+function Toolbar(props) {
+  return (
+    <div>
+      <ThemedButton />
+    </div>
+  );
+}
+
+function ThemedButton() {
+  const theme = useContext(ThemeContext);
+  return (
+    <button style={{ background: theme.background, color: theme.foreground }}>
+      I am styled by theme context!
+    </button>
+  );
+}
+```
+
+> Theo mình thì khi nào các bạn truyền qua 2 lần prop thì nên suy nghĩ đến việc dùng useContext
+
+> Chức năng context hay còn gọi là context API không chỉ có riêng ở functional component, nó còn có ở class component nữa. Nhưng useContext thì chỉ dùng được ở functional component thôi!
 
 ## createPortal
 
