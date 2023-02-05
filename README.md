@@ -1,8 +1,83 @@
+- [JSX là gì?](#jsx-l--g--)
+  - [Nhúng biến vào JSX](#nh-ng-bi-n-v-o-jsx)
+  - [Truyền thuộc tính với JSX](#truy-n-thu-c-t-nh-v-i-jsx)
+  - [Chỉ định Children với JSX](#ch----nh-children-v-i-jsx)
+  - [JSX giúp bạn chống tấn công Injection](#jsx-gi-p-b-n-ch-ng-t-n-c-ng-injection)
+  - [JSX là đại diện của object](#jsx-l----i-di-n-c-a-object)
+- [Render Element là gì?](#render-element-l--g--)
+  - [Render element vào trong DOM thật](#render-element-v-o-trong-dom-th-t)
+  - [Cập nhật element đã render](#c-p-nh-t-element----render)
+  - [React chỉ cập nhật những gì cần thiết](#react-ch--c-p-nh-t-nh-ng-g--c-n-thi-t)
+- [Component và Props là gì? ( cơ bản ) <br>](#component-v--props-l--g-----c--b-n----br-)
+- [Children Props là gì?](#children-props-l--g--)
+- [State là gì?](#state-l--g--)
+- [useState là gì?](#usestate-l--g--)
+- [React re-render 2 lần mặc dù setState cùng value](#react-re-render-2-l-n-m-c-d--setstate-c-ng-value)
+- [useEffect](#useeffect)
+  - [Không truyền depedency](#kh-ng-truy-n-depedency)
+  - [Depedency là array rỗng `[]`](#depedency-l--array-r-ng-----)
+  - [Depedency có các item `[a,b]`](#depedency-c--c-c-item---a-b--)
+  - [Trong trường hợp setState trong useEffect mà cần dùng state trước đó, nhưng không muốn khai báo thêm item trong depedency thì hãy dùng `prevState = () => {}`](#trong-tr--ng-h-p-setstate-trong-useeffect-m--c-n-d-ng-state-tr--c-----nh-ng-kh-ng-mu-n-khai-b-o-th-m-item-trong-depedency-th--h-y-d-ng--prevstate------------)
+  - [useEffect còn có một clean up function dùng để chạy trước khi effect function chạy lại lần tiếp theo](#useeffect-c-n-c--m-t-clean-up-function-d-ng----ch-y-tr--c-khi-effect-function-ch-y-l-i-l-n-ti-p-theo)
+- [Cleanup function là gì](#cleanup-function-l--g-)
+- [useRef và useState giống và khác nhau thế nào ?](#useref-v--usestate-gi-ng-v--kh-c-nhau-th--n-o--)
+- [Những nguyên tắc khi sử dụng hooks](#nh-ng-nguy-n-t-c-khi-s--d-ng-hooks)
+- [Form trong React](#form-trong-react)
+  - [Controlled components](#controlled-components)
+  - [Textarea](#textarea)
+  - [Select tag](#select-tag)
+  - [File input tag](#file-input-tag)
+  - [Xử lý nhiều inputs](#x--l--nhi-u-inputs)
+- [Uncontrolled Components](#uncontrolled-components)
+  - [Default value](#default-value)
+  - [File input tag](#file-input-tag-1)
+  - [Fix những lỗi phổ biến liên quan đến từ khoá uncontrolled](#fix-nh-ng-l-i-ph--bi-n-li-n-quan---n-t--kho--uncontrolled)
+- [React Hook Form cheatsheet](#react-hook-form-cheatsheet)
+- [Lifting State Up](#lifting-state-up)
+- [Phân tích](#ph-n-t-ch)
+- [Bài học học được](#b-i-h-c-h-c----c)
+
+* [useContext](#usecontext)
+  - [createPortal](#createportal)
+  - [Context](#context)
+  - [Props Drilling là gì](#props-drilling-l--g-)
+  - [Ý nghĩa của các component trong React-Router-Dom v6](#--ngh-a-c-a-c-c-component-trong-react-router-dom-v6)
+  - [Higher Order Components](#higher-order-components)
+  - [Vấn đề khi sử dụng HOCS](#v-n----khi-s--d-ng-hocs)
+  - [Lifting State](#lifting-state)
+* [Props Render - một phương pháp để xử lí Lifting State & Props Drilling](#props-render---m-t-ph--ng-ph-p----x--l--lifting-state---props-drilling)
+* [Tổng quan sơ lược lại về HOCS, Render Props và Custom hooks](#t-ng-quan-s--l--c-l-i-v--hocs--render-props-v--custom-hooks)
+* [React Composition (Compound Component)](#react-composition--compound-component-)
+* [Props Collection - học từ Kentc Dodds (aka creator of Remix)](#props-collection---h-c-t--kentc-dodds--aka-creator-of-remix-)
+* [Props Getter](#props-getter)
+* [Control Props - 1 kiến thức cực advanced, suy nghĩ kĩ trước khi đọc (bởi tôi cũng chưa hiểu rõ nữa :( )](#control-props---1-ki-n-th-c-c-c-advanced--suy-ngh--k--tr--c-khi---c--b-i-t-i-c-ng-ch-a-hi-u-r--n-a-----)
+  - [Vậy ta phải làm thế nào ?](#v-y-ta-ph-i-l-m-th--n-o--)
+  - [Bây giờ, ta sẽ cùng tìm hiểu cách làm thế nào để các devs khác có thể chèn logic code của họ vào code cùa mình mà không cần mở file CounterControlProps.js ra nhé](#b-y-gi---ta-s--c-ng-t-m-hi-u-c-ch-l-m-th--n-o----c-c-devs-kh-c-c--th--ch-n-logic-code-c-a-h--v-o-code-c-a-m-nh-m--kh-ng-c-n-m--file-countercontrolpropsjs-ra-nh-)
+* [Inversion Of Control](#inversion-of-control)
+* [useMemo, useCallback và React.memo](#usememo--usecallback-v--reactmemo)
+* [React Error Boundary](#react-error-boundary)
+* [Firebase](#firebase)
+* [Truy vấn dữ liệu nâng cao với Firestore Queries](#truy-v-n-d--li-u-n-ng-cao-v-i-firestore-queries)
+* [Firebase Authentication](#firebase-authentication)
+* [Class Component](#class-component)
+  - [setState](#setstate)
+  - [Lifecycle](#lifecycle)
+* [Constructor trong class component](#constructor-trong-class-component)
+* [ComponentdidMount](#componentdidmount)
+* [componentDidUpdate](#componentdidupdate)
+* [componentWillUnmount](#componentwillunmount)
+  - [Inheritance](#inheritance)
+  - [Composition](#composition)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 ## JSX là gì?
 
 JSX là `một cú pháp mở rộng cho JavaScript`, cách viết nó cũng rất giống với HTML nên khá dễ để hiểu.
 
 JSX = Javascript + XML. Nó biến cú pháp dạng gần như **XML về thành Javascript**. **Giúp người lập trình** có thể **code ReactJS bằng cú pháp của XML** thay vì sử dụng Javascript. **Các XML elements, attributes và children được chuyển đổi thành các đối số truyền vào React.createElement.**
+
+<a name="nhungbien"></a>
 
 ### Nhúng biến vào JSX
 
@@ -1133,12 +1208,97 @@ const Homepage = () => {
 ## Higher Order Components
 
 - Khi ta phát triển một component, và nó sử dụng đi, sử dụng lại một logic nào đó và chúng ta muốn sử dụng cái logic đó từ component này qua component kia mà không cần phải viết lại -> THÌ ta sẽ phải sử dụng HOCS
+
+- HOC là kỹ thuật nâng cao trong React, không phải là một React API. HOC là một function nhận vào một component và return về một component mới
+
 - Kỹ thuật này cùng với render props thường được sử dụng trước khi hình thành ra khái niệm custom hooks
 
-- VD:
-  - Giờ ta có component A sử dụng axios để fetch data về, và khi data chưa được fetch về ta sẽ có một hiệu ứng loading
-  - Ở component B và component C, ta cũng sẽ sử dụng axios để fetch data về, nhưng ta lại không muốn viết lại logic của hiệu ứng loading, mà muốn sử dụng lại nó
-    -> Ta sẽ phải áp dụng HOCS để làm việc này
+- Ví dụ, ta có component A sử dụng axios để fetch data về, và khi data chưa được fetch về ta sẽ có một hiệu ứng loading. Ở component B và component C, ta cũng sẽ sử dụng axios để fetch data về, nhưng ta lại không muốn lặp lại những dòng code ở component A, mà muốn tái sử dụng lại logic của nó -> Ta sẽ phải áp dụng HOCS để làm việc này
+
+### Ví dụ về việc tái sử dụng logic của HOC
+
+Ví dụ như tự động đăng ký sự kiện khi render component và hủy đăng ký khi component unmount
+
+```jsx
+const CommentList = (props) => {
+  return <div>Comment List</div>;
+};
+
+const BlogList = (props) => {
+  return <div>Blog List</div>;
+};
+
+const withSubscription = (WrappedComponent) => {
+  const newComponent = (props) => {
+    useEffect(() => {
+      subcribe("Đăng ký!");
+      return () => {
+        unsubcribe("Hủy đăng ký!");
+      };
+    }, []);
+    return <WrappedComponent {...props} />;
+  };
+  return newComponent;
+};
+
+const NewCommentList = withSubscription(CommentList);
+const NewBlogList = withSubscription(BlogList);
+```
+
+Trong một số trường hợp thì chúng ta có thể custom hook để xử lý use case trên mà không cần dùng đến HOC
+
+### Truyền những prop không liên quan vào component mà không làm thay đổi cách dùng của component gốc
+
+```jsx
+const CommentList = ({ commentList,profile }) => {
+  console.log(profile)
+  return <div>Comment List</div>
+}
+
+const BlogList = ({ blogList, profile }) => {
+  console.log(profile)
+  return <div>Blog List</div>
+}
+
+
+const connect = (WrappedComponent, newProps) => {
+  return (props) => {
+    return <WrappedComponent {...props} {...newProps} />
+  }
+}
+
+const NewCommentList = connect(CommentList, {profile: {name: 'Khoi'}})
+const NewBlogList = connect(BlogList, {profile: {name: 'Khoi'}})
+
+const App = () => (
+  return (
+    <div>
+    <NewCommentList commentList={commentList}/>
+    <NewBlogList blogList={blogList}/>
+    </div>
+  )
+)
+```
+
+Trong một số trường hợp thì chúng ta cũng có thể custom hook để xử lý use case trên mà không cần dùng đến HOC
+
+### Một số lưu ý khi dùng HOC
+
+- Đừng dùng HOC bên trong render method hoặc trong function component
+
+```jsx
+render() {
+  // Một phiên bản mới của EnhancedComponent được tạo ra mỗi khi render
+  // EnhancedComponent1 !== EnhancedComponent2
+  const EnhancedComponent = enhance(MyComponent);
+  // Gây nên việc EnhancedComponent bị unmount/remount mỗi lần render!
+  return <EnhancedComponent />;
+}
+```
+
+Đây không chỉ là vấn đề về hiệu suất mà còn là logic, nó sẽ làm component bị unmount liên tục mỗi khi re-render
+
+- `ref` sẽ không được truyền xuống component, vì `ref` không thực sự là một prop, nó được xử lý bởi React. Giải pháp cho vấn đề này là chúng ta dùng `React.forwardRef` API
 
 ## Vấn đề khi sử dụng HOCS
 
@@ -1200,7 +1360,7 @@ export default withLoading(withErrorBoundaries(withSearch(ComponentC)));
 
 ## Lifting State
 
-- Là trường hợp khi bạn tạo state ở component cha và truyền xuống component con
+- Là trường hợp khi bạn tạo state ở component cha và truyền xuống các component con
 
 - Nhược điểm: Khi làm dự án lớn nếu ta cứ liên tục chọc ngoáy state của thg component cha xuống component con rồi truyền qua hàng đống component khác như vậy thì mình đã nói rồi -> nó sẽ gây ra hiện tượng props drilling
 
