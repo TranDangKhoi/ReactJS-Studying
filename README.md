@@ -883,7 +883,7 @@ Việc làm trên sẽ đem lại một flow mượt mà, thay vì mỗi compone
 
 Nếu một giá trị nào đó có thể dùng prop hoặc state để lưu trữ thì đa số các trường hợp chúng ta nên chọn prop! Ví dụ, thay vì tạo 2 state là `celsiusValue` và `fahrenheitValue` trong component `TemperatureInput`, chúng ta chỉ cần tạo state `temperature` và `scale` trong component cha, các giá trị `celsiusValue` và `fahrenheitValue` có thể được tính toán và truyền xuống dưới dạng prop.
 
-# useContext
+## useContext
 
 Chúng ta dùng useContext để hạn chế việc truyền prop qua nhiều component
 
