@@ -1,13 +1,8 @@
 import React from "react";
 import "./App.css";
-import RenderTwice from "./components/Testing/RenderTwice";
 
 function App() {
-  return (
-    <>
-      <RenderTwice></RenderTwice>
-    </>
-  );
+  return <></>;
 }
 
 export default App;
