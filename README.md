@@ -39,7 +39,6 @@
 
 * [useContext](#usecontext)
 * [createPortal](#createportal)
-* [Context](#context)
 * [Props Drilling là gì](#props-drilling-là-gì)
 * [Ý nghĩa của các component trong React-Router-Dom v6](#ý-nghĩa-của-các-component-trong-react-router-dom-v6)
 * [Higher Order Components](#higher-order-components)
@@ -946,10 +945,6 @@ function ThemedButton() {
 ```jsx
 
 ```
-
-## Context
-
-- Context sẽ cung cấp cho ta 1 phương pháp để chia sẻ những giá trị giữa các component với nhau
 
 ## Props Drilling là gì
 
