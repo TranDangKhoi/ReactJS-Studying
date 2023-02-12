@@ -493,7 +493,7 @@ useEffect(
 Mutate là chúng ta thay đổi giá trị bên trong object mà không làm thay đổi tham chiếu của nó.
 
 ```js
-const A = { name: "duoc" };
+const A = { name: "khoi" };
 const B = A;
 A.name = "cuong"; // Chúng ta đang mutate A
 console.log(A === B); // true vì tham chiếu A và B giống nhau
@@ -1274,7 +1274,54 @@ function ThemedButton() {
 
 ## Ý nghĩa của các component trong React-Router-Dom v6
 
-- BrowserRoutes : Dùng để bọc thằng <App/> -> enable chức năng router cho website
+### BrowsersRouter
+
+99% anh em sẽ dùng `<BrowsersRouter>`, được build trên history API của trình duyệt, dùng để lưu trữ URL và chuyển trang.
+
+Ví dụ:
+
+Đối với SPA thì server sẽ cấu hình là khi bạn nhập url nào thì server cũng trả về url nhắm đến file `index.html`, ví dụ `/`.
+
+Khi enter url `https://cungtapyoga.com/about` vào trình duyệt, server nhận được url là `https://cungtapyoga.com/about` và sẽ trả về nội dụng là file `index.html`. Lúc này React Router sẽ đảm nhiệm việc hiển thị component cho đúng tùy vào url.
+
+### HashRouter
+
+HashRouter dùng dấu `#` trong URL ví dụ: `https://cungtapyoga.com/#/about`, `https://cungtapyoga.com/#/blog/uon-deo`.
+
+Lợi ích của việc thêm dấu `#` vào url là để server không nhận biết được chúng ta vào url nào. Khi anh em nhập các url ở ví dụ trên vào trình duyệt và nhấn enter thì trình duyệt chỉ gửi lên server là `https://cungtapyoga.com` và server chỉ nhận được là `https://cungtapyoga.com`.
+
+Điều này khá hữu ích khi server anh em là một share hosting và không toàn quyền điều hành server.
+
+Ví dụ:
+
+Có một server được cấu hình cho nhiều dịch vụ, mỗi dịch vụ là một url khác nhau.
+
+- Landing Page cho user: `https://hospital.com`
+- Manager: `https://hospital.com/manager`
+- Doctor: `https://hospital.com/doctor`
+- Staff: `https://hospital.com/staff`
+
+Mình đảm nhiệm thiết kế một Landing Page cho user là một SPA có nhiều trang trong đó, và chỉ được cấp cho url là `https://hospital.com`.
+
+Bây giờ nếu mình thiết kế thêm url `/manager` là dành cho việc quản lý profile cá nhân của người dùng
+
+- BrowsersRouter: người dùng enter url `https://hospital.com/manager` thì server sẽ trả về trang của manager (người quản lý), điều này không tốt!
+
+- HashRouter: người dùng enter url `https://hospital.com/#/manager` thì server sẽ trả về trang `https://hospital.com`, lúc này React Router sẽ thực hiện hiển thị cho đúng trang `/manager`.
+
+### MemoryRouter
+
+MemoryRouter lưu trữ url vào một array. Không như `<BrowserHistory>` và `<HashRouter>`, nó không bị ràng buộc bởi history stack trong trình duyệt. Điều này rất hữu ích khi viết unit test cho React Router.
+
+### Router
+
+Đây là cấp thấp nhất của tất cả Router component, tức là các Router component như `BrowsersRouter` hay `HashRouter` đều được build nên từ `Router` này.
+
+Bạn không cần dùng Router, thay vì đó dùng các Router cấp cao hơn như `BrowsersRouter`
+
+### StaticRouter
+
+StaticRouter dùng để render React Router trong môi trường nodejs, phục vụ cho việc Server Side Rendering
 
 - Routes: Dùng để chứa các <Route/>
 
@@ -1516,9 +1563,27 @@ const Homepage = () => {
 };
 ```
 
+- Update một số thứ hay của navigate:
+
+      - Nếu bạn muốn navigate lại các trang cũ mà nằm trong history thì có thể truyền **`số âm`** vào bên trong `navigate()`, ví dụ:
+
+      ```jsx
+      const NotFoundPage = () => {
+      const navigate = useNavigate();
+      useEffect(() => {
+        navigate(-1);
+      },[])
+      return (
+          <div>
+            Not Found
+          </div>
+        );
+      };
+      ```
+
 - useLocation: Gồm rất nhiều thuộc tính (pathName, hash, search, state, key), dùng để truyền state, lấy ra pathName, ...
 
--
+- Navigate component: Dùng để redirect ngay khi chuyển sang một trang khác (thường là các trang 404 Not Found)
 
 ## Higher Order Components
 
