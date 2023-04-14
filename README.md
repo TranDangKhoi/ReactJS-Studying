@@ -1581,6 +1581,8 @@ const Homepage = () => {
       };
       ```
 
+      - replace: Thay thế stack history
+
 - useLocation: Gồm rất nhiều thuộc tính (pathName, hash, search, state, key), dùng để truyền state, lấy ra pathName, ...
 
 - Navigate component: Dùng để redirect ngay khi chuyển sang một trang khác (thường là các trang 404 Not Found)
